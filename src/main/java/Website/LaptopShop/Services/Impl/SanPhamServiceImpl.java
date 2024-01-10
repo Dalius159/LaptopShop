@@ -242,7 +242,7 @@ public class SanPhamServiceImpl implements SanPhamService {
         String manufactor = object.getManufactor();
         String os = object.getOs();
         String ram = object.getRam();
-        String pin = object.getPin();
+        int pin = object.getPin();
         // Muc gia
         switch (price) {
             case "duoi-2-trieu":
@@ -282,8 +282,8 @@ public class SanPhamServiceImpl implements SanPhamService {
         if (ram.length()>1) {
             builder.and(QSanPham.sanPham.ram.like("%"+ram+"%"));
         }
-        if (pin.length()>1) {
-            builder.and(QSanPham.sanPham.dungLuongPin.eq(pin));
+        if (pin>1000) {
+            builder.and(QSanPham.sanPham.dungLuongPin_mAh.eq(pin));
         }
 
         return sanPhamRepo.findAll(builder, PageRequest.of(page - 1, resultPerPage));

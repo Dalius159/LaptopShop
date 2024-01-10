@@ -5,6 +5,7 @@ import Website.LaptopShop.Entities.VaiTro;
 import Website.LaptopShop.Repositories.NguoiDungRepository;
 import Website.LaptopShop.Repositories.VaiTroRepository;
 import Website.LaptopShop.Services.NguoiDungService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class NguoiDungServiceImpl implements NguoiDungService {
     @Autowired
     private NguoiDungRepository nguoiDungRepo;
@@ -39,6 +41,7 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 
     @Override
     public NguoiDung saveUserForMember(NguoiDung nd) {
+nd.setPassword(bCryptPasswordEncoder.encode(nd.getPassword()));
         Set<VaiTro> setVaiTro = new HashSet<>();
         setVaiTro.add(vaiTroRepo.findByTenVaiTro("ROLE_MEMBER"));
         nd.setVaiTro(setVaiTro);
@@ -57,7 +60,10 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     }
 
     @Override
-    public void changePass(NguoiDung nd, String newPass) {nguoiDungRepo.save(nd);}
+    public void changePass(NguoiDung nd, String newPass) {
+		nd.setPassword(bCryptPasswordEncoder.encode(newPass));
+		nguoiDungRepo.save(nd);
+	}
 
     @Override
     public Page<NguoiDung> getNguoiDungByVaiTro(Set<VaiTro> vaiTro, int page) {
@@ -76,6 +82,7 @@ public class NguoiDungServiceImpl implements NguoiDungService {
         nd.setDiaChi(dto.getDiaChi());
         nd.setEmail(dto.getEmail());
         nd.setSoDienThoai(dto.getSdt());
+nd.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 
         Set<VaiTro> vaiTro  = new HashSet<>();
         vaiTro.add(vaiTroRepo.findByTenVaiTro(dto.getTenVaiTro()));

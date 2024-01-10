@@ -19,7 +19,7 @@ public class SearchSanPhamObject {
     // theo ram, pin, OS
     private String os;
     private String ram;
-    private String pin;
+    private int pin;
 
     public SearchSanPhamObject() {
         danhMucId = "";
