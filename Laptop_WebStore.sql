@@ -13,70 +13,70 @@ USE Laptop_WebStore;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-DROP TABLE IF EXISTS ChiMucGioHang;
+DROP TABLE IF EXISTS chi_muc_gio_hang;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE ChiMucGioHang (
+CREATE TABLE chi_muc_gio_hang (
   id bigint NOT NULL AUTO_INCREMENT,
   soLuong tinyint NOT NULL,
   ma_gio_hang bigint,
   ma_san_pham bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FK49lmmclnjgb7eck20lwhv0cks FOREIGN KEY (ma_gio_hang) REFERENCES GioHang(id),
-  CONSTRAINT FKkd69a7wiulr4xgohxl0rlhth4 FOREIGN KEY (ma_san_pham) REFERENCES SanPham(id)
+  CONSTRAINT FK49lmmclnjgb7eck20lwhv0cks FOREIGN KEY (ma_gio_hang) REFERENCES gio_hang(id),
+  CONSTRAINT FKkd69a7wiulr4xgohxl0rlhth4 FOREIGN KEY (ma_san_pham) REFERENCES san_pham(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES ChiMucGioHang WRITE;
-/*!40000 ALTER TABLE ChiMucGioHang DISABLE KEYS */;
-INSERT INTO ChiMucGioHang VALUES (10,7,1,64),(11,1,1,54),(12,1,1,60),(13,2,1,56),(14,1,1,62),(15,1,2,88),(16,1,2,85);
-/*!40000 ALTER TABLE ChiMucGioHang ENABLE KEYS */;
+LOCK TABLES chi_muc_gio_hang WRITE;
+/*!40000 ALTER TABLE chi_muc_gio_hang DISABLE KEYS */;
+INSERT INTO chi_muc_gio_hang VALUES (10,7,1,64),(11,1,1,54),(12,1,1,60),(13,2,1,56),(14,1,1,62),(15,1,2,88),(16,1,2,85);
+/*!40000 ALTER TABLE chi_muc_gio_hang ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS ChiTietDonHang;
+DROP TABLE IF EXISTS chi_tiet_don_hang;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE ChiTietDonHang(
+CREATE TABLE chi_tiet_don_hang(
   id bigint NOT NULL AUTO_INCREMENT,
   donGia int NOT NULL,
   soLuongDat tinyint NOT NULL,
   ma_don_hang bigint,
   ma_san_pham bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FK9wl3houbukbxpixsut6uvojhy FOREIGN KEY (ma_don_hang) REFERENCES DonHang(id),
-  CONSTRAINT FK3ry84nmdxgoarx53qjxd671tk FOREIGN KEY (ma_san_pham) REFERENCES SanPham(id)
+  CONSTRAINT FK9wl3houbukbxpixsut6uvojhy FOREIGN KEY (ma_don_hang) REFERENCES don_hang(id),
+  CONSTRAINT FK3ry84nmdxgoarx53qjxd671tk FOREIGN KEY (ma_san_pham) REFERENCES san_pham(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES ChiTietDonHang WRITE;
-/*!40000 ALTER TABLE ChiTietDonHang DISABLE KEYS */;
-INSERT INTO ChiTietDonHang VALUES (1,13980000,2,32,62),(2,25990000,1,32,57),(3,22490000,1,32,54);
-/*!40000 ALTER TABLE ChiTietDonHang ENABLE KEYS */;
+LOCK TABLES chi_tiet_don_hang WRITE;
+/*!40000 ALTER TABLE chi_tiet_don_hang DISABLE KEYS */;
+INSERT INTO chi_tiet_don_hang VALUES (1,13980000,2,32,62),(2,25990000,1,32,57),(3,22490000,1,32,54);
+/*!40000 ALTER TABLE chi_tiet_don_hang ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS DanhMuc;
+DROP TABLE IF EXISTS danh_muc;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE DanhMuc (
+CREATE TABLE danh_muc (
   id bigint NOT NULL AUTO_INCREMENT,
   tenDanhMuc varchar(30),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES DanhMuc WRITE;
-/*!40000 ALTER TABLE DanhMuc DISABLE KEYS */;
-INSERT INTO DanhMuc VALUES (1,'Laptop'),(2,'PC ĐỒNG BỘ & PC GAMING'),(3,'TB NGHE NHÌN & GIẢI TRÍ'),(4,'LINH KIỆN MÁY TÍNH'),(5,'THIẾT BỊ LƯU TRỮ'),(6,'THIẾT BỊ MẠNG'),(7,'CAMERA QUAN SÁT'),(8,'PHỤ KIỆN CÁC LOẠI'),(9,'THIẾT BỊ VĂN PHÒNG');
-/*!40000 ALTER TABLE DanhMuc ENABLE KEYS */;
+LOCK TABLES danh_muc WRITE;
+/*!40000 ALTER TABLE danh_muc DISABLE KEYS */;
+INSERT INTO danh_muc VALUES (1,'Laptop'),(2,'PC ĐỒNG BỘ & PC GAMING'),(3,'TB NGHE NHÌN & GIẢI TRÍ'),(4,'LINH KIỆN MÁY TÍNH'),(5,'THIẾT BỊ LƯU TRỮ'),(6,'THIẾT BỊ MẠNG'),(7,'CAMERA QUAN SÁT'),(8,'PHỤ KIỆN CÁC LOẠI'),(9,'THIẾT BỊ VĂN PHÒNG');
+/*!40000 ALTER TABLE danh_muc ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS DonHang;
+DROP TABLE IF EXISTS don_hang;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE DonHang (
+CREATE TABLE don_hang (
   id bigint NOT NULL AUTO_INCREMENT,
   diaChiNhan varchar(150),
   ghiChu varchar(150),
@@ -90,58 +90,58 @@ CREATE TABLE DonHang (
   ma_nguoi_dat bigint,
   ma_shipper bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FKgndcrlvetoudr3jaif9b7ay37 FOREIGN KEY (ma_shipper) REFERENCES NguoiDung (id),
-  CONSTRAINT FKnwjiboxao1uvw1siemkvs1jb9 FOREIGN KEY (ma_nguoi_dat) REFERENCES NguoiDung (id)
+  CONSTRAINT FKgndcrlvetoudr3jaif9b7ay37 FOREIGN KEY (ma_shipper) REFERENCES nguoi_dung (id),
+  CONSTRAINT FKnwjiboxao1uvw1siemkvs1jb9 FOREIGN KEY (ma_nguoi_dat) REFERENCES nguoi_dung (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES DonHang WRITE;
-/*!40000 ALTER TABLE DonHang DISABLE KEYS */;
-INSERT INTO DonHang VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','Đang chờ duyệt', 16500000,NULL,NULL),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','created',17500000,2,NULL);
-/*!40000 ALTER TABLE DonHang ENABLE KEYS */;
+LOCK TABLES don_hang WRITE;
+/*!40000 ALTER TABLE don_hang DISABLE KEYS */;
+INSERT INTO don_hang VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','Đang chờ duyệt', 16500000,NULL,NULL),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','created',17500000,2,NULL);
+/*!40000 ALTER TABLE don_hang ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS GioHang;
+DROP TABLE IF EXISTS gio_hang;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE GioHang (
+CREATE TABLE gio_hang (
   id bigint NOT NULL AUTO_INCREMENT,
   tongTien int,
   ma_nguoi_dung bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FKitverect56puwr47y7tyvy6er FOREIGN KEY (ma_nguoi_dung) REFERENCES NguoiDung (id)
+  CONSTRAINT FKitverect56puwr47y7tyvy6er FOREIGN KEY (ma_nguoi_dung) REFERENCES nguoi_dung (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES GioHang WRITE;
-/*!40000 ALTER TABLE GioHang DISABLE KEYS */;
-INSERT INTO GioHang VALUES (1,NULL,2),(2,NULL,1);
-/*!40000 ALTER TABLE GioHang ENABLE KEYS */;
+LOCK TABLES gio_hang WRITE;
+/*!40000 ALTER TABLE gio_hang DISABLE KEYS */;
+INSERT INTO gio_hang VALUES (1,NULL,2),(2,NULL,1);
+/*!40000 ALTER TABLE gio_hang ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS HangSanXuat;
+DROP TABLE IF EXISTS hang_san_xuat;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE HangSanXuat (
+CREATE TABLE hang_san_xuat (
   id bigint NOT NULL AUTO_INCREMENT,
   tenHangSanXuat varchar(9),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES HangSanXuat WRITE;
-/*!40000 ALTER TABLE HangSanXuat DISABLE KEYS */;
-INSERT INTO HangSanXuat VALUES (2,'Apple'),(3,'Asus'),(4,'Acer'),(5,'Dell'),(6,'HP'),(7,'Lenovo'),(8,'MSI'),(9,'Masstel'),(10,'Haier');
-/*!40000 ALTER TABLE HangSanXuat ENABLE KEYS */;
+LOCK TABLES hang_san_xuat WRITE;
+/*!40000 ALTER TABLE hang_san_xuat DISABLE KEYS */;
+INSERT INTO hang_san_xuat VALUES (2,'Apple'),(3,'Asus'),(4,'Acer'),(5,'Dell'),(6,'HP'),(7,'Lenovo'),(8,'MSI'),(9,'Masstel'),(10,'Haier');
+/*!40000 ALTER TABLE hang_san_xuat ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS LienHe;
+DROP TABLE IF EXISTS lien_he;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE LienHe (
+CREATE TABLE lien_he (
   id bigint NOT NULL AUTO_INCREMENT,
   emailLienHe varchar(25),
   ngayLienHe datetime,
@@ -151,20 +151,20 @@ CREATE TABLE LienHe (
   trangThai varchar(10),
   ma_nguoi_tra_loi bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FK6jm47uh7f94pc3wix0duvedde FOREIGN KEY (ma_nguoi_tra_loi) REFERENCES NguoiDung (id)
+  CONSTRAINT FK6jm47uh7f94pc3wix0duvedde FOREIGN KEY (ma_nguoi_tra_loi) REFERENCES nguoi_dung (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES LienHe WRITE;
-/*!40000 ALTER TABLE LienHe DISABLE KEYS */;
-/*!40000 ALTER TABLE LienHe ENABLE KEYS */;
+LOCK TABLES lien_he WRITE;
+/*!40000 ALTER TABLE lien_he DISABLE KEYS */;
+/*!40000 ALTER TABLE lien_he ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS NguoiDung;
+DROP TABLE IF EXISTS nguoi_dung;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE NguoiDung (
+CREATE TABLE nguoi_dung (
   id bigint NOT NULL AUTO_INCREMENT,
   diaChi varchar(150),
   email varchar(25),
@@ -175,10 +175,10 @@ CREATE TABLE NguoiDung (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES NguoiDung WRITE;
-/*!40000 ALTER TABLE NguoiDung DISABLE KEYS */;
-INSERT INTO NguoiDung VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$/VFMNUPBKNVRMjxPFCYKZ.lKahoLQda0EaAxdqoun1w3DqwNLa2me','123456789'),(2,NULL,'member@gmail.com',NULL,'$2a$10$j7Upgupou72GBmukz0G6pOATk3wlCAgaoFCEqAhSvLToD/V/1wlpu',NULL),(3,NULL,'shipper@gmail.com',NULL,'$2a$10$u2B29HDxuWVYY3fUJ8R2qunNzXngfxij5GpvlFAEtIz3JpK/WFXF2',NULL),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$ZCqCO9gSWt8A8HNXAWq8luqfNbJm0uG3PsUlzry0aRLwO3VHQZTmy','123456');
-/*!40000 ALTER TABLE NguoiDung ENABLE KEYS */;
+LOCK TABLES nguoi_dung WRITE;
+/*!40000 ALTER TABLE nguoi_dung DISABLE KEYS */;
+INSERT INTO nguoi_dung VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$/VFMNUPBKNVRMjxPFCYKZ.lKahoLQda0EaAxdqoun1w3DqwNLa2me','123456789'),(2,NULL,'member@gmail.com',NULL,'$2a$10$j7Upgupou72GBmukz0G6pOATk3wlCAgaoFCEqAhSvLToD/V/1wlpu',NULL),(3,NULL,'shipper@gmail.com',NULL,'$2a$10$u2B29HDxuWVYY3fUJ8R2qunNzXngfxij5GpvlFAEtIz3JpK/WFXF2',NULL),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$ZCqCO9gSWt8A8HNXAWq8luqfNbJm0uG3PsUlzry0aRLwO3VHQZTmy','123456');
+/*!40000 ALTER TABLE nguoi_dung ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -189,8 +189,8 @@ CREATE TABLE nguoidung_vaitro (
   ma_nguoi_dung bigint NOT NULL,
   ma_vai_tro bigint NOT NULL,
   PRIMARY KEY (ma_nguoi_dung,ma_vai_tro),
-  CONSTRAINT FKig6jxd861mqv02a8pn68r43fr FOREIGN KEY (ma_vai_tro) REFERENCES VaiTro (id),
-  CONSTRAINT FKocavcnspu1wcvp2w0s4usfgbf FOREIGN KEY (ma_nguoi_dung) REFERENCES NguoiDung (id)
+  CONSTRAINT FKig6jxd861mqv02a8pn68r43fr FOREIGN KEY (ma_vai_tro) REFERENCES vai_tro (id),
+  CONSTRAINT FKocavcnspu1wcvp2w0s4usfgbf FOREIGN KEY (ma_nguoi_dung) REFERENCES nguoi_dung (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
@@ -201,10 +201,10 @@ INSERT INTO nguoidung_vaitro VALUES (1,1),(1,2),(2,2),(4,2),(3,3);
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS SanPham;
+DROP TABLE IF EXISTS san_pham;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE SanPham (
+CREATE TABLE san_pham (
   id bigint NOT NULL AUTO_INCREMENT,
   cpu varchar(30),
   donGia int NOT NULL,
@@ -221,14 +221,14 @@ CREATE TABLE SanPham (
   ma_danh_muc bigint,
   ma_hang_sx bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FKchvjvgjnq8lbt9mjtyfn5pksq FOREIGN KEY (ma_hang_sx) REFERENCES HangSanXuat (id),
-  CONSTRAINT FKqss6n6gtx6lhb7flcka9un18t FOREIGN KEY (ma_danh_muc) REFERENCES DanhMuc (id)
+  CONSTRAINT FKchvjvgjnq8lbt9mjtyfn5pksq FOREIGN KEY (ma_hang_sx) REFERENCES hang_san_xuat (id),
+  CONSTRAINT FKqss6n6gtx6lhb7flcka9un18t FOREIGN KEY (ma_danh_muc) REFERENCES danh_muc (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES SanPham WRITE;
-/*!40000 ALTER TABLE SanPham DISABLE KEYS */;
-INSERT INTO SanPham VALUES (3,'Intel, Core i5, 1.8 Ghz',23990000,0,100,5800,' Mac Os',' 13.3 inch LED-backlit','8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 128GB MQD32SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+LOCK TABLES san_pham WRITE;
+/*!40000 ALTER TABLE san_pham DISABLE KEYS */;
+INSERT INTO san_pham VALUES (3,'Intel, Core i5, 1.8 Ghz',23990000,0,100,5800,' Mac Os',' 13.3 inch LED-backlit','8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 128GB MQD32SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
 							  (4,' Intel, Core i5, 1.8 Ghz',28990000,0,100,6000,'Mac Os','13.3 inch LED-backlit',' 8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 256GB MQD42SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
                               (5,'Intel, Core M3, 1.2 GHz',33990000,0,150,6000,'Mac Os',' 12 inch LED-backlit','8 GB, LPDDR3, 1866 MHz','Macbook 12 256GB (2017)','thiết kế không có thay đổi so với phiên bản 2016 nhưng Apple đã nâng cấp thêm bộ nhớ và giới thiệu bộ vi xử lý Intel thế hệ thứ 7','12 tháng','Thiết kế hoàn mỹ tinh tế và sang trọng',1,2),
                               (6,' Intel, Core i5, 2.3 GHz',33990000,0,200,6000,'Mac Os',' 13.3 inch LED-backlit',' 8 GB, LPDDR3, 2133MHz','Macbook Pro 13 inch 128GB (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
@@ -369,24 +369,24 @@ INSERT INTO SanPham VALUES (3,'Intel, Core i5, 1.8 Ghz',23990000,0,100,5800,' Ma
                               (141,NULL,100000,0,100,NULL,NULL,NULL,NULL,'Cáp chuyển HDMI sang VGA ',NULL,'3 tháng','Cáp chuyển HDMI sang VGA Hỗ trợ Full HD DHTV-C20 Orico',9,5),
                               (142,NULL,140000,0,100,NULL,NULL,NULL,NULL,'Cable HDMI 1.5m',NULL,'2 tháng','Cable HDMI 1.5m Version 2.0 hỗ trợ 4K 60Mhz',9,3),
                               (143,NULL,1000000,0,100,NULL,NULL,NULL,NULL,'Cáp chuyển TypeC ',NULL,'2 tháng','Cáp chuyển TypeC sang 5 cổng HDMI/TypeC/2*USB 3.0 RCH3A-GD Orico',9,6);
-/*!40000 ALTER TABLE SanPham ENABLE KEYS */;
+/*!40000 ALTER TABLE san_pham ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS VaiTro;
+DROP TABLE IF EXISTS vai_tro;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE VaiTro (
+CREATE TABLE vai_tro (
   id bigint NOT NULL AUTO_INCREMENT,
   tenVaiTro varchar(20),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES VaiTro WRITE;
-/*!40000 ALTER TABLE VaiTro DISABLE KEYS */;
-INSERT INTO VaiTro VALUES (1,'ROLE_ADMIN'),(2,'ROLE_MEMBER'),(3,'ROLE_SHIPPER');
-/*!40000 ALTER TABLE VaiTro ENABLE KEYS */;
+LOCK TABLES vai_tro WRITE;
+/*!40000 ALTER TABLE vai_tro DISABLE KEYS */;
+INSERT INTO vai_tro VALUES (1,'ROLE_ADMIN'),(2,'ROLE_MEMBER'),(3,'ROLE_SHIPPER');
+/*!40000 ALTER TABLE vai_tro ENABLE KEYS */;
 UNLOCK TABLES;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
