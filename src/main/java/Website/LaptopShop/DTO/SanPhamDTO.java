@@ -15,7 +15,7 @@ public class SanPhamDTO {
     private String cpu;
     private String ram;
     private String thietKe;
-    private String dungLuongPin;
+    private int dungLuongPin;
     private long danhMucId;
     private long nhaSXId;
     private MultipartFile hinhAnh;

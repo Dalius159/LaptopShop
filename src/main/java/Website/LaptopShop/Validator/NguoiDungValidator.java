@@ -16,9 +16,7 @@ public class NguoiDungValidator implements Validator {
     private NguoiDungService nguoiDungService;
 
     @Override
-    public boolean supports(Class<?> clazz) {
-        return NguoiDung.class.equals(clazz);
-    }
+    public boolean supports(Class<?> clazz) {return NguoiDung.class.equals(clazz);}
 
     @Override
     public void validate(Object target, Errors errors) {

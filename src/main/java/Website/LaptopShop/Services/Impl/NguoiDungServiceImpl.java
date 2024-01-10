@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import Website.LaptopShop.DTO.TaiKhoanDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -22,6 +23,9 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 
     @Autowired
     private VaiTroRepository vaiTroRepo;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public NguoiDung findByEmail(String email) {

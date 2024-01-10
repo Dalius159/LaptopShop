@@ -45,7 +45,7 @@ public class SanPhamServiceImpl implements SanPhamService {
         sanPham.setThongTinChung(dto.getThongTinChung());
         sanPham.setManHinh(dto.getManHinh());
         sanPham.setRam(dto.getRam());
-        sanPham.setDungLuongPin(dto.getDungLuongPin());
+        sanPham.setDungLuongPin_mAh(dto.getDungLuongPin());
         sanPham.setDonViKho(Integer.parseInt(dto.getDonViKho()));
         sanPham.setHeDieuHanh(dto.getHeDieuHanh());
 

@@ -15,7 +15,7 @@ public class SanPham {
     private long donGia;
     private int donViBan;
     private int donViKho;
-    private String dungLuongPin;
+    private int dungLuongPin_mAh;
     private String heDieuHanh;
     private String manHinh;
     private String ram;
