@@ -1,4 +1,4 @@
-package Website.LaptopShop.Entities;
+package Website.LaptopShop.DTO;
 
 import lombok.Data;
 
