@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>HTML Boilerplate Page</title>
+</head>
+<body>
+<script th:src="@{/js/client/homeAjax.js}"></script>
+<!--start-image-slider---->
+<div class="wrap">
+	<div class="image-slider">
+		<!-- Slideshow 1 -->
+		<ul class="rslides" id="slider1">
+			<li><img th:src="@{/Frontend/img/laptop1.jpg}" src="/images/laptop1.jpg" alt="laptop1"></li>
+			<li><img th:src="@{/Frontend/img/laptop2.png}" src="/images/laptop2.png" alt="laptop2"></li>
+			<li><img th:src="@{/Frontend/img/laptop3.png}" src="/images/laptop3.png" alt="laptop3"></li>
+		</ul>
+		<!-- Slideshow 2 -->
+	</div>
+	<!--End-image-slider---->
+</div>
+
+<div class="clear"></div>
+<div class="wrap">
+	<div class="content">
+		<div class="top-3-grids">
+			<div class="section group">
+				<div class="grid_1_of_3 images_1_of_3">
+					<a th:href="@{#}">
+						<img th:src="@{/images/acer.jpg}" src="/Frontend/img/acer.jpg" alt="acer">
+					</a>
+					<h3>Prominent Brands</h3>
+				</div>
+				<div class="grid_1_of_3 images_1_of_3 ">
+					<a th:href="@{#}">
+						<img th:src="@{/images/lenovo2.png}" src="Frontend/img/lenovo2.png" alt="lenovo2" style="background-color: white">
+					</a>
+					<h3>Prominent Brands</h3>
+				</div>
+				<div class="grid_1_of_3 images_1_of_3 ">
+					<a th:href="@{#}">
+						<img th:src="@{images/dell.png}" src="Frontend/img/dell.png" alt="dell" style="background-color: white">
+					</a>
+					<h3>Prominent Brands</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="content-grids">
+		<h4>Latest Laptops</h4>
+	</div>
+</div>
+
+<div class="content-sidebar">
+	<h4>Catalog</h4>
+	<ul id="danhmuc"></ul>
+</div>
+<div class="clear"></div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Laptop Shop - Login</title>
+	<link rel="stylesheet" th:href="@{/css/login.css}" href="/Frontend/css/login.css">
+	<link rel="stylesheet" th:href="@{/bootstrap/bootstrap.min.css}">
+	<script th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/bootstrap/bootstrap.min.js}"></script>
+</head>
+
+<body>
+
+<div class="login-page">
+	<div class="form">
+		<h2 class="form-signin-heading" style="text-align: center">Login</h2>
+		<hr>
+<!--		request parameter, alternative is #request-->
+		<div th:if="${param.error != null}" class="alert alert-danger">
+			<p>Wrong password or username</p>
+		</div>
+		<div th:if="${param.logout != null}" class="alert alert-success">
+			<p >Logged Out.</p>
+		</div>
+		<div th:if="${param.accessDenied != null}" class="alert alert-danger">
+			<p>Unauthorized Access</p>
+		</div>
+
+		<form class="login-form" method="POST" th:action="@{/login}">
+			<input type="text" placeholder="Email" name="email" required="required" style="padding: 10px;"/>
+			<input type="password" placeholder="Mật khẩu" name="password" required="required" style="padding: 10px;"/>
+			<input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			<label style="padding-right: 130px; font-size: 15px;" id="label">
+				<input type="checkbox" class="form-check-input" id="" name="remember-me"/>
+				Maintain Login
+			</label>
+			<input id="submit" type="submit" value="ĐĂNG NHẬP">
+			<p class="message" style="font-size: 18px; padding-top:10px">
+				Don't have an account?<a th:href="@{/register}">Create one</a>
+			</p>
+		</form>
+	</div>
+</div>
+</body>
+</html>
