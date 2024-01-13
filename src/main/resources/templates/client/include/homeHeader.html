@@ -3,8 +3,9 @@
 <head>
 	<link rel="stylesheet" th:href="@{/bootstrap/bootstrap.min.css}">
 	<script th:src="@{/bootstrap/bootstrap.min.js}"></script>
-	<!--    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css" media="all" />-->
-	<!--    <link th:href="@{'//fonts.googleapis.com/css?family=Londrina+Solid|Coda+Caption:800|Open+Sans'}" rel="stylesheet" type="text/css">-->
+	<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css" media="all"/>
+	<link th:href="@{'//fonts.googleapis.com/css?family=Londrina+Solid|Coda+Caption:800|Open+Sans'}" rel="stylesheet"
+		  type="text/css">
 	<link rel="stylesheet" th:href="@{/jquery/responsiveslides.css}">
 	<script th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/jquery/responsiveslides.min.js}"></script>
@@ -34,7 +35,7 @@
 		<div class="header-top-nav" th:if="${#authentication.name != null}">
 			<ul>
 				<!--loggedInUser is resolved by templates that include this file-->
-				<li>Hello, <span th:text="${loggedInUser.hoTen}"></span></li>
+				<!--				<li>Hello, <span th:text="${loggedInUser.hoTen}"></span></li>-->
 				<li><a th:href="@{/account}">Account</a></li>
 				<li><a th:href="@{/cart}">
 					<span>Shopping Cart &nbsp;&nbsp;:</span>
@@ -63,7 +64,7 @@
 		<!--start-logo-->
 		<div class="logo">
 			<a th:href="@{/}">
-				<img th:src="@{/images/logo3.png}" src="/images/logo3.png" title="logo" alt="logo" />
+				<img th:src="@{/images/logo3.png}" src="/images/logo3.png" title="logo" alt="logo"/>
 			</a>
 		</div>
 		<div class="top-nav">

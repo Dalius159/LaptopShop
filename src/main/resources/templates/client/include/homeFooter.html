@@ -3,10 +3,9 @@
 <head>
 	<meta charset="UTF-8"/>
 	<title>Your Page Title</title>
-	<!-- Add your other head elements here -->
 </head>
 <body>
-<div class="footer">
+<div th:fragment="footer" class="footer">
 	<div class="wrap">
 		<div class="section group">
 			<div class="col_1_of_4 span_1_of_4">
@@ -28,13 +27,13 @@
 				<h3>Follow Us:</h3>
 				<ul>
 					<li><a href="#">
-						<img th:src="/images/twitter.png" src="Frontend/img/twitter.png" alt="Twitter"/>
+						<img th:src="@{/images/twitter.png}" src="Frontend/img/twitter.png" alt="Twitter"/>
 						Twitter</a></li>
 					<li><a href="#">
-						<img th:src="/images/facebook.png" src="Frontend/img/facebook.png" alt="Facebook"/>
+						<img th:src="@{/images/facebook.png}" src="Frontend/img/facebook.png" alt="Facebook"/>
 						Facebook</a></li>
 					<li><a href="#">
-						<img th:src="/images/rss.png" src="Frontend/img/rss.png" alt="Rss"/>
+						<img th:src="@{/images/rss.png}" src="Frontend/img/rss.png" alt="Rss"/>
 						Rss</a></li>
 				</ul>
 			</div>
