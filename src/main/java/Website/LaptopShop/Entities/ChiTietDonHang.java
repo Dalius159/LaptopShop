@@ -3,7 +3,7 @@ package Website.LaptopShop.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-@Entity
+@Entity(name = "chi_tiet_don_hang")
 @Data
 public class ChiTietDonHang {
     @Id

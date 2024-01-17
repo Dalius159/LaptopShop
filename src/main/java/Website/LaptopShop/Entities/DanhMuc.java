@@ -6,14 +6,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
-@Entity
+@Entity(name = "danh_muc")
 @Data
 public class DanhMuc {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotEmpty(message="Tên danh mục không được trống")
+    @NotEmpty(message="Catalog name cannot be empty")
     private String tenDanhMuc;
 
     @JsonIgnore

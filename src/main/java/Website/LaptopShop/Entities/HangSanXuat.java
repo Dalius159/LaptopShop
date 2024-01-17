@@ -7,14 +7,14 @@ import lombok.Data;
 
 import java.util.List;
 
-@Entity
+@Entity(name = "hang_san_xuat")
 @Data
 public class HangSanXuat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotEmpty(message="Tên hãng sản xuất không được trống")
+    @NotEmpty(message="Producer brand cannot be empty")
     private String tenHangSanXuat;
 
     @JsonIgnore
