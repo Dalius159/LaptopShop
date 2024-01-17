@@ -1,5 +1,5 @@
 function addToCart(id) {
-	fetch(`http://localhost:8080/laptopshop/api/gio-hang/addSanPham?id=${id}`, {
+	fetch(`http://localhost:8080/api/gio-hang/addSanPham?id=${id}`, {
 		method: 'GET',
 		headers: {'Content-Type': 'application/json'}
 	})
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	ajaxGet();
 
 	function ajaxGet() {
-		fetch('http://localhost:8080/laptopshop/api/san-pham/latest', {
+		fetch('http://localhost:8080/api/san-pham/latest', {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
 		})

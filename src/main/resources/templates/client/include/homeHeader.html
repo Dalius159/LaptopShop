@@ -24,7 +24,7 @@
 	<!--start-Header-->
 	<div class="header">
 		<div class="search-bar">
-			<form th:action="@{/laptopshop/search}">
+			<form th:action="@{/search}">
 				<label> <input type="text" name="name"/> </label>
 				<input type="submit" value="Search"/>
 			</form>
@@ -34,8 +34,10 @@
 		<!--integrate with spring security, need testing-->
 		<div class="header-top-nav" th:if="${#authentication.name != null}">
 			<ul>
-				<!--loggedInUser is resolved by templates that include this file-->
-				<!--				<li>Hello, <span th:text="${loggedInUser.hoTen}"></span></li>-->
+				<li>Hello, <span>
+<!--						th:text="${loggedInUser.hoTen}">-->
+
+				</span></li>
 				<li><a th:href="@{/account}">Account</a></li>
 				<li><a th:href="@{/cart}">
 					<span>Shopping Cart &nbsp;&nbsp;:</span>
