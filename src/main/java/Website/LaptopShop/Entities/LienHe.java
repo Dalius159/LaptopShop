@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 import java.util.Date;
-@Entity(name = "lien_he")
+@Entity()
 @Data
 public class LienHe {
     @Id

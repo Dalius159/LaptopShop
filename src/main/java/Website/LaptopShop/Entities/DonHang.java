@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
-@Entity(name = "don_hang")
+@Entity()
 @Data
 public class DonHang {
     @Id

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Set;
-@Entity(name = "vai_tro")
+@Entity()
 @Data
 public class VaiTro {
     @Id
