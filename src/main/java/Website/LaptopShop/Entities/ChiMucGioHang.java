@@ -2,7 +2,7 @@ package Website.LaptopShop.Entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-@Entity
+@Entity()
 @Data
 public class ChiMucGioHang {
     @Id

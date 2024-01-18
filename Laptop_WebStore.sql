@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS chi_muc_gio_hang;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE chi_muc_gio_hang (
   id bigint NOT NULL AUTO_INCREMENT,
-  soLuong tinyint NOT NULL,
+  so_luong tinyint NOT NULL,
   ma_gio_hang bigint,
   ma_san_pham bigint,
   PRIMARY KEY (id),
@@ -39,8 +39,8 @@ DROP TABLE IF EXISTS chi_tiet_don_hang;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE chi_tiet_don_hang(
   id bigint NOT NULL AUTO_INCREMENT,
-  donGia int NOT NULL,
-  soLuongDat tinyint NOT NULL,
+  don_gia int NOT NULL,
+  so_luong_dat tinyint NOT NULL,
   ma_don_hang bigint,
   ma_san_pham bigint,
   PRIMARY KEY (id),
@@ -61,7 +61,7 @@ DROP TABLE IF EXISTS danh_muc;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE danh_muc (
   id bigint NOT NULL AUTO_INCREMENT,
-  tenDanhMuc varchar(30),
+  ten_danh_muc varchar(30),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -78,15 +78,15 @@ DROP TABLE IF EXISTS don_hang;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE don_hang (
   id bigint NOT NULL AUTO_INCREMENT,
-  diaChiNhan varchar(150),
-  ghiChu varchar(150),
-  hoTenNguoiNhan varchar(20),
-  ngayDatHang datetime,
-  ngayGiaoHang datetime,
-  ngayNhanHang datetime,
-  sdtNhanHang varchar(12),
-  trangThaiDonHang varchar(15),
-  tongGiaTri int,
+  dia_chi_nhan varchar(100),
+  ghi_chu varchar(100),
+  ho_ten_nguoi_nhan varchar(20),
+  ngay_dat_hang datetime,
+  ngay_giao_hang datetime,
+  ngay_nhan_hang datetime,
+  sdt_nhan_hang varchar(12),
+  trang_thai_don_hang varchar(15),
+  tong_gia_tri int,
   ma_nguoi_dat bigint,
   ma_shipper bigint,
   PRIMARY KEY (id),
@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS gio_hang;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE gio_hang (
   id bigint NOT NULL AUTO_INCREMENT,
-  tongTien int,
+  tong_tien int,
   ma_nguoi_dung bigint,
   PRIMARY KEY (id),
   CONSTRAINT FKitverect56puwr47y7tyvy6er FOREIGN KEY (ma_nguoi_dung) REFERENCES nguoi_dung (id)
@@ -126,7 +126,7 @@ DROP TABLE IF EXISTS hang_san_xuat;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE hang_san_xuat (
   id bigint NOT NULL AUTO_INCREMENT,
-  tenHangSanXuat varchar(9),
+  ten_hang_san_xuat varchar(9),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -143,12 +143,12 @@ DROP TABLE IF EXISTS lien_he;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE lien_he (
   id bigint NOT NULL AUTO_INCREMENT,
-  emailLienHe varchar(25),
-  ngayLienHe datetime,
-  ngayTraLoi datetime,
-  noiDungLienHe varchar(50),
-  noiDungTraLoi varchar(50),
-  trangThai varchar(10),
+  email_lien_he varchar(25),
+  ngay_lien_he datetime,
+  ngay_tra_loi datetime,
+  noi_dung_lien_he varchar(50),
+  noi_dung_tra_loi varchar(50),
+  trang_thai varchar(10),
   ma_nguoi_tra_loi bigint,
   PRIMARY KEY (id),
   CONSTRAINT FK6jm47uh7f94pc3wix0duvedde FOREIGN KEY (ma_nguoi_tra_loi) REFERENCES nguoi_dung (id)
@@ -166,11 +166,11 @@ DROP TABLE IF EXISTS nguoi_dung;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE nguoi_dung (
   id bigint NOT NULL AUTO_INCREMENT,
-  diaChi varchar(150),
-  email varchar(25),
-  hoTen varchar(30),
+  dia_chi varchar(150),
+  email varchar(25) UNIQUE,
+  ho_ten varchar(30),
   password varchar(65),
-  soDienThoai varchar(12),
+  do_dien_thoai varchar(12),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -207,17 +207,17 @@ DROP TABLE IF EXISTS san_pham;
 CREATE TABLE san_pham (
   id bigint NOT NULL AUTO_INCREMENT,
   cpu varchar(30),
-  donGia int NOT NULL,
-  donViBan smallint NOT NULL,
-  donViKho smallint NOT NULL,
-  dungLuongPin_mAh smallint,
-  heDieuHanh varchar(30),
-  manHinh varchar(50),
+  don_gia int NOT NULL,
+  don_vi_ban smallint NOT NULL,
+  don_vi_kho smallint NOT NULL,
+  dung_luong_pin_mAh smallint,
+  he_dieu_hanh varchar(30),
+  man_hinh varchar(50),
   ram varchar(30),
-  tenSanPham varchar(100),
-  thietKe varchar(255),
-  thongTinBaoHanh varchar(30),
-  thongTinChung varchar(255),
+  ten_san_pham varchar(100),
+  thiet_ke varchar(255),
+  thong_tin_bao_hanh varchar(30),
+  thong_tin_chung varchar(255),
   ma_danh_muc bigint,
   ma_hang_sx bigint,
   PRIMARY KEY (id),
@@ -228,7 +228,7 @@ CREATE TABLE san_pham (
 --
 LOCK TABLES san_pham WRITE;
 /*!40000 ALTER TABLE san_pham DISABLE KEYS */;
-INSERT INTO san_pham VALUES (3,'Intel, Core i5, 1.8 Ghz',23990000,0,100,5800,' Mac Os',' 13.3 inch LED-backlit','8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 128GB MQD32SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+INSERT INTO san_pham VALUES   (3,'Intel, Core i5, 1.8 Ghz',23990000,0,100,5800,' Mac Os',' 13.3 inch LED-backlit','8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 128GB MQD32SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
 							  (4,' Intel, Core i5, 1.8 Ghz',28990000,0,100,6000,'Mac Os','13.3 inch LED-backlit',' 8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 256GB MQD42SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
                               (5,'Intel, Core M3, 1.2 GHz',33990000,0,150,6000,'Mac Os',' 12 inch LED-backlit','8 GB, LPDDR3, 1866 MHz','Macbook 12 256GB (2017)','thiết kế không có thay đổi so với phiên bản 2016 nhưng Apple đã nâng cấp thêm bộ nhớ và giới thiệu bộ vi xử lý Intel thế hệ thứ 7','12 tháng','Thiết kế hoàn mỹ tinh tế và sang trọng',1,2),
                               (6,' Intel, Core i5, 2.3 GHz',33990000,0,200,6000,'Mac Os',' 13.3 inch LED-backlit',' 8 GB, LPDDR3, 2133MHz','Macbook Pro 13 inch 128GB (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
@@ -378,7 +378,7 @@ DROP TABLE IF EXISTS vai_tro;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE vai_tro (
   id bigint NOT NULL AUTO_INCREMENT,
-  tenVaiTro varchar(20),
+  ten_vai_tro varchar(20),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;

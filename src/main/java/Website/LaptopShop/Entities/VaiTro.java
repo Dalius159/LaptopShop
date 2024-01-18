@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Set;
-@Entity
+@Entity()
 @Data
 public class VaiTro {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String tenVaiTro;
