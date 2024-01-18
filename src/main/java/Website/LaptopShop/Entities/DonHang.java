@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
-@Entity
+@Entity(name = "don_hang")
 @Data
 public class DonHang {
     @Id
@@ -34,11 +34,11 @@ public class DonHang {
     private String trangThaiDonHang;
     private long tongGiaTri;
 
-    @ManyToOne(optional = true)
+    @ManyToOne()
     @JoinColumn(name = "ma_nguoi_dat")
     private NguoiDung nguoiDat;
 
-    @ManyToOne(optional = true)
+    @ManyToOne()
     @JoinColumn(name = "ma_shipper")
     private NguoiDung shipper;
 

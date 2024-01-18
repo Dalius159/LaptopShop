@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
-@Entity
+@Entity(name = "san_pham")
 @Data
 public class SanPham {
     @Id
