@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  lang="en">
 <head>
 	<link rel="stylesheet" th:href="@{/bootstrap/bootstrap.min.css}">
 	<script th:src="@{/bootstrap/bootstrap.min.js}"></script>
@@ -32,7 +35,7 @@
 		<div class="clear"></div>
 
 		<!--integrate with spring security, need testing-->
-		<div class="header-top-nav" th:if="${#authentication.name != null}">
+		<div class="header-top-nav" sec:authorize="isAuthenticated()">
 			<ul>
 				<li>Hello, <span>
 <!--						th:text="${loggedInUser.hoTen}">-->
@@ -46,7 +49,7 @@
 			</ul>
 		</div>
 
-		<div class="header-top-nav" th:unless="${#authentication.name != null}">
+		<div class="header-top-nav" sec:authorize="isAnonymous()">
 			<ul>
 				<li><a th:href="@{/register}">Sign Up</a></li>
 				<li><a th:href="@{/login}">Sign In</a></li>
