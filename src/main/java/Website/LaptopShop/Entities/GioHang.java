@@ -2,7 +2,7 @@ package Website.LaptopShop.Entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-@Entity(name = "gio_hang")
+@Entity
 @Data
 public class GioHang {
     @Id

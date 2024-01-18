@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
 						if (i % 4 === 0) {
 							content = `<div class="grid_1_of_4 images_1_of_4 products-info">
                                 <a href="sp?id=${sanpham.id}">
-                                    <img style="width: 300px; height: 238px" src="/img/${sanpham.id}.png" alt="product_img">
+                                    <img style="width: 300px; height: 238px" src="/product_images/${sanpham.id}.png" alt="product_img">
                                     <h3 style="font-weight: bold;">${sanpham.tenSanPham}</h3>
                                 </a>
                                 <h3>${accounting.formatMoney(sanpham.donGia)} VND</h3>
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 						} else {
 							content += `<div class="grid_1_of_4 images_1_of_4 products-info">
                                 <a href="sp?id=${sanpham.id}">
-                                    <img style="width: 300px; height: 238px" src="/img/${sanpham.id}.png" alt="product_img">
+                                    <img style="width: 300px; height: 238px" src="/product_images/${sanpham.id}.png" alt="product_img">
                                     <h3 style="font-weight: bold;">${sanpham.tenSanPham}</h3>
                                 </a>
                                 <h3>${accounting.formatMoney(sanpham.donGia)} VND</h3>
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 						if (i % 4 === 0) {
 							content = `<div class="grid_1_of_4 images_1_of_4 products-info">
                                 <a href="sp?id=${sanpham.id}">
-                                    <img style="width: 300px; height: 238px" src="/img/${sanpham.id}.png" alt="product_img">
+                                    <img style="width: 300px; height: 238px" src="/product_images/${sanpham.id}.png" alt="product_img">
                                     <h3 style="font-weight: bold;">${sanpham.tenSanPham}</h3>
                                 </a>
                                 <h3>${accounting.formatMoney(sanpham.donGia)} VND</h3>
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
 						} else {
 							content += `<div class="grid_1_of_4 images_1_of_4 products-info">
                                 <a href="sp?id=${sanpham.id}">
-                                    <img style="width: 300px; height: 238px" src="/img/${sanpham.id}.png" alt="product_img">
+                                    <img style="width: 300px; height: 238px" src="/product_images/${sanpham.id}.png" alt="product_img">
                                     <h3 style="font-weight: bold;">${sanpham.tenSanPham}</h3>
                                 </a>
                                 <h3>${accounting.formatMoney(sanpham.donGia)} VND</h3>

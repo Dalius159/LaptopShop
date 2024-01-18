@@ -8,7 +8,7 @@ import lombok.ToString;
 
 import java.util.List;
 import java.util.Set;
-@Entity(name = "nguoi_dung")
+@Entity
 @Data
 public class NguoiDung {
     @Id

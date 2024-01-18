@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
-@Entity(name = "danh_muc")
+@Entity
 @Data
 public class DanhMuc {
     @Id
