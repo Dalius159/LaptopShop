@@ -29,8 +29,14 @@
 		</div>
 
 		<form class="login-form" method="POST" th:action="@{/login}">
-			<input type="text" placeholder="Email" name="email" required="required" style="padding: 10px;"/>
-			<input type="password" placeholder="Mật khẩu" name="password" required="required" style="padding: 10px;"/>
+			<label>
+				Email
+				<input type="text" placeholder="Email" name="email" required="required" style="padding: 10px;"/>
+			</label>
+			<label>
+				Password
+				<input type="password" placeholder="Mật khẩu" name="password" required="required" style="padding: 10px;"/>
+			</label>
 			<input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 			<label style="padding-right: 130px; font-size: 15px;" id="label">
 				<input type="checkbox" class="form-check-input" id="" name="remember-me"/>
