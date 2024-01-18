@@ -9,7 +9,7 @@ import java.util.Set;
 @Data
 public class VaiTro {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String tenVaiTro;

@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Set;
 @Entity()
 @Data
+@Table(name = "nguoi_dung", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class NguoiDung {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String diaChi;
@@ -24,10 +25,10 @@ public class NguoiDung {
 
     private String soDienThoai;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name="nguoidung_vaitro",
-            joinColumns=@JoinColumn(name="ma_nguoi_dung"),
-            inverseJoinColumns=@JoinColumn(name="ma_vai_tro"))
+            joinColumns=@JoinColumn(name="ma_nguoi_dung", referencedColumnName = "id"),
+            inverseJoinColumns=@JoinColumn(name="ma_vai_tro", referencedColumnName = "id"))
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<VaiTro> vaiTro;
