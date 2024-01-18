@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			method: 'GET',
 		})
 			.then(response => {
-				if (!response.ok) { throw new Error("Network response was not ok"); }
+				if (!response.ok) { throw new Error("Cannot add to cart: server failed to response"); }
 				return response.json();
 			})
 			.then(result => {
