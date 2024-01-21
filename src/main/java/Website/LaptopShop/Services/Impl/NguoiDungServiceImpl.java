@@ -41,7 +41,7 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 
     @Override
     public NguoiDung saveUserForMember(NguoiDung nd) {
-nd.setPassword(bCryptPasswordEncoder.encode(nd.getPassword()));
+        nd.setPassword(bCryptPasswordEncoder.encode(nd.getPassword()));
         Set<VaiTro> setVaiTro = new HashSet<>();
         setVaiTro.add(vaiTroRepo.findByTenVaiTro("ROLE_MEMBER"));
         nd.setVaiTro(setVaiTro);
@@ -82,7 +82,7 @@ nd.setPassword(bCryptPasswordEncoder.encode(nd.getPassword()));
         nd.setDiaChi(dto.getDiaChi());
         nd.setEmail(dto.getEmail());
         nd.setSoDienThoai(dto.getSdt());
-nd.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        nd.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 
         Set<VaiTro> vaiTro  = new HashSet<>();
         vaiTro.add(vaiTroRepo.findByTenVaiTro(dto.getTenVaiTro()));

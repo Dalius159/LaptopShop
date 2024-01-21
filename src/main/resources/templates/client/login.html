@@ -1,53 +1,132 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
->
-
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Laptop Shop - Login</title>
-	<link rel="stylesheet" th:href="@{/css/login.css}" href="/css/login.css">
-	<link rel="stylesheet" th:href="@{/bootstrap/bootstrap.min.css}">
-	<script th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
-	<script th:src="@{/bootstrap/bootstrap.min.js}"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laptop Store</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" href="login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
+    <div th:if="${param.error}" id="error" class="notification error-message">
+        <p>Invalid email or password!</p>
+    </div>
 
-<div class="login-page">
-	<div class="form">
-		<h2 class="form-signin-heading" style="text-align: center">Login</h2>
-		<hr>
-<!--		request parameter, alternative is #request-->
-		<div th:if="${param.error != null}" class="alert alert-danger">
-			<p>Wrong password or username</p>
-		</div>
-		<div th:if="${param.logout != null}" class="alert alert-success">
-			<p >Logged Out.</p>
-		</div>
-		<div th:if="${param.accessDenied != null}" class="alert alert-danger">
-			<p>Unauthorized Access</p>
-		</div>
+    <div th:if="${param.logout}" id="logout" class="notification success-message">
+        <p>Logged out successfully!</p>
+    </div>
 
-		<form class="login-form" method="POST" th:action="@{/login}">
-			<label>
-				Email
-				<input type="text" placeholder="Email" name="email" required="required" style="padding: 10px;"/>
-			</label>
-			<label>
-				Password
-				<input type="password" placeholder="Mật khẩu" name="password" required="required" style="padding: 10px;"/>
-			</label>
-			<input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-			<label style="padding-right: 130px; font-size: 15px;" id="label">
-				<input type="checkbox" class="form-check-input" id="" name="remember-me"/>
-				Maintain Login
-			</label>
-			<input id="submit" type="submit" value="ĐĂNG NHẬP">
-			<p class="message" style="font-size: 18px; padding-top:10px">
-				Don't have an account?<a th:href="@{/register}">Create one</a>
-			</p>
-		</form>
-	</div>
-</div>
+    <div th:if="${param.accessDenied}" id="unauthorized" class="notification error-message">
+        <p>Unauthorized Access!</p>
+    </div>
+
+    <div th:if="${param.success}" id="success" class="notification success-message">
+        <p>Registration successful!</p>
+    </div>
+
+    <div class="wrapper">
+
+        <span class="bg-animate"></span>
+        <span class="bg-animate2"></span>
+
+        <div class="form-box login">
+            <h2 class="animation" style="--i:0; --j:21">Login</h2>
+            <form th:action="@{${contextPath}/login}" method="post">
+                <div class="input-box animation" style="--i:1; --j:22">
+                    <input type="text" required>
+                    <label>Email</label>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <div class="input-box animation" style="--i:2; --j:23">
+                    <input type="password" required>
+                    <label>Password</label>
+                    <i class='bx bxs-lock-alt' ></i>
+                </div>
+                <div class="forget-section animation" style="--i:3; --j:24">
+                    <p>
+                        <input type="checkbox">
+                        Remember me
+                    </p>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn animation" style="--i:4; --j:25">Sign in</button>
+                <div class="logreg-link animation" style="--i:5; --j:26">
+                    <p>Not a member? 
+                    <a href="#" class="register-link">Register</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="info-text login">
+            <h2 class="animation" style="--i:0; --j:20">Hi There!</h2>
+            <p class="animation" style="--i:1; --j:21">How are you today?</p>
+        </div>
+
+        <div class="form-box register">
+            <h2 class="animation" style="--i:17; --j:0">Register</h2>
+            <form th:action="@{/register}" method="post" th:object="${newUser}">
+                <div class="input-box animation" style="--i:18; --j:1">
+                    <input type="email"  required>
+                    <label>Email</label>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <div class="input-box animation" style="--i:19; --j:2">
+                    <input type="password"  required>
+                    <label>Password</label>
+                    <i class='bx bxs-lock-alt' ></i>
+                </div>
+                <div class="input-box animation" style="--i:20; --j:3">
+                    <input type="password"  required>
+                    <label>Confirm Password</label>
+                    <i class='bx bxs-lock-alt' ></i>
+                </div>
+                <div class="input-box animation" style="--i:21; --j:4">
+                    <input type="text"  required>
+                    <label>Fullname</label>
+                    <i class='bx bxs-user' ></i>
+                </div>
+                <button type="submit" class="btn animation" style="--i:22; --j:5">Sign up</button>
+                <div class="logreg-link animation" style="--i:23; --j:6">
+                    <p>Already have an acount? 
+                    <a href="#" class="login-link">Login</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="info-text register">
+            <h2 class="animation" style="--i:17; --j:0">Welcome!</h2>
+            <p class="animation" style="--i:18; --j:1">Hope you're served well!</p>
+        </div>
+    </div>
+
+    <script>
+        const wrapper = document.querySelector('.wrapper');
+        const registerLink = document.querySelector('.register-link');
+        const loginLink = document.querySelector('.login-link');
+        registerLink.onclick = () => {
+            wrapper.classList.add('active');
+        }
+        loginLink.onclick = () => {
+            wrapper.classList.remove('active');
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            ['error', 'logout', 'unauthorized', 'success'].forEach(showMessage);
+
+            function showMessage(type) {
+                var element = document.getElementById(type);
+                if (element) {
+                    element.style.cssText = 'display: block; opacity: 1;';
+                    setTimeout(function() {
+                        element.style.cssText = 'opacity: 0; display: none;';
+                    }, 2000);
+                }
+            }
+        });
+    </script>
 </body>
 </html>

@@ -43,6 +43,6 @@ public class RegisterController {
 
         securityService.autologin(nguoiDung.getEmail(), nguoiDung.getConfirmPassword());
 
-        return "redirect:/";
+        return "redirect:/register?success";
     }
 }
