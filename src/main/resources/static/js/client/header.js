@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			.then(result => {
 				result.forEach(danhmuc => {
 					const content = `
-						  <li><a href="/store?brand=${danhmuc.tenDanhMuc}">
+						  <li><a href="${contextPath}/store?brand=${danhmuc.tenDanhMuc}">
 							  <span style="font-size: 16px; font-weight: 900;">${danhmuc.tenDanhMuc}</span>
 							</a></li>`;
 					const content2 = `

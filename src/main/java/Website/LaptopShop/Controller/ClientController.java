@@ -78,7 +78,15 @@ public class ClientController {
 	}
 
 	@GetMapping("/store")
-	public String storePage(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String range, @RequestParam(defaultValue = "") String brand, @RequestParam(defaultValue = "") String manufactor, @RequestParam(defaultValue = "") String os, @RequestParam(defaultValue = "") String ram, @RequestParam(defaultValue = "") int pin, Model model) {
+	public String storePage(
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "") String range,
+			@RequestParam(defaultValue = "") String brand,
+			@RequestParam(defaultValue = "") String manufactor,
+			@RequestParam(defaultValue = "") String os,
+			@RequestParam(defaultValue = "") String ram,
+			@RequestParam(defaultValue = "") int pin,
+			Model model) {
 		SearchSanPhamObject obj = new SearchSanPhamObject();
 		obj.setBrand(brand);
 		obj.setDonGia(range);
@@ -121,8 +129,8 @@ public class ClientController {
 		model.addAttribute("pageList", pagelist);
 
 		//Lay cac danh muc va hang san xuat tim thay
-		Set<String> hangsx = new HashSet<String>();
-		Set<Integer> pinSet = new HashSet<Integer>();
+		Set<String> hangsx = new HashSet<>();
+		Set<Integer> pinSet = new HashSet<>();
 		Iterable<SanPham> dum = sanPhamService.getSanPhamByTenDanhMuc(brand);
 		for (SanPham sp : dum) {
 			hangsx.add(sp.getHangSanXuat().getTenHangSanXuat());
@@ -151,11 +159,11 @@ public class ClientController {
 		return "redirect:/login?logout";
 	}
 
-	@GetMapping("/shipping")
-	public String shippingPage(Model model) {
-
-		return "client/shipping";
-	}
+//	@GetMapping("/shipping")
+//	public String shippingPage(Model model) {
+//
+//		return "client/shipping";
+//	}
 
 	@GetMapping("/guarantee")
 	public String guaranteePage(Model model) {

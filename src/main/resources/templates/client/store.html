@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<title>Store</title>
@@ -9,7 +9,7 @@
 
 <div th:insert="~{/client/include/homeHeader}"></div>
 <div th:insert="~{/client/include/storeContent}"></div>
-<div th:insert="~{/client/include/homeFooter}"></div>
+<div th:insert="~{/client/include/homeFooter :: footer}"></div>
 
 </body>
 </html>
