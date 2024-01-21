@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>HTML Boilerplate</title>
+	<link rel="stylesheet" th:href="@{/Frontend/css/searchResult.css}">
+	<script th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/jquery/responsiveslides.min.js}"></script>
+	<script th:src="@{/js/client/accounting.min.js}"></script>
+	<script th:src="@{/js/client/store.js}"></script>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function () {
+			const elements = document.querySelectorAll(".grid_1_of_4");
+			elements.forEach(function (element) {
+				element.innerHTML = accounting.formatMoney(element.textContent);
+			});
+		});
+	</script>
+
+</head>
+<body>
+<div class="clear"></div>
+<div class="wrap">
+	<div class="content">
+		<div class="content-grids">
+			<div class="section group" th:if="${#lists.isEmpty(list)}">
+				<h4>No search result</h4>
+			</div>
+			<div th:each="sanpham, loopStatus : ${list}">
+				<div th:if="${loopStatus.index != list.size() - 1}">
+					<div th:if="${loopStatus.index % 4 == 0}" class="section group">
+						<div class="grid_1_of_4 images_1_of_4 products-info" style="width: 232px; height: 400px;">
+							<a th:href="@{'sp?id=' + ${sanpham.id}}">
+								<img th:src="@{'/laptopshop/img/' + ${sanpham.id}.png}"
+									 style="width: 225px; height: 230px">
+								<h3 style="font-weight: bold; height: 43.2px" th:text="${sanpham.tenSanPham}"></h3>
+							</a>
+							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
+							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'"
+									class="btn btn-warning">
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Giỏ hàng
+							</button>
+							<h3></h3>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+</body>
+</html>

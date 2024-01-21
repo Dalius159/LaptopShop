@@ -48,17 +48,17 @@ public class CartController {
 	public String cartPage(HttpServletRequest req, HttpServletResponse res, Model model) {
 		NguoiDung currentUser = getSessionUser(req);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Map<Long, String> quantity = new HashMap<>();
+		Map<Long, Long> quantity = new HashMap<>();
 		List<SanPham> listsp = new ArrayList<>();
 		Cookie[] cl = req.getCookies();
 		//Lay tu cookie
 		if (auth == null || auth.getPrincipal() == "anonymousUser") {
 
-			Set<Long> idList = new HashSet<Long>();
-			for (int i = 0; i < cl.length; i++) {
-				if (cl[i].getName().matches("[0-9]+")) {
-					idList.add(Long.parseLong(cl[i].getName()));
-					quantity.put(Long.parseLong(cl[i].getName()), cl[i].getValue());
+			Set<Long> idList = new HashSet<>();
+			for (Cookie cookie : cl) {
+				if (cookie.getName().matches("[0-9]+")) {
+					idList.add(Long.parseLong(cookie.getName()));
+					quantity.put(Long.parseLong(cookie.getName()), Long.parseLong(cookie.getValue()));
 				}
 
 			}
@@ -75,17 +75,15 @@ public class CartController {
 			ChiMucGioHang chiMucGioHang;
 			int flag;
 			var soLuong = 1;
-			for (int i = 0; i < cl.length; i++) {
+			for (Cookie cookie : cl) {
 				flag = 0;
-				if (cl[i].getName().matches("[0-9]+")) {
-					long id = Long.parseLong(cl[i].getName());
-					soLuong = Integer.parseInt(cl[i].getValue());
-					for (int j = 0; j < listchimuc.size(); j++) {
-						chiMucGioHang = listchimuc.get(j);
-
+				if (cookie.getName().matches("[0-9]+")) {
+					long id = Long.parseLong(cookie.getName());
+					soLuong = Integer.parseInt(cookie.getValue());
+					for (ChiMucGioHang mucGioHang : listchimuc) {
+						chiMucGioHang = mucGioHang;
 						if (id == chiMucGioHang.getSanPham().getId()) {
 							chiMucGioHang.setSoLuong(chiMucGioHang.getSoLuong() + soLuong);
-
 							flag = 1;
 							break;
 						}
@@ -107,12 +105,13 @@ public class CartController {
 
 			for (ChiMucGioHang c : listchimuc) {
 				listsp.add(c.getSanPham());
-				quantity.put(c.getSanPham().getId(), Integer.toString(c.getSoLuong()));
+				quantity.put(c.getSanPham().getId(), (long) c.getSoLuong());
 			}
 
 			ClearUpRightBeforeCheckout(req, res);
 		}
 
+//		TODO: fix typo
 		model.addAttribute("checkEmpty", listsp.size());
 		model.addAttribute("cart", listsp);
 		model.addAttribute("quanity", quantity);
@@ -122,12 +121,12 @@ public class CartController {
 	}
 
 	public void ClearUpRightBeforeCheckout(HttpServletRequest request, HttpServletResponse response) {
-		Cookie clientCookies[] = request.getCookies();
-		for (int i = 0; i < clientCookies.length; i++) {
-			if (clientCookies[i].getName().matches("[0-9]+")) {
-				clientCookies[i].setMaxAge(0);
-				clientCookies[i].setPath("/");
-				response.addCookie(clientCookies[i]);
+		Cookie[] clientCookies = request.getCookies();
+		for (Cookie clientCookie : clientCookies) {
+			if (clientCookie.getName().matches("[0-9]+")) {
+				clientCookie.setMaxAge(0);
+				clientCookie.setPath("/");
+				response.addCookie(clientCookie);
 			}
 		}
 	}

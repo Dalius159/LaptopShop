@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en"
+	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	  lang="en">
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+	<!--many other boilerplate in /include/ use libraries here, do not remove-->
 	<link rel="stylesheet" th:href="@{/bootstrap/bootstrap.min.css}">
 	<script th:src="@{/bootstrap/bootstrap.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css" media="all"/>
@@ -12,7 +13,6 @@
 	<link rel="stylesheet" th:href="@{/jquery/responsiveslides.css}">
 	<script th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/jquery/responsiveslides.min.js}"></script>
-
 	<script th:src="@{/js/client/accounting.min.js}"></script>
 
 	<script>
@@ -37,9 +37,7 @@
 		<!--integrate with spring security, need testing-->
 		<div class="header-top-nav" sec:authorize="isAuthenticated()">
 			<ul>
-				<li>Hello, <span>
-<!--						th:text="${loggedInUser.hoTen}">-->
-				</span></li>
+				<li>Hello, <span th:text="${loggedInUser.hoTen}"></span></li>
 				<li><a th:href="@{/account}">Account</a></li>
 				<li><a th:href="@{/cart}">
 					<span>Shopping Cart &nbsp;&nbsp;:</span>
@@ -66,11 +64,10 @@
 <div class="top-header">
 	<div class="wrap">
 		<!--start-logo-->
-		<div class="logo">
 			<a th:href="@{/}">
-				<img th:src="@{/images/logo3.png}" src="/images/logo3.png" title="logo" alt="logo"/>
+				<img th:src="@{/images/logo3.png}"
+					 src="/images/logo3.png" title="logo" alt="logo" style="max-width: 25%; height: auto;" />
 			</a>
-		</div>
 		<div class="top-nav">
 			<ul>
 				<li><a th:href="@{/}">Home Page</a></li>

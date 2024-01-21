@@ -56,13 +56,13 @@ public class GioHangAPI {
 		if (auth == null || auth.getPrincipal() == "anonymousUser") {
 			Cookie[] clientCookies = request.getCookies();
 			boolean found = false;
-			for (int i = 0; i < clientCookies.length; i++) {
+			for (Cookie clientCookie : clientCookies) {
 				//Neu san pham da co trong cookie tang so luong them 1
-				if (clientCookies[i].getName().equals(id)) {
-					clientCookies[i].setValue(Integer.toString(Integer.parseInt(clientCookies[i].getValue()) + 1));
-					clientCookies[i].setPath("/");
-					clientCookies[i].setMaxAge(60 * 60 * 24 * 7);
-					response.addCookie(clientCookies[i]);
+				if (clientCookie.getName().equals(id)) {
+					clientCookie.setValue(Integer.toString(Integer.parseInt(clientCookie.getValue()) + 1));
+					clientCookie.setPath("/");
+					clientCookie.setMaxAge(60 * 60 * 24 * 7);
+					response.addCookie(clientCookie);
 					found = true;
 					break;
 				}
@@ -96,12 +96,13 @@ public class GioHangAPI {
 			} else {
 				c.setSoLuong(c.getSoLuong() + 1);
 			}
-			c = chiMucGioHangService.saveChiMucGiohang(c);
+			chiMucGioHangService.saveChiMucGiohang(c);
 		}
 		ro.setStatus("success");
 		return ro;
 	}
 
+	//TODO: fix typo
 	@GetMapping("/changSanPhamQuanity")
 	public ResponseObject changeQuanity(@RequestParam String id, @RequestParam String value, HttpServletRequest request, HttpServletResponse response) {
 		NguoiDung currentUser = getSessionUser(request);
@@ -110,12 +111,12 @@ public class GioHangAPI {
 		//Su dung cookie de luu
 		if (auth == null || auth.getPrincipal() == "anonymousUser") {
 			Cookie[] clientCookies = request.getCookies();
-			for (int i = 0; i < clientCookies.length; i++) {
-				if (clientCookies[i].getName().equals(id)) {
-					clientCookies[i].setValue(value);
-					clientCookies[i].setPath("/");
-					clientCookies[i].setMaxAge(60 * 60 * 24 * 7);
-					response.addCookie(clientCookies[i]);
+			for (Cookie clientCookie : clientCookies) {
+				if (clientCookie.getName().equals(id)) {
+					clientCookie.setValue(value);
+					clientCookie.setPath("/");
+					clientCookie.setMaxAge(60 * 60 * 24 * 7);
+					response.addCookie(clientCookie);
 					break;
 				}
 			}
@@ -125,7 +126,7 @@ public class GioHangAPI {
 			SanPham sp = sanPhamService.getSanPhamById(Long.parseLong(id));
 			ChiMucGioHang c = chiMucGioHangService.getChiMucGioHangBySanPhamAndGioHang(sp, g);
 			c.setSoLuong(Integer.parseInt(value));
-			c = chiMucGioHangService.saveChiMucGiohang(c);
+			chiMucGioHangService.saveChiMucGiohang(c);
 		}
 		ro.setStatus("success");
 		return ro;
@@ -139,12 +140,12 @@ public class GioHangAPI {
 		//Su dung cookie de luu
 		if (auth == null || auth.getPrincipal() == "anonymousUser") {
 			Cookie[] clientCookies = request.getCookies();
-			for (int i = 0; i < clientCookies.length; i++) {
-				if (clientCookies[i].getName().equals(id)) {
-					clientCookies[i].setMaxAge(0);
-					clientCookies[i].setPath("/");
-					System.out.println(clientCookies[i].getMaxAge());
-					response.addCookie(clientCookies[i]);
+			for (Cookie clientCookie : clientCookies) {
+				if (clientCookie.getName().equals(id)) {
+					clientCookie.setMaxAge(0);
+					clientCookie.setPath("/");
+					System.out.println(clientCookie.getMaxAge());
+					response.addCookie(clientCookie);
 					break;
 				}
 			}
