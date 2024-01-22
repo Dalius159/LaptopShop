@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.List;
 import java.util.Set;
@@ -17,10 +19,17 @@ public class NguoiDung {
     private long id;
 
     private String diaChi;
+
+    @NotEmpty(message = "*Please provide an email")
     private String email;
+
+    @NotEmpty
+    @NotEmpty(message = "*Please provide your name")
     private String hoTen;
 
     @JsonIgnore
+    @Length(min = 5, message = "*Your password must have at least 5 characters")
+    @NotEmpty(message = "*Please provide your password")
     private String password;
 
     private String soDienThoai;
@@ -41,6 +50,7 @@ public class NguoiDung {
 
     @Transient
     @JsonIgnore
+    @NotEmpty(message = "*Please provide your password")
     private String confirmPassword;
 
     public NguoiDung() {
