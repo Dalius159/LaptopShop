@@ -177,7 +177,7 @@ CREATE TABLE nguoi_dung (
 --
 LOCK TABLES nguoi_dung WRITE;
 /*!40000 ALTER TABLE nguoi_dung DISABLE KEYS */;
-INSERT INTO nguoi_dung VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$/VFMNUPBKNVRMjxPFCYKZ.lKahoLQda0EaAxdqoun1w3DqwNLa2me','123456789'),(2,NULL,'member@gmail.com',NULL,'$2a$10$j7Upgupou72GBmukz0G6pOATk3wlCAgaoFCEqAhSvLToD/V/1wlpu',NULL),(3,NULL,'shipper@gmail.com',NULL,'$2a$10$u2B29HDxuWVYY3fUJ8R2qunNzXngfxij5GpvlFAEtIz3JpK/WFXF2',NULL),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$ZCqCO9gSWt8A8HNXAWq8luqfNbJm0uG3PsUlzry0aRLwO3VHQZTmy','123456');
+INSERT INTO nguoi_dung VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$/VFMNUPBKNVRMjxPFCYKZ.lKahoLQda0EaAxdqoun1w3DqwNLa2me','123456789'),(2,NULL,'member@gmail.com',NULL,'$2a$10$j7Upgupou72GBmukz0G6pOATk3wlCAgaoFCEqAhSvLToD/V/1wlpu',NULL),(3,NULL,'shipper@gmail.com',NULL,'$2a$10$u2B29HDxuWVYY3fUJ8R2qunNzXngfxij5GpvlFAEtIz3JpK/WFXF2',NULL),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$ZCqCO9gSWt8A8HNXAWq8luqfNbJm0uG3PsUlzry0aRLwO3VHQZTmy','123456'),(5,NULL,'nhat@gmail.com','nguyen minh nhat','nhat','123456789');
 /*!40000 ALTER TABLE nguoi_dung ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +385,7 @@ CREATE TABLE vai_tro (
 --
 LOCK TABLES vai_tro WRITE;
 /*!40000 ALTER TABLE vai_tro DISABLE KEYS */;
-INSERT INTO vai_tro VALUES (1,'ROLE_ADMIN'),(2,'ROLE_MEMBER'),(3,'ROLE_SHIPPER');
+INSERT INTO vai_tro VALUES (1,'ADMIN'),(2,'MEMBER'),(3,'SHIPPER');
 /*!40000 ALTER TABLE vai_tro ENABLE KEYS */;
 UNLOCK TABLES;
 
