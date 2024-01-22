@@ -35,29 +35,29 @@ public class NguoiDungValidator implements Validator {
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
         if (!(pattern.matcher(user.getEmail()).matches())) {
-            errors.rejectValue("email", "error.email", "Địa chỉ email không phù hợp");
+            errors.rejectValue("email", "error.email", "Email not match");
         }
 
         // check địa chi email đã được dùng chưa
         if (nguoiDungService.findByEmail(user.getEmail()) != null) {
-            errors.rejectValue("email", "error.email", "Địa chỉ email đã được sử dụng");
+            errors.rejectValue("email", "error.email", "Email already used");
         }
 
         // check password trống hay không
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.password", "Password không được bỏ trống");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.password", "Can't be emty");
 
         // check confirmPassword trống hay không
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "error.confirmPassword",
-                "Nhắc lại mật khẩu không được bỏ trống");
+                "Can't be emty");
 
         // check độ dài password (8-32)
         if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "error.password", "Mật khẩu phải dài 8-32 ký tự");
+            errors.rejectValue("password", "error.password", "Length must be in 8-32");
         }
 
         // check match pass và confirmPass
         if (!user.getConfirmPassword().equals(user.getPassword())) {
-            errors.rejectValue("confirmPassword", "error.confirmPassword", "Nhắc lại mật khẩu không chính xác");
+            errors.rejectValue("confirmPassword", "error.confirmPassword", "Wrong Confirm Password");
         }
     }
 }

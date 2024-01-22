@@ -307,3 +307,17 @@ body {
 .success-message{
     background-color: #81c784;
 }
+
+.validation-message{
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    width: 150px;
+    height: 50px;
+    border-radius: 16px;
+    text-align: center;
+    background-color: #e57373;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: none;
+}

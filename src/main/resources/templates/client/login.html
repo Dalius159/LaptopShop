@@ -68,23 +68,27 @@
             <h2 class="animation" style="--i:17; --j:0">Register</h2>
             <form th:action="@{/register}" method="post" th:object="${newUser}">
                 <div class="input-box animation" style="--i:18; --j:1">
-                    <input type="email" th:field="*{email}" name="email" required>
+                    <input type="email" th:field="*{email}" required>
                     <label>Email</label>
+                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="validate-email" class="validation-message"></label>
                     <i class='bx bxs-envelope'></i>
                 </div>
                 <div class="input-box animation" style="--i:19; --j:2">
-                    <input type="password"  th:field="*{password}" name="password" required>
+                    <input type="password"  th:field="*{password}" required>
                     <label>Password</label>
+                    <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" id="validate-password" class="validation-message"></label>
                     <i class='bx bxs-lock-alt' ></i>
                 </div>
                 <div class="input-box animation" style="--i:20; --j:3">
-                    <input type="password" th:field="*{confirmPassword}" name="confirmPassword" required>
+                    <input type="password" th:field="*{confirmPassword}"  required>
                     <label>Confirm Password</label>
+                    <label th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" id="validate-confirmPassword" class="validation-message"></label>
                     <i class='bx bxs-lock-alt' ></i>
                 </div>
                 <div class="input-box animation" style="--i:21; --j:4">
-                    <input type="text"  th:field="*{hoTen}" name="hoTen" required>
+                    <input type="text"  th:field="*{hoTen}" required>
                     <label>Fullname</label>
+                    <label th:if="${#fields.hasErrors('hoTen')}" th:errors="*{hoTen}" id="validate-fullname" class="validation-message"></label>
                     <i class='bx bxs-user' ></i>
                 </div>
                 <button type="submit" class="btn animation" style="--i:22; --j:5">Sign up</button>
@@ -115,7 +119,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            ['error', 'logout', 'unauthorized', 'success'].forEach(showMessage);
+            ['error', 'logout', 'unauthorized', 'success', 'validate-email', 'validate-password', 'validate-confirmPassword', 'validate-fullname'].forEach(showMessage);
 
             function showMessage(type) {
                 var element = document.getElementById(type);
@@ -123,7 +127,7 @@
                     element.style.cssText = 'display: block; opacity: 1;';
                     setTimeout(function() {
                         element.style.cssText = 'opacity: 0; display: none;';
-                    }, 2000);
+                    }, 8000);
                 }
             }
         });
