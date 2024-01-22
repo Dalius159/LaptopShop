@@ -66,7 +66,7 @@
 
         <div class="form-box register">
             <h2 class="animation" style="--i:17; --j:0">Register</h2>
-            <form th:action="@{/login}" method="post" th:object="${newUser}">
+            <form th:action="@{/register}" method="post" th:object="${newUser}">
                 <div class="input-box animation" style="--i:18; --j:1">
                     <input type="email" th:field="*{email}" name="email" required>
                     <label>Email</label>
