@@ -53,8 +53,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) ->
                 {
                     requests
-                            .requestMatchers("/admin/**").hasRole("ADMIN")
-                            .requestMatchers("/shipper/**").hasRole("SHIPPER")
+                            //.requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
+                            //.requestMatchers("/shipper/**").hasRole("ROLE_SHIPPER")
                             .requestMatchers("/checkout", "/thankyou").hasRole("MEMBER")
                             .requestMatchers("/**").permitAll();
                 })

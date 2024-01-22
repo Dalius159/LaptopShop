@@ -3,13 +3,12 @@ package Website.LaptopShop.Controller;
 import Website.LaptopShop.DTO.ResponseObject;
 import Website.LaptopShop.DTO.SearchSanPhamObject;
 import Website.LaptopShop.Entities.*;
-import Website.LaptopShop.Services.DanhMucService;
-import Website.LaptopShop.Services.LienHeService;
-import Website.LaptopShop.Services.NguoiDungService;
-import Website.LaptopShop.Services.SanPhamService;
+import Website.LaptopShop.Services.*;
+import Website.LaptopShop.Validator.NguoiDungValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
@@ -17,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -36,6 +36,12 @@ public class ClientController {
 
 	@Autowired
 	private LienHeService lienHeService;
+
+	@Autowired
+	private NguoiDungValidator nguoiDungValidator;
+
+	@Autowired
+	private SecurityService securityService;
 
 	@ModelAttribute("loggedInUser")
 	public NguoiDung loggedInUser() {
@@ -159,15 +165,25 @@ public class ClientController {
 		return "redirect:/login?logout";
 	}
 
-//	@GetMapping("/shipping")
-//	public String shippingPage(Model model) {
-//
-//		return "client/shipping";
-//	}
-
 	@GetMapping("/guarantee")
 	public String guaranteePage(Model model) {
 
 		return "client/guarantee";
+	}
+
+	@PostMapping("/login")
+	public String registerProcess(@ModelAttribute("newUser") @Valid NguoiDung nguoiDung, BindingResult bindingResult, Model model) {
+
+		nguoiDungValidator.validate(nguoiDung, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			return "client/login";
+		}
+
+		nguoiDungService.saveUserForMember(nguoiDung);
+
+		securityService.autologin(nguoiDung.getEmail(), nguoiDung.getConfirmPassword());
+
+		return "redirect:/login?success";
 	}
 }
