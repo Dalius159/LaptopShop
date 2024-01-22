@@ -33,14 +33,14 @@
 
         <div class="form-box login">
             <h2 class="animation" style="--i:0; --j:21">Login</h2>
-            <form th:action="@{${contextPath}/login}" method="post">
+            <form th:action="@{/login}" method="post">
                 <div class="input-box animation" style="--i:1; --j:22">
-                    <input type="text" required>
+                    <input type="text" name="email" required>
                     <label>Email</label>
                     <i class='bx bxs-envelope'></i>
                 </div>
                 <div class="input-box animation" style="--i:2; --j:23">
-                    <input type="password" required>
+                    <input type="password" name="password" required>
                     <label>Password</label>
                     <i class='bx bxs-lock-alt' ></i>
                 </div>
