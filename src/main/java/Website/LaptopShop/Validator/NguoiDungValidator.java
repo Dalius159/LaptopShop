@@ -24,8 +24,8 @@ public class NguoiDungValidator implements Validator {
         NguoiDung user = (NguoiDung) target;
 
         ValidationUtils.rejectIfEmpty(errors, "email", "error.hoTen", "Họ tên không được bỏ trống");
-        ValidationUtils.rejectIfEmpty(errors, "soDienThoai", "error.soDienThoai", "Số điện thoại không được bỏ trống");
-        ValidationUtils.rejectIfEmpty(errors, "diaChi", "error.diaChi", "Địa chỉ không được bỏ trống");
+        //ValidationUtils.rejectIfEmpty(errors, "soDienThoai", "error.soDienThoai", "Số điện thoại không được bỏ trống");
+        //ValidationUtils.rejectIfEmpty(errors, "diaChi", "error.diaChi", "Địa chỉ không được bỏ trống");
 
         // validate cho email
         // check ko đc trống

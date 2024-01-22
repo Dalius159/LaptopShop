@@ -66,7 +66,8 @@ public class ClientController {
 	}
 
 	@GetMapping("/login")
-	public String loginPage() {
+	public String loginPage(Model model) {
+		model.addAttribute("newUser", new NguoiDung());
 		return "client/login";
 	}
 
@@ -171,12 +172,13 @@ public class ClientController {
 		return "client/guarantee";
 	}
 
-	@PostMapping("/login")
+	@PostMapping("/register")
 	public String registerProcess(@ModelAttribute("newUser") @Valid NguoiDung nguoiDung, BindingResult bindingResult, Model model) {
 
 		nguoiDungValidator.validate(nguoiDung, bindingResult);
 
 		if (bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach((e) -> {System.err.println(e.getDefaultMessage());});
 			return "client/login";
 		}
 
