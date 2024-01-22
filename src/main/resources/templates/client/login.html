@@ -68,29 +68,29 @@
             <h2 class="animation" style="--i:17; --j:0">Register</h2>
             <form th:action="@{/login}" method="post" th:object="${newUser}">
                 <div class="input-box animation" style="--i:18; --j:1">
-                    <input type="email"  required>
+                    <input type="email" th:field="*{email}" name="email" required>
                     <label>Email</label>
                     <i class='bx bxs-envelope'></i>
                 </div>
                 <div class="input-box animation" style="--i:19; --j:2">
-                    <input type="password"  required>
+                    <input type="password"  th:field="*{password}" name="password" required>
                     <label>Password</label>
                     <i class='bx bxs-lock-alt' ></i>
                 </div>
                 <div class="input-box animation" style="--i:20; --j:3">
-                    <input type="password"  required>
+                    <input type="password" th:field="*{confirmPassword}" name="confirmPassword" required>
                     <label>Confirm Password</label>
                     <i class='bx bxs-lock-alt' ></i>
                 </div>
                 <div class="input-box animation" style="--i:21; --j:4">
-                    <input type="text"  required>
+                    <input type="text"  th:field="*{hoTen}" name="hoTen" required>
                     <label>Fullname</label>
                     <i class='bx bxs-user' ></i>
                 </div>
                 <button type="submit" class="btn animation" style="--i:22; --j:5">Sign up</button>
                 <div class="logreg-link animation" style="--i:23; --j:6">
                     <p>Already have an acount? 
-                    <a href="#" class="login-link">Login</a>
+                    <a href="/register" class="login-link">Login</a>
                     </p>
                 </div>
             </form>
