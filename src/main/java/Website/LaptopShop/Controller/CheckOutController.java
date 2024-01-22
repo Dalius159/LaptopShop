@@ -16,121 +16,119 @@ import java.util.*;
 @Controller
 @SessionAttributes("loggedInUser")
 public class CheckOutController {
-    @Autowired
-    private NguoiDungService nguoiDungService;
-    @Autowired
-    private GioHangService gioHangService;
-    @Autowired
-    private ChiMucGioHangService chiMucGioHangService;
-    @Autowired
-    private DonHangService donHangService;
-    @Autowired
-    private ChiTietDonHangService chiTietDonHangService;
+	@Autowired
+	private NguoiDungService nguoiDungService;
+	@Autowired
+	private GioHangService gioHangService;
+	@Autowired
+	private ChiMucGioHangService chiMucGioHangService;
+	@Autowired
+	private DonHangService donHangService;
+	@Autowired
+	private ChiTietDonHangService chiTietDonHangService;
 
-    @ModelAttribute("loggedInUser")
-    public NguoiDung loggedInUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return nguoiDungService.findByEmail(auth.getName());
-    }
+	@ModelAttribute("loggedInUser")
+	public NguoiDung loggedInUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return nguoiDungService.findByEmail(auth.getName());
+	}
 
-    public NguoiDung getSessionUser(HttpServletRequest request) {
-        return (NguoiDung) request.getSession().getAttribute("loggedInUser");
-    }
+	public NguoiDung getSessionUser(HttpServletRequest request) {
+		return (NguoiDung) request.getSession().getAttribute("loggedInUser");
+	}
 
-    @GetMapping("/checkout")
-    public String checkoutPage(HttpServletRequest req, Model model) {
-        NguoiDung currentUser = getSessionUser(req);
-        Map<Long, String> quanity = new HashMap<Long, String>();
-        List<SanPham> listsp = new ArrayList<SanPham>();
+	@GetMapping("/checkout")
+	public String checkoutPage(HttpServletRequest req, Model model) {
+		NguoiDung currentUser = getSessionUser(req);
+		Map<Long, String> quantity = new HashMap<>();
+		List<SanPham> listsp = new ArrayList<>();
 
-        GioHang g = gioHangService.getGioHangByNguoiDung(currentUser);
+		GioHang g = gioHangService.getGioHangByNguoiDung(currentUser);
 
-        List<ChiMucGioHang> listchimuc = chiMucGioHangService.getChiMucGioHangByGioHang(g);
+		List<ChiMucGioHang> listchimuc = chiMucGioHangService.getChiMucGioHangByGioHang(g);
 
-        for (ChiMucGioHang c : listchimuc) {
+		for (ChiMucGioHang c : listchimuc) {
+			listsp.add(c.getSanPham());
+			quantity.put(c.getSanPham().getId(), Integer.toString(c.getSoLuong()));
+		}
 
-            listsp.add(c.getSanPham());
-            quanity.put(c.getSanPham().getId(), Integer.toString(c.getSoLuong()));
+//      TODO: fix typo
+		model.addAttribute("cart", listsp);
+		model.addAttribute("quanity", quantity);
+		model.addAttribute("user", currentUser);
+		model.addAttribute("donhang", new DonHang());
 
-        }
+		return "client/checkout";
+	}
 
-        model.addAttribute("cart", listsp);
-        model.addAttribute("quanity", quanity);
-        model.addAttribute("user", currentUser);
-        model.addAttribute("donhang", new DonHang());
+	@PostMapping("/complete-order")
+	public String completeOrder(@ModelAttribute("donhang") DonHang donhang, HttpServletRequest req, HttpServletResponse response, Model model) {
+		SaveOrder(donhang, req, response, model, (byte) 0);
 
-        return "client/checkout";
-    }
+		return "redirect:/thankyou";
+	}
 
-    @PostMapping("/complete-order")
-    public String completeOrder(@ModelAttribute("donhang") DonHang donhang, HttpServletRequest req, HttpServletResponse response, Model model) {
-        SaveOrder(donhang, req, response, model, (byte) 0);
+	@GetMapping(value = "/thankyou")
+	public String thankyouPage(HttpServletRequest req, Model model) {
+		NguoiDung currentUser = getSessionUser(req);
+		DonHang donhang = donHangService.findLatestDonHangByMaNguoiDat(currentUser.getId());
+		Map<Long, Long> quanity = new HashMap<>();
+		List<SanPham> listsp = new ArrayList<SanPham>();
 
-        return "redirect:/thankyou";
-    }
+		List<ChiTietDonHang> chiTietDonHangs = donhang.getDanhSachChiTiet();
+		for (ChiTietDonHang c : chiTietDonHangs) {
+			listsp.add(c.getSanPham());
+			quanity.put(c.getSanPham().getId(), (long) c.getSoLuongDat());
+		}
 
-    @GetMapping(value = "/thankyou")
-    public String thankyouPage(HttpServletRequest req, Model model) {
-        NguoiDung currentUser = getSessionUser(req);
-        DonHang donhang = donHangService.findLatestDonHangByMaNguoiDat(currentUser.getId());
-        Map<Long, String> quanity = new HashMap<Long, String>();
-        List<SanPham> listsp = new ArrayList<SanPham>();
+		model.addAttribute("donhang", donhang);
+		model.addAttribute("cart", listsp);
+		model.addAttribute("quanity", quanity);
 
-        List<ChiTietDonHang> chiTietDonHangs = donhang.getDanhSachChiTiet();
-        for (ChiTietDonHang c : chiTietDonHangs) {
-            listsp.add(c.getSanPham());
-            quanity.put(c.getSanPham().getId(), Integer.toString(c.getSoLuongDat()));
-        }
+		return "client/thank-you";
+	}
 
-        model.addAttribute("donhang", donhang);
-        model.addAttribute("cart", listsp);
-        model.addAttribute("quanity", quanity);
+	public void SaveOrder(DonHang donhang, HttpServletRequest req, HttpServletResponse response, Model model, byte status) {
+		if (status == 1) {donhang.setGhiChu("Đã thanh toán");} else {donhang.setGhiChu("Thanh toán khi nhận hàng");}
+		donhang.setNgayDatHang(new Date());
+		donhang.setTrangThaiDonHang("Đang chờ giao");
 
-        return "client/thankYou";
-    }
+		NguoiDung currentUser = getSessionUser(req);
+		Map<Long, String> quanity = new HashMap<Long, String>();
+		List<SanPham> listsp = new ArrayList<SanPham>();
+		List<ChiTietDonHang> listDetailDH = new ArrayList<ChiTietDonHang>();
 
-    public void SaveOrder(DonHang donhang, HttpServletRequest req, HttpServletResponse response, Model model, byte status) {
-        if (status == 1) donhang.setGhiChu("Đã thanh toán");
-        else donhang.setGhiChu("Thanh toán khi nhận hàng");
-        donhang.setNgayDatHang(new Date());
-        donhang.setTrangThaiDonHang("Đang chờ giao");
+		donhang.setNguoiDat(currentUser);
+		System.out.println(donhang.getId());
+		DonHang d = donHangService.save(donhang);
+		GioHang g = gioHangService.getGioHangByNguoiDung(currentUser);
+		List<ChiMucGioHang> listchimuc = chiMucGioHangService.getChiMucGioHangByGioHang(g);
+		for (ChiMucGioHang c : listchimuc) {
+			ChiTietDonHang detailDH = new ChiTietDonHang();
+			detailDH.setSanPham(c.getSanPham());
+			detailDH.setDonGia(c.getSoLuong() * c.getSanPham().getDonGia());
+			detailDH.setSoLuongDat(c.getSoLuong());
+			detailDH.setDonHang(d);
+			listDetailDH.add(detailDH);
 
-        NguoiDung currentUser = getSessionUser(req);
-        Map<Long, String> quanity = new HashMap<Long, String>();
-        List<SanPham> listsp = new ArrayList<SanPham>();
-        List<ChiTietDonHang> listDetailDH = new ArrayList<ChiTietDonHang>();
+			listsp.add(c.getSanPham());
+			quanity.put(c.getSanPham().getId(), Integer.toString(c.getSoLuong()));
+		}
 
-        donhang.setNguoiDat(currentUser);
-        System.out.println(donhang.getId());
-        DonHang d = donHangService.save(donhang);
-        GioHang g = gioHangService.getGioHangByNguoiDung(currentUser);
-        List<ChiMucGioHang> listchimuc = chiMucGioHangService.getChiMucGioHangByGioHang(g);
-        for (ChiMucGioHang c : listchimuc) {
-            ChiTietDonHang detailDH = new ChiTietDonHang();
-            detailDH.setSanPham(c.getSanPham());
-            detailDH.setDonGia(c.getSoLuong() * c.getSanPham().getDonGia());
-            detailDH.setSoLuongDat(c.getSoLuong());
-            detailDH.setDonHang(d);
-            listDetailDH.add(detailDH);
+		chiTietDonHangService.save(listDetailDH);
 
-            listsp.add(c.getSanPham());
-            quanity.put(c.getSanPham().getId(), Integer.toString(c.getSoLuong()));
-        }
+		cleanUpAfterCheckOut(req);
+		model.addAttribute("donhang", donhang);
+		model.addAttribute("cart", listsp);
+		model.addAttribute("quanity", quanity);
+	}
 
-        chiTietDonHangService.save(listDetailDH);
+	public void cleanUpAfterCheckOut(HttpServletRequest request) {
+		NguoiDung currentUser = getSessionUser(request);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        cleanUpAfterCheckOut(req);
-        model.addAttribute("donhang", donhang);
-        model.addAttribute("cart", listsp);
-        model.addAttribute("quanity", quanity);
-    }
-
-    public void cleanUpAfterCheckOut(HttpServletRequest request) {
-        NguoiDung currentUser = getSessionUser(request);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        GioHang g = gioHangService.getGioHangByNguoiDung(currentUser);
-        List<ChiMucGioHang> c = chiMucGioHangService.getChiMucGioHangByGioHang(g);
-        chiMucGioHangService.deleteAllChiMucGiohang(c);
-    }
+		GioHang g = gioHangService.getGioHangByNguoiDung(currentUser);
+		List<ChiMucGioHang> c = chiMucGioHangService.getChiMucGioHangByGioHang(g);
+		chiMucGioHangService.deleteAllChiMucGiohang(c);
+	}
 }
