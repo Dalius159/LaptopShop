@@ -92,7 +92,7 @@ public class ClientController {
 			@RequestParam(defaultValue = "") String manufactor,
 			@RequestParam(defaultValue = "") String os,
 			@RequestParam(defaultValue = "") String ram,
-			@RequestParam(defaultValue = "") int pin,
+			@RequestParam(defaultValue = "0") int pin,
 			Model model) {
 		SearchSanPhamObject obj = new SearchSanPhamObject();
 		obj.setBrand(brand);
