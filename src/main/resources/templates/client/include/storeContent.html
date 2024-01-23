@@ -33,184 +33,188 @@
 </head>
 <body>
 <div class="clear"></div>
-<div class="wrap">
-	<div class="content">
-		<div class="product_container">
-			<div class="section group" th:if="${#lists.isEmpty(list)}">
-				<h4>No search result</h4>
+
+<div style="display: flex;">
+	<div class="wrap">
+		<div class="content">
+			<div class="product_container">
+				<div class="section group" th:if="${#lists.isEmpty(list)}">
+					<h4>No search result</h4>
+				</div>
+
+				<div th:each="sanpham, loop : ${list}">
+					<!--switch case need testing-->
+					<div th:if="${loop.index != #lists.size(list)-1}" th:switch="${loop.index % 4}">
+
+						<div th:case="0" class="product_item products-info"
+							 style="width: 232px; height: 400px;">
+							<a th:href="@{'sp?id=' + ${sanpham.id}}">
+								<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+									 style="width: 15em; height: 15em;"/>
+								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+							</a>
+							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
+							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
+									type="button">
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span>
+								Cart
+							</button>
+							<h3></h3>
+						</div>
+
+						<div th:case="3" class="product_item products-info"
+							 style="width: 232px; height: 400px;">
+							<a th:href="@{/sp(id=${sanpham.id})}">
+								<img th:src="@{'/product_images/'+ ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+									 style="width: 15em; height: 15em;"/>
+								<h3 style="	font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+							</a>
+							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
+							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
+									type="button">
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span>
+								Cart
+							</button>
+							<h3></h3>
+						</div>
+
+						<div th:case="*" class="product_item products-info"
+							 style="width: 232px; height: 400px;">
+							<a th:href="@{/sp(id=${sanpham.id})}">
+								<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+									 style="width: 15em; height: 15em;"/>
+								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+							</a>
+							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
+							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
+									type="button">
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
+							</button>
+							<h3></h3>
+						</div>
+
+					</div>
+
+					<div th:unless="${loop.index != #lists.size(list)-1}" th:switch="${loop.index % 4}">
+						<div th:case="0" class="product_item products-info"
+							 style="width: 232px; height: 400px;">
+							<a th:href="@{/sp(id=${sanpham.id})}">
+								<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+									 style="width: 15em; height: 15em;"/>
+								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+							</a>
+							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
+							<button th:onclick="addToCart(${sanpham.id})" class="btn btn-warning" type="button">
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
+							</button>
+							<h3></h3>
+						</div>
+
+						<div th:unless="0" class="product_item products-info"
+							 style="width: 232px; height: 400px;">
+							<a th:href="@{/sp(id=${sanpham.id})}">
+								<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+									 style="width: 15em; height: 15em;"/>
+								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+							</a>
+							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
+							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
+									type="button">
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
+							</button>
+							<h3></h3>
+						</div>
+					</div>
+				</div>
+
 			</div>
 
-			<div th:each="sanpham, loop : ${list}">
-				<!--switch case need testing-->
-				<div th:if="${loop.index != #lists.size(list)-1}" th:switch="${loop.index % 4}">
+			<div class="paging" th:if="${#lists.size(list) != 0}">
+				<a th:if="${currentPage != 1}"
+				   th:href="'@{/store(page=' + ${currentPage - 1 } + ',range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}'">
+					Back</a>
+				<a th:if="${currentPage == 1}" class="current">1</a>
+				<a th:if="${currentPage != 1}"
+				   th:href="@{/store(page=1,range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}">
+					1</a>
 
-					<div th:case="0" class="product_item products-info"
-						 style="width: 232px; height: 400px;">
-						<a th:href="@{'sp?id=' + ${sanpham.id}}">
-							<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
-								 style="width: 15em; height: 15em;"/>
-							<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
-						</a>
-						<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-						<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
-								type="button">
-							<span class="glyphicon glyphicon-shopping-cart pull-center"></span>
-							Cart
-						</button>
-						<h3></h3>
-					</div>
+				<th:block th:each="pg : ${pageList}" th:status="loop">
+					<a th:if="${currentPage == pg}" class="current" th:text="${pg}"></a>
+					<a th:if="${currentPage != pg}"
+					   th:href="@{/store(page=${pg},range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}"
+					   th:text="${pg}"></a>
+				</th:block>
 
-					<div th:case="3" class="product_item products-info"
-						 style="width: 232px; height: 400px;">
-						<a th:href="@{/sp(id=${sanpham.id})}">
-							<img th:src="@{'/product_images/'+ ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
-								 style="width: 15em; height: 15em;"/>
-							<h3 style="	font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
-						</a>
-						<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-						<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
-								type="button">
-							<span class="glyphicon glyphicon-shopping-cart pull-center"></span>
-							Cart
-						</button>
-						<h3></h3>
-					</div>
-
-					<div th:case="*" class="product_item products-info"
-						 style="width: 232px; height: 400px;">
-						<a th:href="@{/sp(id=${sanpham.id})}">
-							<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
-								 style="width: 15em; height: 15em;"/>
-							<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
-						</a>
-						<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-						<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
-								type="button">
-							<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
-						</button>
-						<h3></h3>
-					</div>
-
-				</div>
-
-				<div th:unless="${loop.index != #lists.size(list)-1}" th:switch="${loop.index % 4}">
-					<div th:case="0" class="product_item products-info"
-						 style="width: 232px; height: 400px;">
-						<a th:href="@{/sp(id=${sanpham.id})}">
-							<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
-								 style="width: 15em; height: 15em;"/>
-							<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
-						</a>
-						<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-						<button th:onclick="addToCart(${sanpham.id})" class="btn btn-warning" type="button">
-							<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
-						</button>
-						<h3></h3>
-					</div>
-
-					<div th:unless="0" class="product_item products-info"
-						 style="width: 232px; height: 400px;">
-						<a th:href="@{/sp(id=${sanpham.id})}">
-							<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
-								 style="width: 15em; height: 15em;"/>
-							<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
-						</a>
-						<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-						<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
-								type="button">
-							<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
-						</button>
-						<h3></h3>
-					</div>
-				</div>
+				<a th:if="${currentPage != totalPage}"
+				   th:href="@{/store(page=${currentPage+1},range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}">
+					Next</a>
 			</div>
 
 		</div>
+	</div>
 
-		<div class="paging" th:if="${#lists.size(list) != 0}">
-			<a th:if="${currentPage != 1}"
-			   th:href="'@{/store(page=' + ${currentPage - 1 } + ',range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}'">
-				Back</a>
-			<a th:if="${currentPage == 1}" class="current">1</a>
-			<a th:if="${currentPage != 1}"
-			   th:href="@{/store(page=1,range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}">
-				1</a>
-
-			<th:block th:each="pg : ${pageList}" th:status="loop">
-				<a th:if="${currentPage == pg}" class="current" th:text="${pg}"></a>
-				<a th:if="${currentPage != pg}"
-				   th:href="@{/store(page=${pg},range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}"
-				   th:text="${pg}"></a>
-			</th:block>
-
-			<a th:if="${currentPage != totalPage}"
-			   th:href="@{/store(page=${currentPage+1},range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}">
-				Next</a>
-		</div>
+	<div class="content-sidebar">
+		<h4>Filter</h4>
+		<!--default http is GET, default action url is #-->
+		<form>
+			<input type="hidden" name="name" th:value="${name}">
+			<p>Price Range</p>
+			<div class="select-range">
+				<select name="range" class="form-control">
+					<option value="">All prices</option>
+					<option value="duoi-2-trieu">Under 2M</option>
+					<option value="2-trieu-den-4-trieu">2M - 4M</option>
+					<option value="4-trieu-den-6-trieu">4M - 6M</option>
+					<option value="6-trieu-den-10-trieu">6M - 10M</option>
+					<option value="tren-10-trieu">Above 10M</option>
+				</select>
+			</div>
+			<p>Manufacturer</p>
+			<div class="select-range">
+				<select name="manufactor" class="form-control">
+					<option value="">All manufacturer</option>
+					<option th:each="manufactor : ${hangsx}" th:value="${manufactor}" th:text="${manufactor}"></option>
+				</select>
+			</div>
+			<div th:if="${brand == 'Laptop'}">
+				<p>Hệ điều hành</p>
+				<div class="select-range">
+					<select name="os" class="form-control">
+						<option value="">All OS</option>
+						<option value="ubuntu">Ubuntu</option>
+						<option value="dos">DOS</option>
+						<option value="mac">MAC</option>
+						<option value="linux">Linux</option>
+						<option value="windows 10">Window 10</option>
+					</select>
+				</div>
+				<p>RAM</p>
+				<div class="select-range">
+					<select name="ram" class="form-control">
+						<option value="">Every RAM size</option>
+						<option value="2 GB">2 GB</option>
+						<option value="3 GB">3 GB</option>
+						<option value="4 GB">4 GB</option>
+						<option value="6 GB">6 GB</option>
+						<option value="8 GB">8 GB</option>
+						<option value="16 GB">16 GB</option>
+					</select>
+				</div>
+				<p>Pin</p>
+				<div class="select-range">
+					<select name="pin" class="form-control">
+						<option value="">All battery</option>
+						<option th:each="pin : ${pinSet}" th:value="${pin}" th:text="${pin}"></option>
+					</select>
+				</div>
+			</div>
+			<input type="hidden" name="brand" th:value="${brand}">
+			<input class="search-submit" type="submit" value="Lọc sản phẩm">
+		</form>
 
 	</div>
 </div>
 
-<div class="content-sidebar">
-	<h4>Filter</h4>
-	<!--default http is GET, default action url is #-->
-	<form>
-		<input type="hidden" name="name" th:value="${name}">
-		<p>Price Range</p>
-		<div class="select-range">
-			<select name="range" class="form-control">
-				<option value="">All prices</option>
-				<option value="duoi-2-trieu">Under 2M</option>
-				<option value="2-trieu-den-4-trieu">2M - 4M</option>
-				<option value="4-trieu-den-6-trieu">4M - 6M</option>
-				<option value="6-trieu-den-10-trieu">6M - 10M</option>
-				<option value="tren-10-trieu">Above 10M</option>
-			</select>
-		</div>
-		<p>Manufacturer</p>
-		<div class="select-range">
-			<select name="manufactor" class="form-control">
-				<option value="">All manufacturer</option>
-				<option th:each="manufactor : ${hangsx}" th:value="${manufactor}" th:text="${manufactor}"></option>
-			</select>
-		</div>
-		<div th:if="${brand == 'Laptop'}">
-			<p>Hệ điều hành</p>
-			<div class="select-range">
-				<select name="os" class="form-control">
-					<option value="">All OS</option>
-					<option value="ubuntu">Ubuntu</option>
-					<option value="dos">DOS</option>
-					<option value="mac">MAC</option>
-					<option value="linux">Linux</option>
-					<option value="windows 10">Window 10</option>
-				</select>
-			</div>
-			<p>RAM</p>
-			<div class="select-range">
-				<select name="ram" class="form-control">
-					<option value="">Every RAM size</option>
-					<option value="2 GB">2 GB</option>
-					<option value="3 GB">3 GB</option>
-					<option value="4 GB">4 GB</option>
-					<option value="6 GB">6 GB</option>
-					<option value="8 GB">8 GB</option>
-					<option value="16 GB">16 GB</option>
-				</select>
-			</div>
-			<p>Pin</p>
-			<div class="select-range">
-				<select name="pin" class="form-control">
-					<option value="">All battery</option>
-					<option th:each="pin : ${pinSet}" th:value="${pin}" th:text="${pin}"></option>
-				</select>
-			</div>
-		</div>
-		<input type="hidden" name="brand" th:value="${brand}">
-		<input class="search-submit" type="submit" value="Lọc sản phẩm">
-	</form>
-
-</div>
 <div class="clear"></div>
 </body>
 </html>
