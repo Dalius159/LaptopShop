@@ -17,25 +17,38 @@
 			});
 		});
 	</script>
+	<style>
+        .product_container {
+            display: flex;
+            flex-wrap: wrap;
+        }
 
+        .product_item {
+            width: 200px; /* Set your preferred width */
+            height: 150px; /* Set your preferred height */
+            margin: 10px; /* Set your preferred margin */
+            border: 1px solid #ccc; /* Add a border for better visibility */
+        }
+	</style>
 </head>
 <body>
 <div class="clear"></div>
 <div class="wrap">
 	<div class="content">
-		<div class="content-grids">
+		<div class="product_container">
 			<div class="section group" th:if="${#lists.isEmpty(list)}">
 				<h4>No search result</h4>
 			</div>
+
 			<div th:each="sanpham, loop : ${list}">
 				<!--switch case need testing-->
 				<div th:if="${loop.index != #lists.size(list)-1}" th:switch="${loop.index % 4}">
 
-					<div th:case="0" class="grid_1_of_4 images_1_of_4 products-info"
-						 style="width: 15em; height: 15em;">
+					<div th:case="0" class="product_item products-info"
+						 style="width: 232px; height: 400px;">
 						<a th:href="@{'sp?id=' + ${sanpham.id}}">
 							<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
-								 style="width: 15em; height: 15em;">
+								 style="width: 15em; height: 15em;"/>
 							<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
 						</a>
 						<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
@@ -47,8 +60,8 @@
 						<h3></h3>
 					</div>
 
-					<div th:case="3" class="grid_1_of_4 images_1_of_4 products-info"
-						 style="width: 15em; height: 15em;">
+					<div th:case="3" class="product_item products-info"
+						 style="width: 232px; height: 400px;">
 						<a th:href="@{/sp(id=${sanpham.id})}">
 							<img th:src="@{'/product_images/'+ ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
 								 style="width: 15em; height: 15em;"/>
@@ -63,7 +76,7 @@
 						<h3></h3>
 					</div>
 
-					<div th:case="*" class="grid_1_of_4 images_1_of_4 products-info"
+					<div th:case="*" class="product_item products-info"
 						 style="width: 232px; height: 400px;">
 						<a th:href="@{/sp(id=${sanpham.id})}">
 							<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
@@ -81,7 +94,7 @@
 				</div>
 
 				<div th:unless="${loop.index != #lists.size(list)-1}" th:switch="${loop.index % 4}">
-					<div th:case="0" class="grid_1_of_4 images_1_of_4 products-info"
+					<div th:case="0" class="product_item products-info"
 						 style="width: 232px; height: 400px;">
 						<a th:href="@{/sp(id=${sanpham.id})}">
 							<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
@@ -95,8 +108,8 @@
 						<h3></h3>
 					</div>
 
-					<div th:unless="0" class="grid_1_of_4 images_1_of_4 products-info"
-						 style="width: 15em; height: 15em;">
+					<div th:unless="0" class="product_item products-info"
+						 style="width: 232px; height: 400px;">
 						<a th:href="@{/sp(id=${sanpham.id})}">
 							<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
 								 style="width: 15em; height: 15em;"/>
@@ -116,7 +129,7 @@
 
 		<div class="paging" th:if="${#lists.size(list) != 0}">
 			<a th:if="${currentPage != 1}"
-			   th:href="'@{/store(page=' + ${currentPage}-1 + ',range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}'">
+			   th:href="'@{/store(page=' + ${currentPage - 1 } + ',range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}'">
 				Back</a>
 			<a th:if="${currentPage == 1}" class="current">1</a>
 			<a th:if="${currentPage != 1}"
@@ -140,7 +153,7 @@
 
 <div class="content-sidebar">
 	<h4>Filter</h4>
-<!--default http is GET, default action url is #-->
+	<!--default http is GET, default action url is #-->
 	<form>
 		<input type="hidden" name="name" th:value="${name}">
 		<p>Price Range</p>
