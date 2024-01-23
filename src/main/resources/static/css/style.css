@@ -212,27 +212,28 @@ body {
 }
 
 .search-bar input[type="submit"] {
-    /*margin-right: 0;*/
-    color: #000;
-    /*background: #fff;*/
+    color: #fff;
     padding: 5px 9px 5px 10px;
     border: 1px solid #e5e5e5;
     margin: 0;
     border-left: none;
+    border-radius: 10px;
     cursor: pointer;
-    background: #0ef;
+    background: #0d2e45;
     font-weight: bold;
+    transition: transform .2s ease-in-out;
 }
 
 .search-bar input[type="submit"]:hover {
-    background: #181818;
+    transform: scale(1.05);
+    background: rgb(0, 238, 255);
     color: #fff;
 }
 
 .search-bar {
     background: #fff;
     margin: 20px 0 13px 0;
-    border-radius: 0.3em;
+    border-radius: 10px;
 }
 
 .header-top-nav ul li {
@@ -255,16 +256,16 @@ body {
 }
 
 .header-top-nav ul li a:hover {
-    color: #94CB32;
+    color: #0ef;
 }
 
 .header-top-nav ul li a span {
-    color: #D70D87;
+    color: #0ef;
 }
 
 /*---top-header----*/
 .top-header {
-    background: #94CB32;
+    background: #0d2e45;
     padding: 12px 0;
     margin-top: 16px;
 }
@@ -297,7 +298,7 @@ body {
 }
 
 .top-nav ul li a:hover {
-    color: #000;
+    color: #0d2e45;
 }
 
 /*---content----*/
@@ -335,7 +336,7 @@ body {
 .images_1_of_3 {
     width: 33%;
     padding: 0 0 1.1% 0;
-    background: #92AC05;
+    background: #0d2e45;
     text-align: center;
     box-shadow: 0 3px 10px rgb(233, 233, 233);
 }
@@ -346,7 +347,7 @@ body {
 }
 
 .second {
-    background: #FCA805;
+    background: rgb(5, 138, 147);
 }
 
 .theree {
@@ -518,7 +519,7 @@ body {
 .images_1_of_4 a {
     font-size: 0.8em;
     font-family: 'Open Sans', sans-serif;
-    color: #94CB32;
+    color: #3be3cf;
 }
 
 .images_1_of_4 a:hover {
@@ -603,7 +604,7 @@ body {
 .content-sidebar li a:hover {
     background: url(../images/sepHor.png) repeat-x left bottom;
     background-color: #eee;
-    color: #94CB32;
+    color: #0ef;
 }
 
 /*---footer---*/
@@ -647,7 +648,7 @@ body {
 
 .span_1_of_4 h3, .span_1_of_4 ul li a {
     font-family: 'Open Sans', sans-serif;
-    color: #575757;
+    color: #fff;
     font-size: 1.2em;
     padding: 6px 0px 0px 0px;
 }
@@ -664,7 +665,7 @@ body {
 .span_1_of_4 p {
     font-size: 0.8125em;
     padding: 0.5em 0;
-    color: #333;
+    color: #fff;
     line-height: 1.5em;
     font-family: verdana, arial, helvetica, helve, sans-serif;
 }
@@ -674,7 +675,7 @@ body {
 }
 
 .span_1_of_4 ul li a:hover {
-    color: #94CB32;
+    color: #0ef;
 }
 
 .footer-secondgrid ul {
@@ -738,7 +739,7 @@ body {
     border: none;
     font-size: 0.8em;
     font-family: 'Open Sans', sans-serif;
-    color: #94CB32;
+    color: #0ef;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
@@ -771,7 +772,7 @@ body {
 }
 
 .about h5 {
-    color: #94CB32;
+    color: #0ef;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9em;
 }
@@ -793,7 +794,7 @@ body {
 }
 
 .quites a span {
-    color: #94CB32;
+    color: #081b29;
     text-transform: uppercase;
 }
 
@@ -1048,7 +1049,7 @@ body {
 }
 
 .back-links ul li a:hover, .details-categories ul li a:hover, .active1 a {
-    color: #94CB32;
+    color: #0ef;
 }
 
 .back-links ul li img {
@@ -1130,7 +1131,7 @@ body {
 }
 
 .active1 a {
-    color: #94CB32;
+    color: #0ef;
     text-decoration: underline;
 }
 
@@ -1181,7 +1182,7 @@ body {
 }
 
 .share ul li a:hover {
-    color: #94CB32;
+    color: #0ef;
 }
 
 .brand-history h3 {
@@ -1197,7 +1198,7 @@ body {
 }
 
 .menu_head {
-    background: #94CB32;
+    background: #0ef;
     color: white;
     cursor: pointer;
     font-family: arial;
@@ -1341,7 +1342,7 @@ body {
     border: 1px solid #575757;
     background: #575757;
     text-decoration: none;
-    color: #94CB32;
+    color: #0ef;
 }
 
 .contact-form input[type="submit"]:active {
@@ -1458,7 +1459,7 @@ body {
 }
 
 .details-categories li span {
-    color: #94CB32;
+    color: #0ef;
     text-decoration: underline;
 }
 
@@ -1469,7 +1470,7 @@ body {
 /*----blog----*/
 .blog-grid-header h3, .blog-grid-header ul li a {
     font-family: 'Open Sans', sans-serif;
-    color: #94CB32;
+    color: #0ef;
     display: inline-block;
     font-size: 0.88em;
     padding: 7px 0px 0px 0px;
@@ -1500,7 +1501,7 @@ body {
 }
 
 .blog-grid-header ul li a:hover {
-    color: #94CB32;
+    color: #0ef;
 }
 
 .blog-grid h4 {
@@ -1594,6 +1595,7 @@ body {
     display: inline-block;
     font-size: 0.8em;
     padding: 5px 10px;
+    border-radius: 10px;
     color: #525049;
     font-family: 'Open Sans', sans-serif;
     text-transform: uppercase;
@@ -1601,7 +1603,7 @@ body {
 }
 
 .span_2_of_3 .button a:hover {
-    color: #94CB32;
+    color: #0ef;
 }
 
 /***** Media Quries *****/
@@ -1684,7 +1686,7 @@ body {
 }
 
 .pagnation ul li a:hover {
-    color: #94CB32;
+    color: #0ef;
 }
 
 /*----error-page-----*/
@@ -1721,7 +1723,7 @@ body {
 }
 
 .copy-right a:hover {
-    color: #94CB32;
+    color: #0ef;
 }
 
 /*----responsive-layouts----*/
