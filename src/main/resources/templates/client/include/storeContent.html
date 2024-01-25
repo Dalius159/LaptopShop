@@ -3,33 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>HTML Boilerplate</title>
-	<link rel="stylesheet" th:href="@{/Frontend/css/searchResult.css}">
+	<link rel="stylesheet" th:href="@{/css/searchResult.css}">
+	<link rel="stylesheet" th:href="@{/css/product_flex.css}">
 	<script th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/jquery/responsiveslides.min.js}"></script>
 	<script th:src="@{/js/client/accounting.min.js}"></script>
 	<script th:src="@{/js/client/store.js}"></script>
 
+<!--	to format money into vnd, may remove-->
 	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function () {
-			const elements = document.querySelectorAll(".grid_1_of_4 .changeToVND");
+			const elements = document.querySelectorAll(".changeToVND");
 			elements.forEach(function (element) {
 				element.innerHTML = accounting.formatMoney(element.textContent);
 			});
 		});
 	</script>
-	<style>
-        .product_container {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .product_item {
-            width: 200px; /* Set your preferred width */
-            height: 150px; /* Set your preferred height */
-            margin: 10px; /* Set your preferred margin */
-            border: 1px solid #ccc; /* Add a border for better visibility */
-        }
-	</style>
 </head>
 <body>
 <div class="clear"></div>
@@ -57,7 +46,7 @@
 							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
 									type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span>
-								Cart
+								Purchase
 							</button>
 							<h3></h3>
 						</div>
@@ -73,7 +62,7 @@
 							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
 									type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span>
-								Cart
+								Purchase
 							</button>
 							<h3></h3>
 						</div>
@@ -88,7 +77,7 @@
 							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
 							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
 									type="button">
-								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
 							</button>
 							<h3></h3>
 						</div>
@@ -105,7 +94,7 @@
 							</a>
 							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
 							<button th:onclick="addToCart(${sanpham.id})" class="btn btn-warning" type="button">
-								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
 							</button>
 							<h3></h3>
 						</div>
@@ -120,7 +109,7 @@
 							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
 							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
 									type="button">
-								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Cart
+								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
 							</button>
 							<h3></h3>
 						</div>
@@ -177,7 +166,7 @@
 				</select>
 			</div>
 			<div th:if="${brand == 'Laptop'}">
-				<p>Hệ điều hành</p>
+				<p>OS</p>
 				<div class="select-range">
 					<select name="os" class="form-control">
 						<option value="">All OS</option>
@@ -209,7 +198,7 @@
 				</div>
 			</div>
 			<input type="hidden" name="brand" th:value="${brand}">
-			<input class="search-submit" type="submit" value="Lọc sản phẩm">
+			<input class="search-submit" type="submit" value="Filter">
 		</form>
 
 	</div>
