@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </a>
                                 <h3>${accounting.formatMoney(sanpham.donGia)}</h3>
                                 <button onClick="addToCart(${sanpham.id})" class="btn btn-warning">
-                                    <span class="glyphicon glyphicon-shopping-cart pull-center"></span>Shopping Cart
+                                    <span class="glyphicon glyphicon-shopping-cart pull-center"></span>Add to cart
                                 </button>
                                 <h3></h3>
                             </div>`;
