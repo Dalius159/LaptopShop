@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>HTML Boilerplate</title>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			document.querySelectorAll(".check").forEach(function (element) {
+				element.innerHTML = accounting.formatMoney(element.textContent);
+			});
+
+			document.querySelectorAll(".total").forEach(function (element) {
+				element.innerHTML = accounting.formatMoney(element.textContent);
+			});
+		});
+	</script>
+
+</head>
+<body>
+
+<form method="post" th:action="@{/complete-order}" th:object="${donhang}">
+
+	<div sec:authorize="isAuthenticated()" class="col-md-3">
+		<br>
+		<p class="border-p" style="line-height:1.5;"><b>Customer info</b></p>
+		<p style="line-height:2;">Full name</p>
+		<input size="27" th:value="${user.hoTen}" th:disabled="true">
+		<p style="line-height:2;">Email address</p>
+		<input size="27" th:value="${user.email}" th:disabled="true">
+		<p style="line-height:2;">Phone number</p>
+		<input size="27" th:value="${user.soDienThoai}" th:disabled="true">
+		<p style="line-height:2;">Home address</p>
+		<textarea rows="5" cols="29" th:value="${user.diaChi}" th:disabled="true"></textarea>
+		<br><br>
+	</div>
+
+	<div class="col-md-3">
+		<br>
+		<p class="border-p" style="line-height:1.5;"><b>Delivery Information</b></p>
+		<p style="line-height:2;">Receiver's name</p>
+		<input size="27" th:field="*{hoTenNguoiNhan}" th:id="hoTenNguoiNhan" required="required">
+		<p style="line-height:2;">Phone number</p>
+		<input size="27" th:field="*{sdtNhanHang}" th:id="sdtNhanHang" required="required">
+		<p style="line-height:2;">Address</p>
+		<textarea rows="5" cols="29" th:field="*{diaChiNhan}" th:id="diaChiNhan" required="required"></textarea>
+		<br><br>
+		<div class="alert" th:id="alertMsg"
+			 th:style="${#fields.hasErrors('hoTenNguoiNhan') or #fields.hasErrors('sdtNhanHang') or #fields.hasErrors('diaChiNhan')} ? '' : 'display:none;'">
+			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			Please provide all information
+		</div>
+		<br><br>
+		<input type="hidden" th:id="tongGiaTri" th:field="*{tongGiaTri}">
+	</div>
+
+	<div class="col-md-6">
+		<br>
+		<p class="border-p" style="line-height:1.5;"><b>Cart</b></p>
+		<br>
+
+		<table class="table-cart-checkout mytable">
+			<thead>
+			<tr>
+				<th>Picture</th>
+				<th>Product</th>
+				<th>Price</th>
+				<th>Total</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="sanpham : ${cart}" style="text-align: center;">
+				<td>
+					<img th:src="@{/product_images/${sanpham.id}.png}" th:alt="${sanpham.id}"
+						 class="img-reponsive fix-size-img">
+				</td>
+				<td style="color:green" th:text="${sanpham.tenSanPham}"></td>
+				<td class="donGia">
+					<div class="check" style="display: inline-block;" th:text="${sanpham.donGia}"></div>
+					<div style="display: inline-block;" th:text="' x ' + ${quanity[sanpham.id]}"></div>
+				</td>
+				<td>
+					<div class="total" th:text="${sanpham.donGia * quanity[sanpham.id]}"></div>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<br>
+		<p>Total value of order: <b id="ordertotal"></b></p>
+		<br>
+		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+		<div>
+			<button class="btn btn-danger pull-center" type="submit" id="submit">Cash-on-delivery purchase</button>
+			<a th:href="@{/cart}" class="btn btn-primary">Return to cart</a>
+		</div>
+		<br><br>
+	</div>
+
+</form>
+
+
+<script th:src="@{/js/client/checkoutAjax.js}"></script>
+</body>
+</html>
