@@ -92,7 +92,7 @@ public class ClientController {
 			@RequestParam(defaultValue = "") String manufactor,
 			@RequestParam(defaultValue = "") String os,
 			@RequestParam(defaultValue = "") String ram,
-			@RequestParam(defaultValue = "") int pin,
+			@RequestParam(defaultValue = "0") int pin,
 			Model model) {
 		SearchSanPhamObject obj = new SearchSanPhamObject();
 		obj.setBrand(brand);
@@ -136,8 +136,8 @@ public class ClientController {
 		model.addAttribute("pageList", pagelist);
 
 		//Lay cac danh muc va hang san xuat tim thay
-		Set<String> hangsx = new HashSet<>();
-		Set<Integer> pinSet = new HashSet<>();
+		Set<String> hangsx = new HashSet<String>();
+		Set<Integer> pinSet = new HashSet<Integer>();
 		Iterable<SanPham> dum = sanPhamService.getSanPhamByTenDanhMuc(brand);
 		for (SanPham sp : dum) {
 			hangsx.add(sp.getHangSanXuat().getTenHangSanXuat());

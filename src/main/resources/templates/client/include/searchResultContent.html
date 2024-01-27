@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--TODO: duplicate of storeContent, need refactor with fragments-->
 <head>
-	<meta charset="UTF-8">
-	<title>HTML Boilerplate</title>
-	<link rel="stylesheet" th:href="@{/css/searchResult.css}">
+	<link rel="stylesheet" th:href="@{/css/searchResult.css}"/>
 	<link rel="stylesheet" th:href="@{/css/product_flex.css}">
 	<script th:src="@{/jquery/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/jquery/responsiveslides.min.js}"></script>
 	<script th:src="@{/js/client/accounting.min.js}"></script>
-	<script th:src="@{/js/client/store.js}"></script>
+	<script th:src="@{/js/client/add2cart.js}"></script>
+	<title>HTML Boilerplate</title>
 
-<!--	to format money into vnd, may remove-->
 	<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function () {
 			const elements = document.querySelectorAll(".changeToVND");
@@ -20,12 +19,36 @@
 		});
 	</script>
 </head>
-<body>
-<div class="clear"></div>
 
-<div style="display: flex;">
+<body>
+<div style="display:flex">
 	<div class="wrap">
 		<div class="content">
+			<h4>Search results:</h4>
+			<div class="top_area_list_page">
+				<div class="sort_pro">
+					<form action="">
+						<input type="hidden" name="name" th:value="${name}"/>
+						<input type="hidden" name="range" th:value="${range}"/>
+						<input type="hidden" name="brand" th:value="${brand}"/>
+						<input type="hidden" name="manufactor" th:value="${manufactor}"/>
+
+						<div class="inline">
+							<select name="sort" class="form-control">
+								<option value=""></option>
+								<option value="newest">Latest</option>
+								<option value="priceAsc">Price ascending</option>
+								<option value="priceDes">Price descending</option>
+							</select>
+						</div>
+
+						<div class="inline">
+							<button type="submit" class="search-submit">Sort</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
 			<div class="product_container">
 				<div class="section group" th:if="${#lists.isEmpty(list)}">
 					<h4>No search result</h4>
@@ -93,7 +116,8 @@
 								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
 							</a>
 							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-							<button th:onclick="addToCart(${sanpham.id})" class="btn btn-warning" type="button">
+							<button th:onclick="addToCart(${sanpham.id})"
+									class="btn btn-warning" type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
 							</button>
 							<h3></h3>
@@ -107,15 +131,14 @@
 								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
 							</a>
 							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
-									type="button">
+							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'"
+									class="btn btn-warning" type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
 							</button>
 							<h3></h3>
 						</div>
 					</div>
 				</div>
-
 			</div>
 
 			<div class="paging" th:if="${#lists.size(list) != 0}">
@@ -138,7 +161,6 @@
 				   th:href="@{/store(page=${currentPage+1},range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}">
 					Next</a>
 			</div>
-
 		</div>
 	</div>
 
@@ -200,10 +222,9 @@
 			<input type="hidden" name="brand" th:value="${brand}">
 			<input class="search-submit" type="submit" value="Filter">
 		</form>
-
 	</div>
+
 </div>
 
-<div class="clear"></div>
 </body>
 </html>
