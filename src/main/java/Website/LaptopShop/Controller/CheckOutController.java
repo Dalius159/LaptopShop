@@ -40,7 +40,7 @@ public class CheckOutController {
 	@GetMapping("/checkout")
 	public String checkoutPage(HttpServletRequest req, Model model) {
 		NguoiDung currentUser = getSessionUser(req);
-		Map<Long, String> quantity = new HashMap<>();
+		Map<Long, Long> quantity = new HashMap<>();
 		List<SanPham> listsp = new ArrayList<>();
 
 		GioHang g = gioHangService.getGioHangByNguoiDung(currentUser);
@@ -49,7 +49,7 @@ public class CheckOutController {
 
 		for (ChiMucGioHang c : listchimuc) {
 			listsp.add(c.getSanPham());
-			quantity.put(c.getSanPham().getId(), Integer.toString(c.getSoLuong()));
+			quantity.put(c.getSanPham().getId(), (long) c.getSoLuong());
 		}
 
 //      TODO: fix typo
@@ -73,7 +73,7 @@ public class CheckOutController {
 		NguoiDung currentUser = getSessionUser(req);
 		DonHang donhang = donHangService.findLatestDonHangByMaNguoiDat(currentUser.getId());
 		Map<Long, Long> quanity = new HashMap<>();
-		List<SanPham> listsp = new ArrayList<SanPham>();
+		List<SanPham> listsp = new ArrayList<>();
 
 		List<ChiTietDonHang> chiTietDonHangs = donhang.getDanhSachChiTiet();
 		for (ChiTietDonHang c : chiTietDonHangs) {
@@ -94,9 +94,9 @@ public class CheckOutController {
 		donhang.setTrangThaiDonHang("Đang chờ giao");
 
 		NguoiDung currentUser = getSessionUser(req);
-		Map<Long, String> quanity = new HashMap<Long, String>();
-		List<SanPham> listsp = new ArrayList<SanPham>();
-		List<ChiTietDonHang> listDetailDH = new ArrayList<ChiTietDonHang>();
+		Map<Long, Long> quanity = new HashMap<>();
+		List<SanPham> listsp = new ArrayList<>();
+		List<ChiTietDonHang> listDetailDH = new ArrayList<>();
 
 		donhang.setNguoiDat(currentUser);
 		System.out.println(donhang.getId());
@@ -112,7 +112,7 @@ public class CheckOutController {
 			listDetailDH.add(detailDH);
 
 			listsp.add(c.getSanPham());
-			quanity.put(c.getSanPham().getId(), Integer.toString(c.getSoLuong()));
+			quanity.put(c.getSanPham().getId(), (long) c.getSoLuong());
 		}
 
 		chiTietDonHangService.save(listDetailDH);
