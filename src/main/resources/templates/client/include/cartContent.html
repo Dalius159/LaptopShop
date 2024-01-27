@@ -47,7 +47,7 @@
 					<td class="covertPriceProduct" th:text="${sanpham.donGia}"></td>
 					<td>
 						<input class="input_num_cart" type="number" th:value="${quanity[sanpham.id]}" min="1"
-							   th:onchange="'changeQuanity(' + ${sanpham.id} + ', this.value, ' + ${sanpham.donGia} + ')'"/>
+							   th:onchange="'changeQuantity(' + ${sanpham.id} + ', this.value, ' + ${sanpham.donGia} + ')'"/>
 					</td>
 					<td><b><span class="total" th:id="'item' + ${sanpham.id} + '_total'"
 								 th:text="${sanpham.donGia * quanity[sanpham.id]}"></span></b></td>

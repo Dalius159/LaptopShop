@@ -89,7 +89,7 @@ public class CheckOutController {
 	}
 
 	public void SaveOrder(DonHang donhang, HttpServletRequest req, HttpServletResponse response, Model model, byte status) {
-		if (status == 1) {donhang.setGhiChu("Đã thanh toán");} else {donhang.setGhiChu("Thanh toán khi nhận hàng");}
+		if (status == 1) {donhang.setGhiChu("Đã thanh toán");} else {donhang.setGhiChu("Cash-on-delivery payment");}
 		donhang.setNgayDatHang(new Date());
 		donhang.setTrangThaiDonHang("Đang chờ giao");
 
