@@ -8,7 +8,7 @@ import java.util.Date;
 public class LienHeDTO {
     private long id;
 
-    @NotEmpty(message="Nội dung trả lời không được trống")
+    @NotEmpty(message="This field can't be empty!")
     private String noiDungTraLoi;
 
     private String tieuDe;

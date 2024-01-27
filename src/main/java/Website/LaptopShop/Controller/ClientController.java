@@ -181,7 +181,6 @@ public class ClientController {
 			bindingResult.getAllErrors().forEach((e) -> {System.err.println(e.getDefaultMessage());});
 			return "client/login";
 		}
-
 		nguoiDungService.saveUserForMember(nguoiDung);
 
 		securityService.autologin(nguoiDung.getEmail(), nguoiDung.getConfirmPassword());

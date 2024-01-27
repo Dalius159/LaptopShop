@@ -3,15 +3,17 @@ package Website.LaptopShop.Entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
-@Entity()
+@Entity
+@NoArgsConstructor
 @Data
 public class DonHang {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String diaChiNhan;
@@ -44,8 +46,4 @@ public class DonHang {
 
     @OneToMany(mappedBy = "donHang")
     private List<ChiTietDonHang> danhSachChiTiet;
-
-    public DonHang() {
-        // TODO Auto-generated constructor stub
-    }
 }

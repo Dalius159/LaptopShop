@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laptop Store</title>
+    <title>Laptop Shop</title>
     <link rel="stylesheet" th:href="@{/css/login.css}" href="login.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -70,7 +70,7 @@
                 <div class="input-box animation" style="--i:18; --j:1">
                     <input type="email" th:field="*{email}" required>
                     <label>Email</label>
-                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="validate-email" class="validation-message"></label>
+                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="validate-email" class="register-link validation-message"></label>
                     <i class='bx bxs-envelope'></i>
                 </div>
                 <div class="input-box animation" style="--i:19; --j:2">
@@ -115,19 +115,30 @@
         loginLink.onclick = () => {
             wrapper.classList.remove('active');
         }
-    </script>
 
-    <script>
         document.addEventListener("DOMContentLoaded", function() {
-            ['error', 'logout', 'unauthorized', 'success', 'validate-email', 'validate-password', 'validate-confirmPassword', 'validate-fullname'].forEach(showMessage);
-
+            ['error', 'logout', 'unauthorized', 'success'].forEach(showMessage);
             function showMessage(type) {
                 var element = document.getElementById(type);
                 if (element) {
                     element.style.cssText = 'display: block; opacity: 1;';
                     setTimeout(function() {
                         element.style.cssText = 'opacity: 0; display: none;';
-                    }, 8000);
+                    }, 2000);
+                }
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            ['validate-email', 'validate-password', 'validate-confirmPassword', 'validate-fullname'].forEach(showMessage);
+            function showMessage(type) {
+                var element = document.getElementById(type);
+                if (element) {
+                    wrapper.classList.add('active');
+                    element.style.cssText = 'display: block; opacity: 1;';
+                    setTimeout(function() {
+                        element.style.cssText = 'opacity: 0; display: none;';
+                    }, 5000);
                 }
             }
         });

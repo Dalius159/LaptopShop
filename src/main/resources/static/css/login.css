@@ -299,7 +299,6 @@ body {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     display: none;
-    
 }
 .error-message{
     background-color: #e57373;
@@ -310,9 +309,9 @@ body {
 
 .validation-message{
     position: absolute;
-    right: 0;
+    left: 0;
     transform: translateY(-50%);
-    width: 150px;
+    width: 200px;
     height: 50px;
     border-radius: 16px;
     text-align: center;

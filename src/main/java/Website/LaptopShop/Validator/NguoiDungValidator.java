@@ -23,13 +23,13 @@ public class NguoiDungValidator implements Validator {
 
         NguoiDung user = (NguoiDung) target;
 
-        ValidationUtils.rejectIfEmpty(errors, "email", "error.hoTen", "Họ tên không được bỏ trống");
+        ValidationUtils.rejectIfEmpty(errors, "email", "error.hoTen", "Fullname can't be empty");
         //ValidationUtils.rejectIfEmpty(errors, "soDienThoai", "error.soDienThoai", "Số điện thoại không được bỏ trống");
         //ValidationUtils.rejectIfEmpty(errors, "diaChi", "error.diaChi", "Địa chỉ không được bỏ trống");
 
         // validate cho email
         // check ko đc trống
-        ValidationUtils.rejectIfEmpty(errors, "email", "error.email", "Email không được trống");
+        ValidationUtils.rejectIfEmpty(errors, "email", "error.email", "Email can't be empty");
 
         // check địa chỉ email phù hợp hay không
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -52,7 +52,7 @@ public class NguoiDungValidator implements Validator {
 
         // check độ dài password (8-32)
         if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "error.password", "Length must be in 8-32");
+            errors.rejectValue("password", "error.password", "Length required: [8-32]");
         }
 
         // check match pass và confirmPass

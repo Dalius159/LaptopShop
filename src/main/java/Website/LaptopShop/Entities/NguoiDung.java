@@ -2,15 +2,13 @@ package Website.LaptopShop.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.List;
 import java.util.Set;
-@Entity()
+@Entity
 @Data
 @Table(name = "nguoi_dung", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class NguoiDung {
@@ -47,7 +45,10 @@ public class NguoiDung {
     @JsonIgnore
     private String confirmPassword;
 
-    public NguoiDung() {
-        // TODO Auto-generated constructor stub
+    public NguoiDung() {}
+
+    public NguoiDung(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 }
