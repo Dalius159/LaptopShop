@@ -52,9 +52,4 @@ public class LienHeServiceImpl implements LienHeService {
     public LienHe save(LienHe lh) {
         return Rep.save(lh);
     }
-
-    @Override
-    public int countByTrangThai(String trangThai) {
-        return Rep.countByTrangThai(trangThai);
-    }
 }

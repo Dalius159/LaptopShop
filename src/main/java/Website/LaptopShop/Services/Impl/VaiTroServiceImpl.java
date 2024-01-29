@@ -17,9 +17,4 @@ public class VaiTroServiceImpl implements VaiTroService {
     public VaiTro findByTenVaiTro(String tenVaiTro) {
         return Rep.findByTenVaiTro(tenVaiTro);
     }
-
-    @Override
-    public List<VaiTro> findAllVaiTro() {
-        return Rep.findAll();
-    }
 }

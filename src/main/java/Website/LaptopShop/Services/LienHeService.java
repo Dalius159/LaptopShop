@@ -12,6 +12,4 @@ public interface LienHeService {
     LienHe findById(long id);
 
     LienHe save(LienHe lh);
-
-    int countByTrangThai(String trangThai);
 }

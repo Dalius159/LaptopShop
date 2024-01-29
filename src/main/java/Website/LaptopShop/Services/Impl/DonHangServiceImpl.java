@@ -72,11 +72,6 @@ public class DonHangServiceImpl implements DonHangService {
     public List<DonHang> getDonHangByNguoiDung(NguoiDung ng) {return Rep.findByNguoiDat(ng);}
 
     @Override
-    public int countByTrangThaiDonHang(String trangThaiDonHang) {
-        return Rep.countByTrangThaiDonHang(trangThaiDonHang);
-    }
-
-    @Override
     public DonHang findLatestDonHangByMaNguoiDat(Long maNguoiDat) {
         return Rep.findLatestDonHangByMaNguoiDat(maNguoiDat);
     }

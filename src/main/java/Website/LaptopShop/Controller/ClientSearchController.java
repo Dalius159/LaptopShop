@@ -17,7 +17,6 @@ public class ClientSearchController {
 	@Autowired
 	private SanPhamService sanPhamService;
 
-
 	@GetMapping("search")
 	public String searchSP(@RequestParam(defaultValue = "1") int page,
 						   @RequestParam String name,
