@@ -17,7 +17,5 @@ public class VaiTro {
     @JsonIgnore
     @ManyToMany(mappedBy = "vaiTro")
     private Set<NguoiDung> nguoiDung;
-    public VaiTro() {
-        // TODO Auto-generated constructor stub
-    }
+    public VaiTro() {}
 }

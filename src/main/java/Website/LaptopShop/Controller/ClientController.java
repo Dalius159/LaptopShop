@@ -42,7 +42,7 @@ public class ClientController {
 
 	@Autowired
 	private SecurityService securityService;
-
+	
 	@ModelAttribute("loggedInUser")
 	public NguoiDung loggedInUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -52,10 +52,6 @@ public class ClientController {
 	@ModelAttribute("listDanhMuc")
 	public List<DanhMuc> listDanhMuc() {
 		return danhMucService.getAllDanhMuc();
-	}
-
-	public NguoiDung getSessionUser(HttpServletRequest request) {
-		return (NguoiDung) request.getSession().getAttribute("loggedInUser");
 	}
 
 	@GetMapping
@@ -181,7 +177,6 @@ public class ClientController {
 			bindingResult.getAllErrors().forEach((e) -> {System.err.println(e.getDefaultMessage());});
 			return "client/login";
 		}
-
 		nguoiDungService.saveUserForMember(nguoiDung);
 
 		securityService.autologin(nguoiDung.getEmail(), nguoiDung.getConfirmPassword());

@@ -11,8 +11,6 @@ import java.util.Set;
 public interface NguoiDungService {
     NguoiDung findByEmail(String email);
 
-    NguoiDung findByConfirmationToken(String confirmationToken);
-
     NguoiDung saveUserForMember(NguoiDung nd);
 
     NguoiDung findById(long id);
@@ -22,8 +20,6 @@ public interface NguoiDungService {
     void changePass(NguoiDung nd, String newPass);
 
     Page<NguoiDung> getNguoiDungByVaiTro(Set<VaiTro> vaiTro, int page);
-
-    List<NguoiDung> getNguoiDungByVaiTro(Set<VaiTro> vaiTro);
 
     NguoiDung saveUserForAdmin(TaiKhoanDTO dto);
 

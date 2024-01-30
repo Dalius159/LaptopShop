@@ -16,9 +16,6 @@ public class HangSanXuatServiceImpl implements HangSanXuatService {
     private HangSanXuatRepository Rep;
 
     @Override
-    public List<HangSanXuat> getALlHangSX() {return Rep.findAll();}
-
-    @Override
     public HangSanXuat getHSXById(long id) {return Rep.findById(id).get();}
 
     @Override

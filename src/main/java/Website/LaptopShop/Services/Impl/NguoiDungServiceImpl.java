@@ -35,11 +35,6 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     }
 
     @Override
-    public NguoiDung findByConfirmationToken(String confirmationToken) {
-        return null;
-    }
-
-    @Override
     public NguoiDung saveUserForMember(NguoiDung nd) {
         nd.setPassword(bCryptPasswordEncoder.encode(nd.getPassword()));
         Set<VaiTro> setVaiTro = new HashSet<>();
@@ -68,11 +63,6 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     @Override
     public Page<NguoiDung> getNguoiDungByVaiTro(Set<VaiTro> vaiTro, int page) {
         return nguoiDungRepo.findByVaiTroIn(vaiTro, PageRequest.of(page - 1, 6));
-    }
-
-    @Override
-    public List<NguoiDung> getNguoiDungByVaiTro(Set<VaiTro> vaiTro) {
-        return nguoiDungRepo.findByVaiTroIn(vaiTro);
     }
 
     @Override
