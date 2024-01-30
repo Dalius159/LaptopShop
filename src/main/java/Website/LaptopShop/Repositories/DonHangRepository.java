@@ -18,7 +18,6 @@ public interface DonHangRepository extends JpaRepository<DonHang, Long>, Queryds
             + " order by DATE_FORMAT(dh.ngayNhanHang, '%Y') asc" )
     public List<Object> layDonHangTheoThangVaNam();
     public List<DonHang> findByNguoiDat(NguoiDung nguoiDat);
-    public int countByTrangThaiDonHang(String trangThaiDonHang);
 
     @Query(value = "SELECT dh.* FROM don_hang dh WHERE dh.id = (SELECT MAX(dh2.id) FROM don_hang dh2 WHERE dh2.ma_nguoi_dat = :maNguoiDat)", nativeQuery = true)
     public DonHang findLatestDonHangByMaNguoiDat(@Param("maNguoiDat") Long maNguoiDat);
