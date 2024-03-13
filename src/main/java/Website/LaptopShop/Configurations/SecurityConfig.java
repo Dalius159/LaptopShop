@@ -8,6 +8,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,69 +17,56 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private AuthenticationSuccessHandler successHandler;
+	@Autowired
+	private AuthenticationSuccessHandler successHandler;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-
-    @Bean
-    BCryptPasswordEncoder passwordEncoder()
-    {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    DaoAuthenticationProvider authProvider()
-    {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    @Bean
-    AuthenticationManager authManager(HttpSecurity http) throws Exception
-    {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .authenticationProvider(authProvider())
-                .build();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(c -> c.disable())
-                .authorizeHttpRequests((requests) ->
-                {
-                    requests
-                            //.requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
-                            //.requestMatchers("/shipper/**").hasRole("ROLE_SHIPPER")
-                            .requestMatchers("/checkout", "/thankyou").hasRole("MEMBER")
-                            .requestMatchers("/**").permitAll();
-                })
-                .formLogin((form) ->
-                {
-                    form.loginPage("/login")
-                            .loginProcessingUrl("/login")
-                            .usernameParameter("email")
-                            .passwordParameter("password")
-                            .successHandler(successHandler)
-                            .failureUrl("/login?error");
-                })
-                .logout((logout) ->
-                {
-                    logout.logoutUrl("/logout")
-                            .logoutSuccessUrl("/login?logout");
-                })
-                .exceptionHandling((exceptionHandling) ->
-                {
-                    System.out.println(exceptionHandling.toString());
-                    exceptionHandling.accessDeniedPage("/login?accessDenied");
-                });
+	@Autowired
+	private UserDetailsService userDetailsService;
 
 
-        return http.build();
-    }
+	@Bean
+	BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	DaoAuthenticationProvider authProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
+
+	@Bean
+	AuthenticationManager authManager(HttpSecurity http) throws Exception {
+		return http.getSharedObject(AuthenticationManagerBuilder.class)
+				.authenticationProvider(authProvider())
+				.build();
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http
+				.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests((requests) -> requests
+						//.requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
+						//.requestMatchers("/shipper/**").hasRole("ROLE_SHIPPER")
+						.requestMatchers("/checkout", "/thankyou").hasRole("MEMBER")
+						.requestMatchers("/**").permitAll())
+				.formLogin((form) -> form.loginPage("/login")
+						.loginProcessingUrl("/login")
+						.usernameParameter("email")
+						.passwordParameter("password")
+						.successHandler(successHandler)
+						.failureUrl("/login?error"))
+				.logout((logout) -> logout.logoutUrl("/logout")
+						.logoutSuccessUrl("/login?logout"))
+				.exceptionHandling((exceptionHandling) -> {
+					System.out.println(exceptionHandling.toString());
+					exceptionHandling.accessDeniedPage("/login?accessDenied");
+				});
+
+
+		return http.build();
+	}
 }
