@@ -57,8 +57,16 @@
 				</div>
 			</div>
 		</div>
+
+		<br><br>
+		<div id="disqus_thread"></div>
 	</div>
 </div>
+
+<script th:inline="javascript">
+	var disqusSeed = [[${disqusSeed}]]
+	var product_id = [[${sp.id}]]
+</script>
 <script th:src="@{/js/client/detailspAjax.js}"></script>
 </body>
 </html>
