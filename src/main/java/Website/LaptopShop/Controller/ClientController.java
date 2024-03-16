@@ -57,7 +57,7 @@ public class ClientController {
 	@GetMapping
 	public String clientPage(Model model, HttpServletRequest request) {
 		model.addAttribute("request1", request);
-		model.addAttribute("test", "vip");
+//		model.addAttribute("test", "vip");
 		return "client/home";
 	}
 

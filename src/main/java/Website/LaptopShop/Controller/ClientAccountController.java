@@ -52,6 +52,7 @@ public class ClientAccountController {
         return "client/account";
     }
 
+    // TODO: obscure, need testing
     @GetMapping("/changeInformation")
     public String clientChangeInformationPage(HttpServletRequest res,Model model) {
         NguoiDung currentUser = getSessionUser(res);
@@ -59,6 +60,7 @@ public class ClientAccountController {
         return "client/information";
     }
 
+    // TODO: obscure, need testing
     @GetMapping("/changePassword")
     public String clientChangePasswordPage() {
         return "client/passwordChange";

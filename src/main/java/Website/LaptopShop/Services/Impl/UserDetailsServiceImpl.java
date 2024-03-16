@@ -35,8 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         for (VaiTro role : roles) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getTenVaiTro()));
         }
-        var user_temp = new User(username, user.getPassword(), grantedAuthorities);
 
-        return user_temp;
+        return new User(username, user.getPassword(), grantedAuthorities);
     }
 }

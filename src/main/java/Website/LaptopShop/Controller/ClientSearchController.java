@@ -1,21 +1,37 @@
 package Website.LaptopShop.Controller;
 
 import Website.LaptopShop.DTO.SearchSanPhamObject;
+import Website.LaptopShop.Entities.NguoiDung;
 import Website.LaptopShop.Entities.SanPham;
+import Website.LaptopShop.Services.NguoiDungService;
 import Website.LaptopShop.Services.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.*;
 
 @Controller
+@SessionAttributes("loggedInUser")
 public class ClientSearchController {
 	@Autowired
 	private SanPhamService sanPhamService;
+
+
+//	TODO: loggedInUser() function need to be declared in any controller using loggedInUser, need refactor
+	@Autowired
+	private NguoiDungService nguoiDungService;
+	@ModelAttribute("loggedInUser")
+	public NguoiDung loggedInUser() {
+		return nguoiDungService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+	}
 
 	@GetMapping("search")
 	public String searchSP(@RequestParam(defaultValue = "1") int page,
@@ -44,7 +60,7 @@ public class ClientSearchController {
 		model.addAttribute("manufactor", manufactor);
 		List<Integer> pagelist = new ArrayList<Integer>();
 
-		//Lap ra danh sach cac trang
+		// Page list, need refactoring
 		if (page == 1 || page == 2 || page == 3 || page == 4) {
 			for (int i = 2; i <= 5 && i <= totalPage; i++) {
 				pagelist.add(i);
