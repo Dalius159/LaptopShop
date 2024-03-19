@@ -26,8 +26,12 @@ public class ClientSearchController {
 
 
 //	TODO: loggedInUser() function need to be declared in any controller using loggedInUser, need refactor
+	private final NguoiDungService nguoiDungService;
+
 	@Autowired
-	private NguoiDungService nguoiDungService;
+	public ClientSearchController(NguoiDungService nguoiDungService){
+		this.nguoiDungService = nguoiDungService;
+	}
 	@ModelAttribute("loggedInUser")
 	public NguoiDung loggedInUser() {
 		return nguoiDungService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
