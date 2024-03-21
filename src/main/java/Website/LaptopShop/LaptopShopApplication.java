@@ -10,6 +10,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //	TODO: change codebase to english
 //	TODO: field injection to constructor injection
 
+//	TODO: thymeleaf - spring boot integration eliminate the need for model DTOs
+//	TODO: refactor thymeleaf fragments, dynamic images link for all, replace jquery responsive_slide with vanilla js
+//	TODO: change codebase to english
+//	TODO: field injection to constructor injection
+
 @SpringBootApplication
 @EnableJpaRepositories("Website.LaptopShop.Repositories")
 public class LaptopShopApplication {
