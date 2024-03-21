@@ -42,7 +42,7 @@ public class ClientController {
 
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@ModelAttribute("loggedInUser")
 	public NguoiDung loggedInUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -111,7 +111,7 @@ public class ClientController {
 		List<Integer> pagelist = new ArrayList<>();
 
 		//Lap ra danh sach cac trang
-		if (page == 1 || page == 2 || page == 3 || page == 4) {
+		if (page >= 1 && page < 4) {
 			for (int i = 2; i <= 5 && i <= totalPage; i++) {
 				pagelist.add(i);
 			}
@@ -132,16 +132,16 @@ public class ClientController {
 		model.addAttribute("pageList", pagelist);
 
 		//Lay cac danh muc va hang san xuat tim thay
-		Set<String> hangsx = new HashSet<String>();
-		Set<Integer> pinSet = new HashSet<Integer>();
-		Iterable<SanPham> dum = sanPhamService.getSanPhamByTenDanhMuc(brand);
-		for (SanPham sp : dum) {
-			hangsx.add(sp.getHangSanXuat().getTenHangSanXuat());
+		Set<String> manufacturer = new HashSet<>();
+		Set<Integer> pinSet = new HashSet<>();
+		Iterable<SanPham> products = sanPhamService.getSanPhamByTenDanhMuc(brand);
+		for (SanPham product : products) {
+			manufacturer.add(product.getHangSanXuat().getTenHangSanXuat());
 			if (brand.equals("Laptop")) {
-				pinSet.add(sp.getDungLuongPin_mAh());
+				pinSet.add(product.getDungLuongPin_mAh());
 			}
 		}
-		model.addAttribute("hangsx", hangsx);
+		model.addAttribute("hangsx", manufacturer);
 		model.addAttribute("pinSet", pinSet);
 		return "client/store";
 	}
@@ -150,7 +150,7 @@ public class ClientController {
 	public String detailspPage(@RequestParam int id, Model model) {
 		SanPham sp = sanPhamService.getSanPhamById(id);
 		model.addAttribute("sp", sp);
-		return "client/detailsp";
+		return "client/productDetail";
 	}
 
 	@GetMapping(value = "/logout")
@@ -169,12 +169,12 @@ public class ClientController {
 	}
 
 	@PostMapping("/register")
-	public String registerProcess(@ModelAttribute("newUser") @Valid NguoiDung nguoiDung, BindingResult bindingResult, Model model) {
+	public String registerProcess(@ModelAttribute("newUser") @Valid NguoiDung nguoiDung, BindingResult bindingResult) {
 
 		nguoiDungValidator.validate(nguoiDung, bindingResult);
 
 		if (bindingResult.hasErrors()) {
-			bindingResult.getAllErrors().forEach((e) -> {System.err.println(e.getDefaultMessage());});
+			bindingResult.getAllErrors().forEach((e) -> System.err.println(e.getDefaultMessage()));
 			return "client/login";
 		}
 		nguoiDungService.saveUserForMember(nguoiDung);

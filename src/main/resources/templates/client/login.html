@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laptop Shop</title>
     <link rel="stylesheet" th:href="@{/css/login.css}" href="/css/login.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link th:href="@{/css/boxicons.min.css}" rel='stylesheet'>
 </head>
 
 <body>
@@ -93,7 +93,7 @@
                 </div>
                 <button type="submit" class="btn animation" style="--i:22; --j:5">Sign up</button>
                 <div class="logreg-link animation" style="--i:23; --j:6">
-                    <p>Already have an acount? 
+                    <p>Already have an account?
                     <a class="login-link">Login</a>
                     </p>
                 </div>
@@ -119,7 +119,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             ['error', 'logout', 'unauthorized', 'success'].forEach(showMessage);
             function showMessage(type) {
-                var element = document.getElementById(type);
+                const element = document.getElementById(type);
                 if (element) {
                     element.style.cssText = 'display: block; opacity: 1;';
                     setTimeout(function() {
@@ -132,7 +132,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             ['validate-email', 'validate-password', 'validate-confirmPassword', 'validate-fullname'].forEach(showMessage);
             function showMessage(type) {
-                var element = document.getElementById(type);
+                const element = document.getElementById(type);
                 if (element) {
                     wrapper.classList.add('active');
                     element.style.cssText = 'display: block; opacity: 1;';

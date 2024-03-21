@@ -7,7 +7,6 @@ import Website.LaptopShop.Services.NguoiDungService;
 import Website.LaptopShop.Services.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,10 +61,10 @@ public class ClientSearchController {
 		model.addAttribute("range", range);
 		model.addAttribute("brand", brand);
 		model.addAttribute("manufactor", manufactor);
-		List<Integer> pagelist = new ArrayList<Integer>();
+		List<Integer> pagelist = new ArrayList<>();
 
 		// Page list, need refactoring
-		if (page == 1 || page == 2 || page == 3 || page == 4) {
+		if (page >= 1 && page < 4) {
 			for (int i = 2; i <= 5 && i <= totalPage; i++) {
 				pagelist.add(i);
 			}
@@ -86,8 +85,8 @@ public class ClientSearchController {
 		model.addAttribute("pageList", pagelist);
 
 		//Lay cac danh muc va hang san xuat tim thay
-		Set<String> danhmuc = new HashSet<String>();
-		Set<String> hangsx = new HashSet<String>();
+		Set<String> danhmuc = new HashSet<>();
+		Set<String> hangsx = new HashSet<>();
 		Iterable<SanPham> dum = sanPhamService.getSanPhamByTenSanPhamWithoutPaginate(obj);
 		for (SanPham sp : dum) {
 			danhmuc.add(sp.getDanhMuc().getTenDanhMuc());
