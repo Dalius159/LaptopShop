@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">>
+    <title>Laptop Shop</title>
+</head>
+<body>
+<div th:insert="~{/client/include/homeHeader}"></div>
+
+
+<script th:src="@{/js/client/information.js}"></script>
+<script th:src="@{/js/client/password.js}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".mytable .tongGiaTri ").each(function() {
+            var value = accounting.formatMoney($(this).text());
+            console.log(value)
+            $(this).html(value);
+        });
+    });
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <br>
+            <p style="font-size: 20px">
+                <b>Account Information:</b>
+            </p>
+            <br>
+            <h3 style="line-height: 2;">
+                <span th:text="${user.hoTen}" style="font-weight: bold"></span>
+            </h3>
+            <h3 style="line-height: 2;">
+                <span th:text="${user.soDienThoai}" style="font-weight: bold"></span>
+            </h3>
+            <h3 style="line-height: 2;">
+                <span th:text="${user.email}" style="font-weight: bold"></span>
+            </h3>
+            <h3 style="line-height: 2;">
+                <span th:text="${user.diaChi}" style="font-weight: bold"></span>
+            </h3>
+            <br>
+            <a class="btn btn-primary" data-toggle="modal" data-target="#modalInformation">Update Personer Information</a>
+            &nbsp; &nbsp; &nbsp;
+            <a class="btn btn-danger" data-toggle="modal" data-target="#modalChangePassword">Change Password</a>
+            <br> <br>
+            <br>
+            <h3>
+                <b>Lịch sử mua hàng:</b>
+            </h3>
+            <br>
+            <table class="table-cart-checkout mytable">
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Ngày mua</th>
+                    <th>Ngày giao hàng</th>
+                    <th>Ngày nhận hàng</th>
+                    <th>Sản phẩm</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái đơn hàng</th>
+                </tr>
+                <tr th:each="donHang : ${list}">
+                    <td th:text="${donHang.id}" style="text-align: center"></td>
+                    <td th:text="${donHang.ngayDatHang}" style="text-align: center"></td>
+                    <td th:text="${donHang.ngayGiaoHang}" style="text-align: center"></td>
+                    <td th:text="${donHang.ngayNhanHang}" style="text-align: center"></td>
+                    <td>
+            <span th:each="chiTiet : ${donHang.danhSachChiTiet}">
+                <p>
+                    <a th:href="@{'/sp?id=' + ${chiTiet.sanPham.id}}" th:text="${chiTiet.sanPham.tenSanPham}"></a>
+                    <br>
+                </p>
+                <p th:if="${donHang.trangThaiDonHang == 'Đang chờ giao' or donHang.trangThaiDonHang == 'Đang giao'}">Số lượng: <span th:text="${chiTiet.soLuongDat}"></span></p>
+                <p th:unless="${donHang.trangThaiDonHang == 'Đang chờ giao' or donHang.trangThaiDonHang == 'Đang giao'}">Số lượng: <span th:text="${chiTiet.soLuongNhanHang}"></span></p>
+                <hr>
+            </span>
+                    </td>
+                    <td class="tongGiaTri" th:text="${tongGiaTri}" style="text-align: center"></td>
+                    <td th:text="${donHang.trangThaiDonHang}" style="text-align: center"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <b>Update Account Information</b>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label style="line-height: 2">Họ tên khách hàng:</label><br>
+                    <label id="nameWarning" style="color: red"></label>
+                    <input class="form-control" id="name" name="name" type="text" th:value="${user.hoTen}">
+                </div>
+                <div class="form-group">
+                    <label style="line-height: 2">Số điện thoại:</label><br>
+                    <label id="phoneWarning" style="color: red"></label>
+                    <input class="form-control" id="phone" name="phone" type="text" th:value="${user.soDienThoai}">
+                </div>
+                <div class="form-group">
+                    <label style="line-height: 2">Địa chỉ:</label><br>
+                    <label id="addressWarning" style="color: red"></label>
+                    <textarea rows="3" cols="1" class="form-control" id="address" th:text="${user.diaChi}"></textarea>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" th:onclick="|changeInformation()|">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalChangePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">
+                    <b>Change Password</b>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label style="line-height: 2">Mật khẩu cũ*:</label><br>
+                    <label id="oldWarning" style="color: red"></label>
+                    <input class="form-control" id="old" name="old" type="password">
+                </div>
+                <div class="form-group">
+                    <label style="line-height: 2">Mật khẩu mới*:</label><br>
+                    <label id="new1Warning" style="color: red"></label>
+                    <input class="form-control" id="new1" name="new1" type="password">
+                </div>
+                <div class="form-group">
+                    <label style="line-height: 2">Xác nhận lại mật khẩu mới*:</label><br>
+                    <label id="new2Warning" style="color: red"></label>
+                    <input class="form-control" id="new2" name="new2" type="password">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" th:onclick="|changePass()|">Đổi mật khẩu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="~{/client/include/homeFooter :: footer}"></div>
+</body>
+</html>

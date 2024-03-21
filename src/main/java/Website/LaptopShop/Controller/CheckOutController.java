@@ -54,7 +54,7 @@ public class CheckOutController {
 
 //      TODO: fix typo
 		model.addAttribute("cart", listsp);
-		model.addAttribute("quanity", quantity);
+		model.addAttribute("quantity", quantity);
 		model.addAttribute("user", currentUser);
 		model.addAttribute("donhang", new DonHang());
 
@@ -72,18 +72,18 @@ public class CheckOutController {
 	public String thankyouPage(HttpServletRequest req, Model model) {
 		NguoiDung currentUser = getSessionUser(req);
 		DonHang donhang = donHangService.findLatestDonHangByMaNguoiDat(currentUser.getId());
-		Map<Long, Long> quanity = new HashMap<>();
+		Map<Long, Long> quantity = new HashMap<>();
 		List<SanPham> listsp = new ArrayList<>();
 
 		List<ChiTietDonHang> chiTietDonHangs = donhang.getDanhSachChiTiet();
 		for (ChiTietDonHang c : chiTietDonHangs) {
 			listsp.add(c.getSanPham());
-			quanity.put(c.getSanPham().getId(), (long) c.getSoLuongDat());
+			quantity.put(c.getSanPham().getId(), (long) c.getSoLuongDat());
 		}
 
 		model.addAttribute("donhang", donhang);
 		model.addAttribute("cart", listsp);
-		model.addAttribute("quanity", quanity);
+		model.addAttribute("quantity", quantity);
 
 		return "client/thank-you";
 	}

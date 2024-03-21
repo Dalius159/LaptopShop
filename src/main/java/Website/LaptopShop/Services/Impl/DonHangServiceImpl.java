@@ -35,9 +35,9 @@ public class DonHangServiceImpl implements DonHangService {
         }
 
         if (!tuNgay.equals("") && tuNgay != null) {
-            if (trangThaiDon.equals("") || trangThaiDon.equals("Đang chờ giao") || trangThaiDon.equals("Đã hủy")) {
+            if (trangThaiDon.equals("") || trangThaiDon.equals("Waiting for delivery") || trangThaiDon.equals("Cancelled")) {
                 builder.and(QDonHang.donHang.ngayDatHang.goe(formatDate.parse(tuNgay)));
-            } else if (trangThaiDon.equals("Đang giao")) {
+            } else if (trangThaiDon.equals("Delivering")) {
                 builder.and(QDonHang.donHang.ngayGiaoHang.goe(formatDate.parse(tuNgay)));
             } else { // hoàn thành
                 builder.and(QDonHang.donHang.ngayNhanHang.goe(formatDate.parse(tuNgay)));
@@ -45,9 +45,9 @@ public class DonHangServiceImpl implements DonHangService {
         }
 
         if (!denNgay.equals("") && denNgay != null) {
-            if (trangThaiDon.equals("") || trangThaiDon.equals("Đang chờ giao") || trangThaiDon.equals("Đã hủy")) {
+            if (trangThaiDon.equals("") || trangThaiDon.equals("Waiting for delivery") || trangThaiDon.equals("Cancelled")) {
                 builder.and(QDonHang.donHang.ngayDatHang.loe(formatDate.parse(denNgay)));
-            } else if (trangThaiDon.equals("Đang giao")) {
+            } else if (trangThaiDon.equals("Delivering")) {
                 builder.and(QDonHang.donHang.ngayGiaoHang.loe(formatDate.parse(denNgay)));
             } else { // hoàn thành
                 builder.and(QDonHang.donHang.ngayNhanHang.loe(formatDate.parse(denNgay)));

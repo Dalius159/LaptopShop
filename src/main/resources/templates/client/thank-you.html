@@ -54,10 +54,10 @@
 						<td style="color:green" th:text="${sanpham.tenSanPham}"></td>
 						<td class="donGia">
 							<div class="check" style="display: inline-block;"
-								 th:text="${sanpham.donGia} + ' x ' + ${quanity[sanpham.id]}"></div>
+								 th:text="${sanpham.donGia} + ' x ' + ${quantity[sanpham.id]}"></div>
 						</td>
 						<td>
-							<div class="total" th:text="${sanpham.donGia * quanity[sanpham.id]}"></div>
+							<div class="total" th:text="${sanpham.donGia * quantity[sanpham.id]}"></div>
 						</td>
 					</tr>
 				</th:block>

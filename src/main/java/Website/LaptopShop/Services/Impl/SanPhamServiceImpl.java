@@ -61,6 +61,33 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     }
 
+    public void FilterByPrice(String price, BooleanBuilder builder){
+        // tim theo don gia
+        switch (price) {
+            case "Under 400":
+                builder.and(QSanPham.sanPham.donGia.lt(400));
+                break;
+
+            case "400 - 800":
+                builder.and(QSanPham.sanPham.donGia.between(400, 800));
+                break;
+
+            case "800 - 1200":
+                builder.and(QSanPham.sanPham.donGia.between(800, 1200));
+                break;
+
+            case "1200 - 1600":
+                builder.and(QSanPham.sanPham.donGia.between(1200, 1600));
+                break;
+
+            case "Above 1000":
+                builder.and(QSanPham.sanPham.donGia.gt(1600));
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     public Page<SanPham> getAllSanPhamByFilter(SearchSanPhamObject object, int page, int limit) {
         BooleanBuilder builder = new BooleanBuilder();
@@ -82,30 +109,7 @@ public class SanPhamServiceImpl implements SanPhamService {
         }
 
         // tim theo don gia
-        switch (price) {
-            case "duoi-2-trieu":
-                builder.and(QSanPham.sanPham.donGia.lt(2000000));
-                break;
-
-            case "2-trieu-den-4-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(2000000, 4000000));
-                break;
-
-            case "4-trieu-den-6-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(4000000, 6000000));
-                break;
-
-            case "6-trieu-den-10-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(6000000, 10000000));
-                break;
-
-            case "tren-10-trieu":
-                builder.and(QSanPham.sanPham.donGia.gt(10000000));
-                break;
-
-            default:
-                break;
-        }
+        FilterByPrice(price, builder);
         return sanPhamRepo.findAll(builder, PageRequest.of(page, limit, sort));
     }
 
@@ -116,9 +120,7 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     public Iterable<SanPham> getSanPhamByTenSanPhamWithoutPaginate(SearchSanPhamObject object) {
         BooleanBuilder builder = new BooleanBuilder();
-        int resultPerPage = 12;
         String[] keywords = object.getKeyword();
-        String sort = object.getSort();
         String price = object.getDonGia();
         // Keyword
         builder.and(QSanPham.sanPham.tenSanPham.like("%" + keywords[0] + "%"));
@@ -127,45 +129,18 @@ public class SanPhamServiceImpl implements SanPhamService {
                 builder.and(QSanPham.sanPham.tenSanPham.like("%" + keywords[i] + "%"));
             }
         }
-        // Muc gia
-        switch (price) {
-            case "duoi-2-trieu":
-                builder.and(QSanPham.sanPham.donGia.lt(2000000));
-                break;
-
-            case "2-trieu-den-4-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(2000000, 4000000));
-                break;
-
-            case "4-trieu-den-6-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(4000000, 6000000));
-                break;
-
-            case "6-trieu-den-10-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(6000000, 10000000));
-                break;
-
-            case "tren-10-trieu":
-                builder.and(QSanPham.sanPham.donGia.gt(10000000));
-                break;
-
-            default:
-                break;
-        }
+        FilterByPrice(price, builder);
         return sanPhamRepo.findAll(builder);
     }
 
     @Override
-    public SanPham getSanPhamById(long id) {
-        return sanPhamRepo.findById(id).get();
-    }
+    public SanPham getSanPhamById(long id) {return sanPhamRepo.findById(id).get();}
 
     // Tim kiem san pham theo keyword, sap xep, phan trang, loc theo muc gia, lay 12
     // san pham moi trang
     @Override
     public Page<SanPham> getSanPhamByTenSanPham(SearchSanPhamObject object, int page, int resultPerPage) {
         BooleanBuilder builder = new BooleanBuilder();
-//		int resultPerPage = 12;
         String[] keywords = object.getKeyword();
         String sort = object.getSort();
         String price = object.getDonGia();
@@ -179,30 +154,7 @@ public class SanPhamServiceImpl implements SanPhamService {
             }
         }
         // Muc gia
-        switch (price) {
-            case "duoi-2-trieu":
-                builder.and(QSanPham.sanPham.donGia.lt(2000000));
-                break;
-
-            case "2-trieu-den-4-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(2000000, 4000000));
-                break;
-
-            case "4-trieu-den-6-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(4000000, 6000000));
-                break;
-
-            case "6-trieu-den-10-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(6000000, 10000000));
-                break;
-
-            case "tren-10-trieu":
-                builder.and(QSanPham.sanPham.donGia.gt(10000000));
-                break;
-
-            default:
-                break;
-        }
+        FilterByPrice(price, builder);
 
         // Danh muc va hang san xuat
         if (brand.length()>1) {
@@ -244,30 +196,7 @@ public class SanPhamServiceImpl implements SanPhamService {
         String ram = object.getRam();
         int pin = object.getPin();
         // Muc gia
-        switch (price) {
-            case "duoi-2-trieu":
-                builder.and(QSanPham.sanPham.donGia.lt(2000000));
-                break;
-
-            case "2-trieu-den-4-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(2000000, 4000000));
-                break;
-
-            case "4-trieu-den-6-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(4000000, 6000000));
-                break;
-
-            case "6-trieu-den-10-trieu":
-                builder.and(QSanPham.sanPham.donGia.between(6000000, 10000000));
-                break;
-
-            case "tren-10-trieu":
-                builder.and(QSanPham.sanPham.donGia.gt(10000000));
-                break;
-
-            default:
-                break;
-        }
+        FilterByPrice(price, builder);
 
         // Danh muc va hang san xuat
         if (brand.length()>1) {

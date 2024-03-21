@@ -12,5 +12,4 @@ import java.util.Set;
 public interface NguoiDungRepository extends JpaRepository<NguoiDung, Long> {
     NguoiDung findByEmail(String email);
     Page<NguoiDung> findByVaiTroIn(Set<VaiTro> vaiTro, Pageable of);
-    List<NguoiDung> findByVaiTroIn(Set<VaiTro> vaiTro);
 }

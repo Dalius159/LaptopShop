@@ -31,7 +31,7 @@
 						<input type="hidden" name="name" th:value="${name}"/>
 						<input type="hidden" name="range" th:value="${range}"/>
 						<input type="hidden" name="brand" th:value="${brand}"/>
-						<input type="hidden" name="manufactor" th:value="${manufactor}"/>
+						<input type="hidden" name="manufacturer" th:value="${manufacturer}"/>
 
 						<div class="inline">
 							<select name="sort" class="form-control">
@@ -143,22 +143,22 @@
 
 			<div class="paging" th:if="${#lists.size(list) != 0}">
 				<a th:if="${currentPage != 1}"
-				   th:href="'@{/store(page=' + ${currentPage - 1 } + ',range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}'">
+				   th:href="'@{/store(page=' + ${currentPage - 1 } + ',range=${range},brand=${brand},manufacturer=${manufacturer},os=${os},ram=${ram},pin=${pin})}'">
 					Back</a>
 				<a th:if="${currentPage == 1}" class="current">1</a>
 				<a th:if="${currentPage != 1}"
-				   th:href="@{/store(page=1,range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}">
+				   th:href="@{/store(page=1,range=${range},brand=${brand},manufacturer=${manufacturer},os=${os},ram=${ram},pin=${pin})}">
 					1</a>
 
 				<th:block th:each="pg : ${pageList}" th:status="loop">
 					<a th:if="${currentPage == pg}" class="current" th:text="${pg}"></a>
 					<a th:if="${currentPage != pg}"
-					   th:href="@{/store(page=${pg},range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}"
+					   th:href="@{/store(page=${pg},range=${range},brand=${brand},manufacturer=${manufacturer},os=${os},ram=${ram},pin=${pin})}"
 					   th:text="${pg}"></a>
 				</th:block>
 
 				<a th:if="${currentPage != totalPage}"
-				   th:href="@{/store(page=${currentPage+1},range=${range},brand=${brand},manufactor=${manufactor},os=${os},ram=${ram},pin=${pin})}">
+				   th:href="@{/store(page=${currentPage+1},range=${range},brand=${brand},manufacturer=${manufacturer},os=${os},ram=${ram},pin=${pin})}">
 					Next</a>
 			</div>
 		</div>
@@ -182,9 +182,9 @@
 			</div>
 			<p>Manufacturer</p>
 			<div class="select-range">
-				<select name="manufactor" class="form-control">
+				<select name="manufacturer" class="form-control">
 					<option value="">All manufacturer</option>
-					<option th:each="manufactor : ${hangsx}" th:value="${manufactor}" th:text="${manufactor}"></option>
+					<option th:each="manufacturer : ${hangsx}" th:value="${manufacturer}" th:text="${manufacturer}"></option>
 				</select>
 			</div>
 			<div th:if="${brand == 'Laptop'}">

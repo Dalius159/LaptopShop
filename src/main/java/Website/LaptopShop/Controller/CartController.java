@@ -111,10 +111,9 @@ public class CartController {
 			ClearUpRightBeforeCheckout(req, res);
 		}
 
-//		TODO: fix typo
 		model.addAttribute("checkEmpty", listsp.size());
 		model.addAttribute("cart", listsp);
-		model.addAttribute("quanity", quantity);
+		model.addAttribute("quantity", quantity);
 
 
 		return "client/cart";
