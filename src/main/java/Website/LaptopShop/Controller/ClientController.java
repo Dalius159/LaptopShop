@@ -155,7 +155,7 @@ public class ClientController {
 		SanPham sp = sanPhamService.getSanPhamById(id);
 		model.addAttribute("sp", sp);
 		model.addAttribute("disqusSeed", disqusSeed);
-		return "client/detailsp";
+		return "client/productDetail";
 	}
 
 	@GetMapping(value = "/logout")
