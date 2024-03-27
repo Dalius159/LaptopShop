@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -146,11 +147,15 @@ public class ClientController {
 		return "client/store";
 	}
 
+	@Value("${disqus.seed}")
+	private String disqusSeed;
+
 	@GetMapping("/sp")
 	public String detailspPage(@RequestParam int id, Model model) {
 		SanPham sp = sanPhamService.getSanPhamById(id);
 		model.addAttribute("sp", sp);
-		return "client/productDetail";
+		model.addAttribute("disqusSeed", disqusSeed);
+		return "client/detailsp";
 	}
 
 	@GetMapping(value = "/logout")
