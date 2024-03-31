@@ -1,13 +1,13 @@
 package Website.LaptopShop.Controller;
 
-import Website.LaptopShop.Entities.ChiMucGioHang;
-import Website.LaptopShop.Entities.GioHang;
-import Website.LaptopShop.Entities.NguoiDung;
-import Website.LaptopShop.Entities.SanPham;
-import Website.LaptopShop.Services.ChiMucGioHangService;
-import Website.LaptopShop.Services.GioHangService;
-import Website.LaptopShop.Services.NguoiDungService;
-import Website.LaptopShop.Services.SanPhamService;
+import Website.LaptopShop.Entities.CartPointer;
+import Website.LaptopShop.Entities.Cart;
+import Website.LaptopShop.Entities.Users;
+import Website.LaptopShop.Entities.Product;
+import Website.LaptopShop.Services.CartPointerService;
+import Website.LaptopShop.Services.CartService;
+import Website.LaptopShop.Services.UserService;
+import Website.LaptopShop.Services.ProductService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,32 +26,32 @@ import java.util.*;
 @SessionAttributes("loggedInUser")
 public class CartController {
 	@Autowired
-	private SanPhamService sanPhamService;
+	private ProductService productService;
 	@Autowired
-	private NguoiDungService nguoiDungService;
+	private UserService userService;
 	@Autowired
-	private GioHangService gioHangService;
+	private CartService cartService;
 	@Autowired
-	private ChiMucGioHangService chiMucGioHangService;
+	private CartPointerService cartPointerService;
 
 	@ModelAttribute("loggedInUser")
-	public NguoiDung loggedInUser() {
+	public Users loggedInUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return nguoiDungService.findByEmail(auth.getName());
+		return userService.findByEmail(auth.getName());
 	}
 
-	public NguoiDung getSessionUser(HttpServletRequest request) {
-		return (NguoiDung) request.getSession().getAttribute("loggedInUser");
+	public Users getSessionUser(HttpServletRequest request) {
+		return (Users) request.getSession().getAttribute("loggedInUser");
 	}
 
 	@GetMapping("/cart")
 	public String cartPage(HttpServletRequest req, HttpServletResponse res, Model model) {
-		NguoiDung currentUser = getSessionUser(req);
+		Users currentUser = getSessionUser(req);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Map<Long, Long> quantity = new HashMap<>();
-		List<SanPham> listsp = new ArrayList<>();
+		List<Product> productList = new ArrayList<>();
 		Cookie[] cl = req.getCookies();
-		//Lay tu cookie
+		//Get from cookie
 		if (auth == null || auth.getPrincipal() == "anonymousUser") {
 
 			Set<Long> idList = new HashSet<>();
@@ -62,57 +62,57 @@ public class CartController {
 				}
 
 			}
-			listsp = sanPhamService.getAllSanPhamByList(idList);
-			//Lay tu database
+			productList = productService.getAllProductByList(idList);
+			//get from database
 		} else {
-			GioHang g = gioHangService.getGioHangByNguoiDung(currentUser);
+			Cart g = cartService.getCartByUser(currentUser);
 			if (g == null) {
-				g = new GioHang();
-				g.setNguoiDung(currentUser);
-				gioHangService.save(g);
+				g = new Cart();
+				g.setUser(currentUser);
+				cartService.save(g);
 			}
-			List<ChiMucGioHang> listchimuc = chiMucGioHangService.getChiMucGioHangByGioHang(g);
-			ChiMucGioHang chiMucGioHang;
+			List<CartPointer> cartPointerList = cartPointerService.getCartPointerByCart(g);
+			CartPointer cartPointer;
 			int flag;
-			var soLuong = 1;
+			var quantity2 = 1;
 			for (Cookie cookie : cl) {
 				flag = 0;
 				if (cookie.getName().matches("[0-9]+")) {
 					long id = Long.parseLong(cookie.getName());
-					soLuong = Integer.parseInt(cookie.getValue());
-					for (ChiMucGioHang mucGioHang : listchimuc) {
-						chiMucGioHang = mucGioHang;
-						if (id == chiMucGioHang.getSanPham().getId()) {
-							chiMucGioHang.setSoLuong(chiMucGioHang.getSoLuong() + soLuong);
+					quantity2 = Integer.parseInt(cookie.getValue());
+					for (CartPointer point : cartPointerList) {
+						cartPointer = point;
+						if (id == cartPointer.getProduct().getId()) {
+							cartPointer.setQuantity(cartPointer.getQuantity() + quantity2);
 							flag = 1;
 							break;
 						}
 
-						chiMucGioHangService.saveChiMucGiohang(chiMucGioHang);
+						cartPointerService.saveCartPointer(cartPointer);
 					}
 
 					if (flag == 0) {
-						chiMucGioHang = new ChiMucGioHang();
-						chiMucGioHang.setGioHang(g);
-						chiMucGioHang.setSanPham(sanPhamService.getSanPhamById(id));
-						chiMucGioHang.setSoLuong(soLuong);
-						listchimuc.add(chiMucGioHang);
+						cartPointer = new CartPointer();
+						cartPointer.setCart(g);
+						cartPointer.setProduct(productService.getProductById(id));
+						cartPointer.setQuantity(quantity2);
+						cartPointerList.add(cartPointer);
 
-						chiMucGioHangService.saveChiMucGiohang(chiMucGioHang);
+						cartPointerService.saveCartPointer(cartPointer);
 					}
 				}
 			}
 
-			for (ChiMucGioHang c : listchimuc) {
-				listsp.add(c.getSanPham());
-				quantity.put(c.getSanPham().getId(), (long) c.getSoLuong());
+			for (CartPointer c : cartPointerList) {
+				productList.add(c.getProduct());
+				quantity.put(c.getProduct().getId(), (long) c.getQuantity());
 			}
 
 			ClearUpRightBeforeCheckout(req, res);
 		}
 
-		model.addAttribute("checkEmpty", listsp.size());
-		model.addAttribute("cart", listsp);
+		model.addAttribute("checkEmpty", productList.size());
+		model.addAttribute("cart", productList);
 		model.addAttribute("quantity", quantity);
 
 

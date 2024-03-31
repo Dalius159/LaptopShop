@@ -28,11 +28,11 @@
 			<p><b>Your order has been placed successfully</b></p><br>
 			<p>Order details:</p><br>
 			<p><b>ID/Order Code: </b><span th:text="${donhang.getId()}"></span></p><br>
-			<p><b>Recipient's Name: </b><span th:text="${donhang.getHoTenNguoiNhan()}"></span></p><br>
-			<p><b>Phone Number: </b><span th:text="${donhang.getSdtNhanHang()}"></span></p><br>
-			<p><b>Address: </b><span th:text="${donhang.getDiaChiNhan()}"></span></p><br>
-			<p><b>Notes: </b><span th:text="${donhang.getGhiChu()}"></span></p><br>
-			<p>At <span th:text="${donhang.getNgayDatHang()}"></span>, we received an order with the following products:
+			<p><b>Recipient's Name: </b><span th:text="${donhang.getReceiver()}"></span></p><br>
+			<p><b>Phone Number: </b><span th:text="${donhang.getReceivedPhone()}"></span></p><br>
+			<p><b>Address: </b><span th:text="${donhang.getReceiveAddress()}"></span></p><br>
+			<p><b>Notes: </b><span th:text="${donhang.getNote()}"></span></p><br>
+			<p>At <span th:text="${donhang.getOrderDate()}"></span>, we received an order with the following products:
 			</p><br>
 
 			<table class="table-cart-checkout mytable">
@@ -51,13 +51,13 @@
 							<img th:src="@{/product_images/{id}.png(id=${sanpham.id})}" th:alt="${sanpham.id}"
 								 class="img-reponsive fix-size-img">
 						</td>
-						<td style="color:green" th:text="${sanpham.tenSanPham}"></td>
+						<td style="color:green" th:text="${sanpham.getProductName}"></td>
 						<td class="donGia">
 							<div class="check" style="display: inline-block;"
-								 th:text="${sanpham.donGia} + ' x ' + ${quantity[sanpham.id]}"></div>
+								 th:text="${sanpham.getPrice} + ' x ' + ${quantity[sanpham.id]}"></div>
 						</td>
 						<td>
-							<div class="total" th:text="${sanpham.donGia * quantity[sanpham.id]}"></div>
+							<div class="total" th:text="${sanpham.getPrice * quantity[sanpham.id]}"></div>
 						</td>
 					</tr>
 				</th:block>

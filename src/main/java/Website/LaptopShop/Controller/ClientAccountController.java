@@ -3,10 +3,10 @@ package Website.LaptopShop.Controller;
 
 import Website.LaptopShop.DTO.PasswordDTO;
 import Website.LaptopShop.DTO.ResponseObject;
-import Website.LaptopShop.Entities.DonHang;
-import Website.LaptopShop.Entities.NguoiDung;
-import Website.LaptopShop.Services.DonHangService;
-import Website.LaptopShop.Services.NguoiDungService;
+import Website.LaptopShop.Entities.Orders;
+import Website.LaptopShop.Entities.Users;
+import Website.LaptopShop.Services.OrderService;
+import Website.LaptopShop.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,29 +24,29 @@ import java.util.List;
 @RequestMapping("/")
 public class ClientAccountController {
     @Autowired
-    private NguoiDungService nguoiDungService;
+    private UserService userService;
 
     @Autowired
-    private DonHangService donHangService;
+    private OrderService orderService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @ModelAttribute("loggedInUser")
-    public NguoiDung loggedInUser() {
+    public Users loggedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return nguoiDungService.findByEmail(auth.getName());
+        return userService.findByEmail(auth.getName());
     }
 
-    public NguoiDung getSessionUser(HttpServletRequest request) {
-        return (NguoiDung) request.getSession().getAttribute("loggedInUser");
+    public Users getSessionUser(HttpServletRequest request) {
+        return (Users) request.getSession().getAttribute("loggedInUser");
     }
 
     @GetMapping("/account")
     public String accountPage(HttpServletRequest res, Model model) {
-        NguoiDung currentUser = getSessionUser(res);
+        Users currentUser = getSessionUser(res);
         model.addAttribute("user", currentUser);
-        List<DonHang> list = donHangService.getDonHangByNguoiDung(currentUser);
+        List<Orders> list = orderService.getOrderByUser(currentUser);
         Collections.reverse(list);
         model.addAttribute("list",list);
         return "client/account";
@@ -55,7 +55,7 @@ public class ClientAccountController {
     // TODO: obscure, need testing
     @GetMapping("/changeInformation")
     public String clientChangeInformationPage(HttpServletRequest res,Model model) {
-        NguoiDung currentUser = getSessionUser(res);
+        Users currentUser = getSessionUser(res);
         model.addAttribute("user", currentUser);
         return "client/information";
     }
@@ -68,25 +68,25 @@ public class ClientAccountController {
 
     @PostMapping("/updateInfo")
     @ResponseBody
-    public ResponseObject commitChange(HttpServletRequest res, @RequestBody NguoiDung ng) {
-        NguoiDung currentUser = getSessionUser(res);
-        currentUser.setHoTen(ng.getHoTen());
-        currentUser.setSoDienThoai(ng.getSoDienThoai());
-        currentUser.setDiaChi(ng.getDiaChi());
-        nguoiDungService.updateUser(currentUser);
+    public ResponseObject commitChange(HttpServletRequest res, @RequestBody Users ng) {
+        Users currentUser = getSessionUser(res);
+        currentUser.setFullName(ng.getFullName());
+        currentUser.setPhoneNumber(ng.getPhoneNumber());
+        currentUser.setAddress(ng.getAddress());
+        userService.updateUser(currentUser);
         return new ResponseObject();
     }
 
     @PostMapping("/updatePassword")
     @ResponseBody
     public ResponseObject passwordChange(HttpServletRequest res,@RequestBody PasswordDTO dto) {
-        NguoiDung currentUser = getSessionUser(res);
+        Users currentUser = getSessionUser(res);
         if (!passwordEncoder.matches( dto.getOldPassword(), currentUser.getPassword())) {
             ResponseObject re = new ResponseObject();
             re.setStatus("old");
             return re;
         }
-        nguoiDungService.changePass(currentUser, dto.getNewPassword());
+        userService.changePass(currentUser, dto.getNewPassword());
         return new ResponseObject();
     }
 }

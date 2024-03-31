@@ -2,8 +2,8 @@ package Website.LaptopShop.API;
 
 import Website.LaptopShop.DTO.PasswordDTO;
 import Website.LaptopShop.DTO.ResponseObject;
-import Website.LaptopShop.Entities.NguoiDung;
-import Website.LaptopShop.Services.NguoiDungService;
+import Website.LaptopShop.Entities.Users;
+import Website.LaptopShop.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,30 +22,30 @@ import java.util.Map;
 public class ProfileAPI {
 
 	@Autowired
-	private NguoiDungService nguoiDungService;
+	private UserService userService;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@GetMapping("/{id}")
-	public NguoiDung getNguoiDungById(@PathVariable long id) {
-		return nguoiDungService.findById(id);
+	public Users getUserById(@PathVariable long id) {
+		return userService.findById(id);
 	}
 
 	@PostMapping("/doiMatKhau")
 	public ResponseObject changePass(@RequestBody @Valid PasswordDTO dto, BindingResult result,
 									 HttpServletRequest request) {
 		System.out.println(dto.toString());
-		NguoiDung currentUser = getSessionUser(request);
+		Users currentUser = getSessionUser(request);
 
 		ResponseObject ro = new ResponseObject();
 		
 		if (!passwordEncoder.matches( dto.getOldPassword(), currentUser.getPassword())) {
-			result.rejectValue("oldPassword", "error.oldPassword", "Mật khẩu cũ không đúng");
+			result.rejectValue("oldPassword", "error.oldPassword", "Wrong old password!");
 		}
 
 		if (!dto.getNewPassword().equals(dto.getConfirmNewPassword())) {
-			result.rejectValue("confirmNewPassword", "error.confirmNewPassword", "Nhắc lại mật khẩu mới không đúng");
+			result.rejectValue("confirmNewPassword", "error.confirmNewPassword", "Wrong confirm password!");
 		}
 
 		if (result.hasErrors()) {
@@ -58,14 +58,14 @@ public class ProfileAPI {
 			ro.setStatus("fail");
 			errors = null;
 		} else {
-			nguoiDungService.changePass(currentUser, dto.getNewPassword());
+			userService.changePass(currentUser, dto.getNewPassword());
 			ro.setStatus("success");
 		}
 		
 		return ro;
 	}
 
-	public NguoiDung getSessionUser(HttpServletRequest request) {
-		return (NguoiDung) request.getSession().getAttribute("loggedInUser");
+	public Users getSessionUser(HttpServletRequest request) {
+		return (Users) request.getSession().getAttribute("loggedInUser");
 	}
 }
