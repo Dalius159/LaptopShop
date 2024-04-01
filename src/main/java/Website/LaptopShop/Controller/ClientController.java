@@ -1,10 +1,10 @@
 package Website.LaptopShop.Controller;
 
 import Website.LaptopShop.DTO.ResponseObject;
-import Website.LaptopShop.DTO.SearchSanPhamObject;
+import Website.LaptopShop.DTO.SearchProductObject;
 import Website.LaptopShop.Entities.*;
 import Website.LaptopShop.Services.*;
-import Website.LaptopShop.Validator.NguoiDungValidator;
+import Website.LaptopShop.Validator.UserValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -27,32 +27,32 @@ import java.util.*;
 @RequestMapping("/")
 public class ClientController {
 	@Autowired
-	private SanPhamService sanPhamService;
+	private ProductService productService;
 
 	@Autowired
-	private NguoiDungService nguoiDungService;
+	private UserService userService;
 
 	@Autowired
-	private DanhMucService danhMucService;
+	private CategoryService categoryService;
 
 	@Autowired
-	private LienHeService lienHeService;
+	private ContactService contactService;
 
 	@Autowired
-	private NguoiDungValidator nguoiDungValidator;
+	private UserValidator userValidator;
 
 	@Autowired
 	private SecurityService securityService;
 
 	@ModelAttribute("loggedInUser")
-	public NguoiDung loggedInUser() {
+	public Users loggedInUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return nguoiDungService.findByEmail(auth.getName());
+		return userService.findByEmail(auth.getName());
 	}
 
-	@ModelAttribute("listDanhMuc")
-	public List<DanhMuc> listDanhMuc() {
-		return danhMucService.getAllDanhMuc();
+	@ModelAttribute("categoryList")
+	public List<Category> categoryList() {
+		return categoryService.getAllCategory();
 	}
 
 	@GetMapping
@@ -64,7 +64,7 @@ public class ClientController {
 
 	@GetMapping("/login")
 	public String loginPage(Model model) {
-		model.addAttribute("newUser", new NguoiDung());
+		model.addAttribute("newUser", new Users());
 		return "client/login";
 	}
 
@@ -75,9 +75,9 @@ public class ClientController {
 
 	@PostMapping("/createContact")
 	@ResponseBody
-	public ResponseObject createContact(@RequestBody LienHe lh) {
-		lh.setNgayLienHe(new Date());
-		lienHeService.save(lh);
+	public ResponseObject createContact(@RequestBody Contact lh) {
+		lh.setContactDate(new Date());
+		contactService.save(lh);
 		return new ResponseObject();
 	}
 
@@ -85,30 +85,30 @@ public class ClientController {
 	public String storePage(
 			@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "") String range,
-			@RequestParam(defaultValue = "") String brand,
-			@RequestParam(defaultValue = "") String manufactor,
+			@RequestParam(defaultValue = "") String category,
+			@RequestParam(defaultValue = "") String manufacturer,
 			@RequestParam(defaultValue = "") String os,
 			@RequestParam(defaultValue = "") String ram,
-			@RequestParam(defaultValue = "0") int pin,
+			@RequestParam(defaultValue = "0") int battery,
 			Model model) {
-		SearchSanPhamObject obj = new SearchSanPhamObject();
-		obj.setBrand(brand);
-		obj.setDonGia(range);
-		obj.setManufactor(manufactor);
-		obj.setOs(os);
+		SearchProductObject obj = new SearchProductObject();
+		obj.setCategory(category);
+		obj.setPrice(range);
+		obj.setManufacturer(manufacturer);
+		obj.setOperatingSystem(os);
 		obj.setRam(ram);
-		obj.setPin(pin);
-		Page<SanPham> list = sanPhamService.getSanPhamByBrand(obj, page, 12);
+		obj.setBatteryCapacity_mAh(battery);
+		Page<Product> list = productService.getProductByCategory(obj, page, 12);
 		int totalPage = list.getTotalPages();
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("list", list.getContent());
 		model.addAttribute("currentPage", page);
 		model.addAttribute("range", range);
-		model.addAttribute("brand", brand);
-		model.addAttribute("manufactor", manufactor);
+		model.addAttribute("brand", category);
+		model.addAttribute("manufactor", manufacturer);
 		model.addAttribute("os", os);
 		model.addAttribute("ram", ram);
-		model.addAttribute("pin", pin);
+		model.addAttribute("pin", battery);
 		List<Integer> pagelist = new ArrayList<>();
 
 		//Lap ra danh sach cac trang
@@ -132,17 +132,17 @@ public class ClientController {
 		}
 		model.addAttribute("pageList", pagelist);
 
-		//Lay cac danh muc va hang san xuat tim thay
-		Set<String> manufacturer = new HashSet<>();
+		//Get category and manufacturer found
+		Set<String> manufacturer2 = new HashSet<>();
 		Set<Integer> pinSet = new HashSet<>();
-		Iterable<SanPham> products = sanPhamService.getSanPhamByTenDanhMuc(brand);
-		for (SanPham product : products) {
-			manufacturer.add(product.getHangSanXuat().getTenHangSanXuat());
-			if (brand.equals("Laptop")) {
-				pinSet.add(product.getDungLuongPin_mAh());
+		Iterable<Product> products = productService.getProductByCategoryName(category);
+		for (Product product : products) {
+			manufacturer2.add(product.getManufacturer().getManufacturerName());
+			if (category.equals("Laptop")) {
+				pinSet.add(product.getBatteryCapacity_mAh());
 			}
 		}
-		model.addAttribute("hangsx", manufacturer);
+		model.addAttribute("hangsx", manufacturer2);
 		model.addAttribute("pinSet", pinSet);
 		return "client/store";
 	}
@@ -152,7 +152,7 @@ public class ClientController {
 
 	@GetMapping("/sp")
 	public String detailspPage(@RequestParam int id, Model model) {
-		SanPham sp = sanPhamService.getSanPhamById(id);
+		Product sp = productService.getProductById(id);
 		model.addAttribute("sp", sp);
 		model.addAttribute("disqusSeed", disqusSeed);
 		return "client/productDetail";
@@ -174,17 +174,17 @@ public class ClientController {
 	}
 
 	@PostMapping("/register")
-	public String registerProcess(@ModelAttribute("newUser") @Valid NguoiDung nguoiDung, BindingResult bindingResult) {
+	public String registerProcess(@ModelAttribute("newUser") @Valid Users users, BindingResult bindingResult) {
 
-		nguoiDungValidator.validate(nguoiDung, bindingResult);
+		userValidator.validate(users, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((e) -> System.err.println(e.getDefaultMessage()));
 			return "client/login";
 		}
-		nguoiDungService.saveUserForMember(nguoiDung);
+		userService.saveUserForMember(users);
 
-		securityService.autologin(nguoiDung.getEmail(), nguoiDung.getConfirmPassword());
+		securityService.autologin(users.getEmail(), users.getConfirmPassword());
 
 		return "redirect:/login?success";
 	}

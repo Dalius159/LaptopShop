@@ -31,16 +31,16 @@
             </p>
             <br>
             <h3 style="line-height: 2;">
-                <span th:text="${user.hoTen}" style="font-weight: bold"></span>
+                <span th:text="${user.getFullName}" style="font-weight: bold"></span>
             </h3>
             <h3 style="line-height: 2;">
-                <span th:text="${user.soDienThoai}" style="font-weight: bold"></span>
+                <span th:text="${user.getPhoneNumber}" style="font-weight: bold"></span>
             </h3>
             <h3 style="line-height: 2;">
                 <span th:text="${user.email}" style="font-weight: bold"></span>
             </h3>
             <h3 style="line-height: 2;">
-                <span th:text="${user.diaChi}" style="font-weight: bold"></span>
+                <span th:text="${user.getAddress}" style="font-weight: bold"></span>
             </h3>
             <br>
             <a class="btn btn-primary" data-toggle="modal" data-target="#modalInformation">Update Personer Information</a>
@@ -64,22 +64,22 @@
                 </tr>
                 <tr th:each="donHang : ${list}">
                     <td th:text="${donHang.id}" style="text-align: center"></td>
-                    <td th:text="${donHang.ngayDatHang}" style="text-align: center"></td>
-                    <td th:text="${donHang.ngayGiaoHang}" style="text-align: center"></td>
-                    <td th:text="${donHang.ngayNhanHang}" style="text-align: center"></td>
+                    <td th:text="${donHang.getOrderDate}" style="text-align: center"></td>
+                    <td th:text="${donHang.getDeliveryDate}" style="text-align: center"></td>
+                    <td th:text="${donHang.getReceivedDate}" style="text-align: center"></td>
                     <td>
-            <span th:each="chiTiet : ${donHang.danhSachChiTiet}">
+            <span th:each="chiTiet : ${donHang.getOrderDetailsList}">
                 <p>
-                    <a th:href="@{'/sp?id=' + ${chiTiet.sanPham.id}}" th:text="${chiTiet.sanPham.tenSanPham}"></a>
+                    <a th:href="@{'/sp?id=' + ${chiTiet.product.id}}" th:text="${chiTiet.product.getProductName}"></a>
                     <br>
                 </p>
-                <p th:if="${donHang.trangThaiDonHang == 'Đang chờ giao' or donHang.trangThaiDonHang == 'Đang giao'}">Số lượng: <span th:text="${chiTiet.soLuongDat}"></span></p>
-                <p th:unless="${donHang.trangThaiDonHang == 'Đang chờ giao' or donHang.trangThaiDonHang == 'Đang giao'}">Số lượng: <span th:text="${chiTiet.soLuongNhanHang}"></span></p>
+                <p th:if="${donHang.getOrderStatus == 'Đang chờ giao' or donHang.getOrderStatus == 'Đang giao'}">Số lượng: <span th:text="${chiTiet.getOrderQuantity}"></span></p>
+                <p th:unless="${donHang.getOrderStatus == 'Đang chờ giao' or donHang.getOrderStatus == 'Đang giao'}">Số lượng: <span th:text="${chiTiet.getReceivedQuantity}"></span></p>
                 <hr>
             </span>
                     </td>
                     <td class="tongGiaTri" th:text="${tongGiaTri}" style="text-align: center"></td>
-                    <td th:text="${donHang.trangThaiDonHang}" style="text-align: center"></td>
+                    <td th:text="${donHang.getOrderStatus}" style="text-align: center"></td>
                 </tr>
             </table>
         </div>
@@ -103,17 +103,17 @@
                 <div class="form-group">
                     <label style="line-height: 2">Họ tên khách hàng:</label><br>
                     <label id="nameWarning" style="color: red"></label>
-                    <input class="form-control" id="name" name="name" type="text" th:value="${user.hoTen}">
+                    <input class="form-control" id="name" name="name" type="text" th:value="${user.getFullName}">
                 </div>
                 <div class="form-group">
                     <label style="line-height: 2">Số điện thoại:</label><br>
                     <label id="phoneWarning" style="color: red"></label>
-                    <input class="form-control" id="phone" name="phone" type="text" th:value="${user.soDienThoai}">
+                    <input class="form-control" id="phone" name="phone" type="text" th:value="${user.getPhoneNumber}">
                 </div>
                 <div class="form-group">
                     <label style="line-height: 2">Địa chỉ:</label><br>
                     <label id="addressWarning" style="color: red"></label>
-                    <textarea rows="3" cols="1" class="form-control" id="address" th:text="${user.diaChi}"></textarea>
+                    <textarea rows="3" cols="1" class="form-control" id="address" th:text="${user.getAddress}"></textarea>
                 </div>
 
             </div>

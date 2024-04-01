@@ -1,10 +1,10 @@
 package Website.LaptopShop.Controller;
 
-import Website.LaptopShop.DTO.SearchSanPhamObject;
-import Website.LaptopShop.Entities.NguoiDung;
-import Website.LaptopShop.Entities.SanPham;
-import Website.LaptopShop.Services.NguoiDungService;
-import Website.LaptopShop.Services.SanPhamService;
+import Website.LaptopShop.DTO.SearchProductObject;
+import Website.LaptopShop.Entities.Product;
+import Website.LaptopShop.Entities.Users;
+import Website.LaptopShop.Services.UserService;
+import Website.LaptopShop.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,19 +21,19 @@ import java.util.*;
 @SessionAttributes("loggedInUser")
 public class ClientSearchController {
 	@Autowired
-	private SanPhamService sanPhamService;
+	private ProductService productService;
 
 
 //	TODO: loggedInUser() function need to be declared in any controller using loggedInUser, need refactor
-	private final NguoiDungService nguoiDungService;
+	private final UserService userService;
 
 	@Autowired
-	public ClientSearchController(NguoiDungService nguoiDungService){
-		this.nguoiDungService = nguoiDungService;
+	public ClientSearchController(UserService userService){
+		this.userService = userService;
 	}
 	@ModelAttribute("loggedInUser")
-	public NguoiDung loggedInUser() {
-		return nguoiDungService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+	public Users loggedInUser() {
+		return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	@GetMapping("search")
@@ -41,17 +41,17 @@ public class ClientSearchController {
 						   @RequestParam String name,
 						   @RequestParam(defaultValue = "") String sort,
 						   @RequestParam(defaultValue = "") String range,
-						   @RequestParam(defaultValue = "") String brand,
+						   @RequestParam(defaultValue = "") String category,
 //						   todo: fix typo
-						   @RequestParam(defaultValue = "") String manufactor,
+						   @RequestParam(defaultValue = "") String manufacturer,
 						   Model model) {
-		SearchSanPhamObject obj = new SearchSanPhamObject();
+		SearchProductObject obj = new SearchProductObject();
 		obj.setKeyword(name.split(" "));
 		obj.setSort(sort);
-		obj.setDonGia(range);
-		obj.setBrand(brand);
-		obj.setManufactor(manufactor);
-		Page<SanPham> list = sanPhamService.getSanPhamByTenSanPham(obj, page, 12);
+		obj.setPrice(range);
+		obj.setCategory(category);
+		obj.setManufacturer(manufacturer);
+		Page<Product> list = productService.getProductByProductName(obj, page, 12);
 		int totalPage = list.getTotalPages();
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("list", list.getContent());
@@ -59,8 +59,8 @@ public class ClientSearchController {
 		model.addAttribute("name", name);
 		model.addAttribute("sort", sort);
 		model.addAttribute("range", range);
-		model.addAttribute("brand", brand);
-		model.addAttribute("manufactor", manufactor);
+		model.addAttribute("brand", category);
+		model.addAttribute("manufactor", manufacturer);
 		List<Integer> pagelist = new ArrayList<>();
 
 		// Page list, need refactoring
@@ -84,16 +84,16 @@ public class ClientSearchController {
 		}
 		model.addAttribute("pageList", pagelist);
 
-		//Lay cac danh muc va hang san xuat tim thay
-		Set<String> danhmuc = new HashSet<>();
-		Set<String> hangsx = new HashSet<>();
-		Iterable<SanPham> dum = sanPhamService.getSanPhamByTenSanPhamWithoutPaginate(obj);
-		for (SanPham sp : dum) {
-			danhmuc.add(sp.getDanhMuc().getTenDanhMuc());
-			hangsx.add(sp.getHangSanXuat().getTenHangSanXuat());
+		//Get categories and manufacturers found
+		Set<String> category2 = new HashSet<>();
+		Set<String> manufacturer2 = new HashSet<>();
+		Iterable<Product> dum = productService.getProductByProductNameWithoutPaginate(obj);
+		for (Product sp : dum) {
+			category2.add(sp.getCategory().getCategoryName());
+			manufacturer2.add(sp.getManufacturer().getManufacturerName());
 		}
-		model.addAttribute("danhmuc", danhmuc);
-		model.addAttribute("hangsx", hangsx);
+		model.addAttribute("danhmuc", category2);
+		model.addAttribute("hangsx", manufacturer2);
 
 		return "client/searchResult";
 	}

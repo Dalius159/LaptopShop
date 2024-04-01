@@ -43,17 +43,17 @@
           <td><img th:src="@{/product_images/{id}.png(id=${sanpham.id})}" th:alt="${sanpham.id}"
                    style="width: 150px" class="cart-img"></td>
           <td style="text-align: center; margin-top: -52px;">
-            <p class="cart_ten"><a th:href="@{/sp(id=${sanpham.id})}" th:text="${sanpham.tenSanPham}"></a></p>
+            <p class="cart_ten"><a th:href="@{/sp(id=${sanpham.id})}" th:text="${sanpham.getProductName}"></a></p>
             <p class="cart_masanpham">Product ID:<span th:text="${sanpham.id}"></span></p>
-            <p class="">Guarantee:<span th:text="${sanpham.thongTinBaoHanh}"></span></p>
+            <p class="">Guarantee:<span th:text="${sanpham.getWarrantyInfor}"></span></p>
           </td>
-          <td class="covertPriceProduct" th:text="${sanpham.donGia}"></td>
+          <td class="covertPriceProduct" th:text="${sanpham.getPrice}"></td>
           <td>
             <input class="input_num_cart" type="number" th:value="${quantity[sanpham.id]}" min="1"
-                   th:onchange="'changeQuantity(' + ${sanpham.id} + ', this.value, ' + ${sanpham.donGia} + ')'"/>
+                   th:onchange="'changeQuantity(' + ${sanpham.id} + ', this.value, ' + ${sanpham.getPrice} + ')'"/>
           </td>
           <td><b><span class="total" th:id="'item' + ${sanpham.id} + '_total'"
-                       th:text="${sanpham.donGia * quantity[sanpham.id]}"></span></b></td>
+                       th:text="${sanpham.getPrice * quantity[sanpham.id]}"></span></b></td>
           <td class="cart-img">
             <a class="btn btn-danger" th:onclick="'deleteFromCart(' + ${sanpham.id} + ')'"
                onclick="return false;"><span class="glyphicon glyphicon-trash"></span></a>

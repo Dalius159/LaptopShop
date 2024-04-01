@@ -7,7 +7,7 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		document.addEventListener('DOMContentLoaded', function () {
-			document.getElementById('priceConvert').innerHTML = accounting.formatMoney([[${sp.donGia}]]);
+			document.getElementById('priceConvert').innerHTML = accounting.formatMoney([[${sp.price}]]);
 		});
 		/*]]>*/
 	</script>
@@ -28,26 +28,26 @@
 				</div>
 				<div class="details col-md-6">
 					<p th:style="'display:none'" id="spid" th:text="${sp.id}"></p>
-					<h2 class="product-title" th:text="${sp.tenSanPham}"></h2>
+					<h2 class="product-title" th:text="${sp.getProductName}"></h2>
 					<h4 class="price">Product description</h4>
 					<p th:if="${#strings.length(sp.cpu) > 0}" class="product-description"
 					   th:text="'CPU: ' + ${sp.cpu}"></p>
 					<p th:if="${#strings.length(sp.ram) > 0}" class="product-description"
 					   th:text="'RAM: ' + ${sp.ram}"></p>
-					<p th:if="${#strings.length(sp.thietKe) > 0}" class="product-description"
-					   th:text="'Design: ' + ${sp.thietKe}"></p>
-					<p th:if="${#strings.length(sp.heDieuHanh) > 0}" class="product-description"
-					   th:text="'Operating system: ' + ${sp.heDieuHanh}"></p>
-					<p th:if="${#strings.length(sp.manHinh) > 0}" class="product-description"
-					   th:text="'Screen: ' + ${sp.manHinh}"></p>
-					<p th:if="${#strings.length(sp.dungLuongPin_mAh) > 0}" class="product-description"
-					   th:text="'Battery Capacity: ' + ${sp.dungLuongPin_mAh}"></p>
-					<p class="product-description" th:text="'Producer brand: ' + ${sp.hangSanXuat.tenHangSanXuat}"></p>
+					<p th:if="${#strings.length(sp.getDesign) > 0}" class="product-description"
+					   th:text="'Design: ' + ${sp.getDesign}"></p>
+					<p th:if="${#strings.length(sp.getOperatingSystem) > 0}" class="product-description"
+					   th:text="'Operating system: ' + ${sp.getOperatingSystem}"></p>
+					<p th:if="${#strings.length(sp.getScreen) > 0}" class="product-description"
+					   th:text="'Screen: ' + ${sp.getScreen}"></p>
+					<p th:if="${#strings.length(sp.getBatteryCapacity_mAh) > 0}" class="product-description"
+                       th:text="'Battery Capacity: ' + ${sp.getBatteryCapacity_mAh}"></p>
+					<p class="product-description" th:text="'Producer brand: ' + ${sp.getManufacturer.getManufacturerName}"></p>
 					<p class="product-description">
-						<span class="important">GENERAL INFORMATION:</span> <span th:text="${sp.thongTinChung}"></span>
+						<span class="important">GENERAL INFORMATION:</span> <span th:text="${sp.getGeneralInfor}"></span>
 					</p>
 					<p class="product-description">
-						<span class="important">GUARANTEE:</span> <span th:text="${sp.thongTinBaoHanh}"></span>
+						<span class="important">GUARANTEE:</span> <span th:text="${sp.getWarrantyInfor}"></span>
 					</p>
 					<h4 class="price" id="blabla">Pricing: <span id="priceConvert"></span></h4>
 					<div class="action">

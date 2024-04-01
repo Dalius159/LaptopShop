@@ -1,8 +1,8 @@
 package Website.LaptopShop.Services.Impl;
 
-import Website.LaptopShop.Entities.NguoiDung;
-import Website.LaptopShop.Entities.VaiTro;
-import Website.LaptopShop.Repositories.NguoiDungRepository;
+import Website.LaptopShop.Entities.Users;
+import Website.LaptopShop.Entities.Roles;
+import Website.LaptopShop.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,21 +19,21 @@ import java.util.Set;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private NguoiDungRepository repo;
+    private UserRepository repo;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        NguoiDung user = repo.findByEmail(username);
+        Users user = repo.findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User with email " + username + " was not be found");
         }
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        Set<VaiTro> roles = user.getVaiTro();
-        for (VaiTro role : roles) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getTenVaiTro()));
+        Set<Roles> roles = user.getRole();
+        for (Roles role : roles) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
 
         return new User(username, user.getPassword(), grantedAuthorities);

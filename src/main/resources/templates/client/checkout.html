@@ -24,19 +24,19 @@
 <div th:insert="~{client/include/homeHeader}"></div>
 
 
-<form method="post" th:action="@{/complete-order}" th:object="${donhang}">
+<form method="post" th:action="@{/complete-order}" th:object="${order}">
 
   <div sec:authorize="isAuthenticated()" class="col-md-3">
     <br>
     <p class="border-p" style="line-height:1.5;"><b>Customer info</b></p>
     <p style="line-height:2;">Full name</p>
-    <input size="27" th:value="${user.hoTen}" th:disabled="true">
+    <input size="27" th:value="${user.getFullName}" th:disabled="true">
     <p style="line-height:2;">Email address</p>
     <input size="27" th:value="${user.email}" th:disabled="true">
     <p style="line-height:2;">Phone number</p>
-    <input size="27" th:value="${user.soDienThoai}" th:disabled="true">
+    <input size="27" th:value="${user.getPhoneNumber}" th:disabled="true">
     <p style="line-height:2;">Home address</p>
-    <textarea rows="5" cols="29" th:value="${user.diaChi}" th:disabled="true"></textarea>
+    <textarea rows="5" cols="29" th:value="${user.getAddress}" th:disabled="true"></textarea>
     <br><br>
   </div>
 
@@ -44,11 +44,11 @@
     <br>
     <p class="border-p" style="line-height:1.5;"><b>Delivery Information</b></p>
     <p style="line-height:2;">Receiver's name</p>
-    <input size="27" th:field="*{hoTenNguoiNhan}" th:id="hoTenNguoiNhan" required="required">
+    <input size="27" th:field="*{getReceiver}" th:id="hoTenNguoiNhan" required="required">
     <p style="line-height:2;">Phone number</p>
-    <input size="27" th:field="*{sdtNhanHang}" th:id="sdtNhanHang" required="required">
+    <input size="27" th:field="*{getReceivedPhone}" th:id="sdtNhanHang" required="required">
     <p style="line-height:2;">Address</p>
-    <textarea rows="5" cols="29" th:field="*{diaChiNhan}" th:id="diaChiNhan" required="required"></textarea>
+    <textarea rows="5" cols="29" th:field="*{getReceiveAddress}" th:id="diaChiNhan" required="required"></textarea>
     <br><br>
     <div class="alert" th:id="alertMsg"
          th:style="${#fields.hasErrors('hoTenNguoiNhan') or #fields.hasErrors('sdtNhanHang') or #fields.hasErrors('diaChiNhan')} ? '' : 'display:none;'">
@@ -56,7 +56,7 @@
       Please provide all information
     </div>
     <br><br>
-    <input type="hidden" th:id="tongGiaTri" th:field="*{tongGiaTri}">
+    <input type="hidden" th:id="tongGiaTri" th:field="*{getTotalCost}">
   </div>
 
   <div class="col-md-6">
@@ -79,13 +79,13 @@
           <img th:src="@{/product_images/${sanpham.id}.png}" th:alt="${sanpham.id}"
                class="img-reponsive fix-size-img">
         </td>
-        <td style="color:green" th:text="${sanpham.tenSanPham}"></td>
+        <td style="color:green" th:text="${sanpham.getProductName}"></td>
         <td class="donGia">
-          <div class="check" style="display: inline-block;" th:text="${sanpham.donGia}"></div>
+          <div class="check" style="display: inline-block;" th:text="${sanpham.getPrice}"></div>
           <div style="display: inline-block;" th:text="' x ' + ${quantity[sanpham.id]}"></div>
         </td>
         <td>
-          <div class="total" th:text="${sanpham.donGia * quantity[sanpham.id]}"></div>
+          <div class="total" th:text="${sanpham.getPrice * quantity[sanpham.id]}"></div>
         </td>
       </tr>
       </tbody>
