@@ -8,14 +8,14 @@
 	<title>Checkout</title>
 
 	<script type="text/javascript">
-		document.addEventListener('DOMContentLoaded', function () {
-			document.querySelectorAll('.mytable .donGia .check').forEach(function (element) {
-				element.innerHTML = accounting.formatMoney(element.textContent);
-			});
-			document.querySelectorAll('.mytable .total').forEach(function (element) {
-				element.innerHTML = accounting.formatMoney(element.textContent);
-			});
-		});
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('. .donGia .check').forEach(function (element) {
+                element.innerHTML = accounting.formatMoney(element.textContent);
+            });
+            document.querySelectorAll('. .total').forEach(function (element) {
+                element.innerHTML = accounting.formatMoney(element.textContent);
+            });
+        });
 	</script>
 </head>
 <body>
@@ -35,7 +35,7 @@
 			<p>At <span th:text="${donhang.getNgayDatHang()}"></span>, we received an order with the following products:
 			</p><br>
 
-			<table class="table-cart-checkout mytable">
+			<table class="table-cart-checkout">
 				<thead>
 				<tr>
 					<th>Picture</th>
