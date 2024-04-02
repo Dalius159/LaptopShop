@@ -51,7 +51,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests((requests) -> requests
 						//.requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
 						//.requestMatchers("/shipper/**").hasRole("ROLE_SHIPPER")
-						.requestMatchers("/checkout", "/thankyou").hasRole("ROLE_MEMBER")
+						.requestMatchers("/checkout", "/thankyou").hasRole("MEMBER")
 						.requestMatchers("/**").permitAll())
 				.formLogin((form) -> form.loginPage("/login")
 						.loginProcessingUrl("/login")
