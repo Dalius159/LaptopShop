@@ -52,7 +52,7 @@
 					<p class="product-description">
 						<span class="important">GUARANTEE:</span> <span th:text="${product.getWarrantyInfor}"></span>
 					</p>
-					<h4 class="price" id="blabla">Pricing: <span id="priceConvert"></span></h4>
+					<h4 class="price">Pricing: <span id="priceConvert"></span></h4>
 					<div class="action">
 						<button class="add-to-cart btn btn-warning" type="button">
 							<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
@@ -63,7 +63,7 @@
 		</div>
 	</div>
 </div>
-<script th:src="@{/js/client/detailspAjax.js}"></script>
+<script th:src="@{/js/client/productDetail.js}"></script>
 
 
 <div th:insert="~{client/include/homeFooter}"></div>
