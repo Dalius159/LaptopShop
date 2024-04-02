@@ -13,229 +13,229 @@ USE Laptop_WebStore;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-DROP TABLE IF EXISTS chi_muc_gio_hang;
+DROP TABLE IF EXISTS cart_pointer;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE chi_muc_gio_hang (
+CREATE TABLE cart_pointer (
   id bigint NOT NULL AUTO_INCREMENT,
-  so_luong tinyint NOT NULL,
-  ma_gio_hang bigint,
-  ma_san_pham bigint,
+  quantity tinyint NOT NULL,
+  cart_id bigint,
+  product_id bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FK49lmmclnjgb7eck20lwhv0cks FOREIGN KEY (ma_gio_hang) REFERENCES gio_hang(id),
-  CONSTRAINT FKkd69a7wiulr4xgohxl0rlhth4 FOREIGN KEY (ma_san_pham) REFERENCES san_pham(id)
+  CONSTRAINT FK49lmmclnjgb7eck20lwhv0cks FOREIGN KEY (cart_id) REFERENCES cart(id),
+  CONSTRAINT FKkd69a7wiulr4xgohxl0rlhth4 FOREIGN KEY (product_id) REFERENCES product(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES chi_muc_gio_hang WRITE;
-/*!40000 ALTER TABLE chi_muc_gio_hang DISABLE KEYS */;
-INSERT INTO chi_muc_gio_hang VALUES (10,7,1,64),(11,1,1,54),(12,1,1,60),(13,2,1,56),(14,1,1,62),(15,1,2,88),(16,1,2,85);
-/*!40000 ALTER TABLE chi_muc_gio_hang ENABLE KEYS */;
+LOCK TABLES cart_pointer WRITE;
+/*!40000 ALTER TABLE cart_pointer DISABLE KEYS */;
+INSERT INTO cart_pointer VALUES (10,7,1,64),(11,1,1,54),(12,1,1,60),(13,2,1,56),(14,1,1,62),(15,1,2,88),(16,1,2,85);
+/*!40000 ALTER TABLE cart_pointer ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS chi_tiet_don_hang;
+DROP TABLE IF EXISTS order_details;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE chi_tiet_don_hang(
+CREATE TABLE order_details(
   id bigint NOT NULL AUTO_INCREMENT,
-  don_gia int NOT NULL,
-  so_luong_dat tinyint NOT NULL,
-  ma_don_hang bigint,
-  ma_san_pham bigint,
+  cost int NOT NULL,
+  order_quantity tinyint NOT NULL,
+  order_id bigint,
+  product_id bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FK9wl3houbukbxpixsut6uvojhy FOREIGN KEY (ma_don_hang) REFERENCES don_hang(id),
-  CONSTRAINT FK3ry84nmdxgoarx53qjxd671tk FOREIGN KEY (ma_san_pham) REFERENCES san_pham(id)
+  CONSTRAINT FK9wl3houbukbxpixsut6uvojhy FOREIGN KEY (order_id) REFERENCES orders(id),
+  CONSTRAINT FK3ry84nmdxgoarx53qjxd671tk FOREIGN KEY (product_id) REFERENCES product(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES chi_tiet_don_hang WRITE;
-/*!40000 ALTER TABLE chi_tiet_don_hang DISABLE KEYS */;
-INSERT INTO chi_tiet_don_hang VALUES (1,13980000,2,32,62),(2,25990000,1,32,57),(3,22490000,1,32,54);
-/*!40000 ALTER TABLE chi_tiet_don_hang ENABLE KEYS */;
+LOCK TABLES order_details WRITE;
+/*!40000 ALTER TABLE order_details DISABLE KEYS */;
+INSERT INTO order_details VALUES (1,13980000,2,32,62),(2,25990000,1,32,57),(3,22490000,1,32,54);
+/*!40000 ALTER TABLE order_details ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS danh_muc;
+DROP TABLE IF EXISTS category;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE danh_muc (
+CREATE TABLE category (
   id bigint NOT NULL AUTO_INCREMENT,
-  ten_danh_muc varchar(30),
+  category_name varchar(30),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES danh_muc WRITE;
-/*!40000 ALTER TABLE danh_muc DISABLE KEYS */;
-INSERT INTO danh_muc VALUES (1,'Laptop'),(2,'PC ĐỒNG BỘ & PC GAMING'),(3,'TB NGHE NHÌN & GIẢI TRÍ'),(4,'LINH KIỆN MÁY TÍNH'),(5,'THIẾT BỊ LƯU TRỮ'),(6,'THIẾT BỊ MẠNG'),(7,'CAMERA QUAN SÁT'),(8,'PHỤ KIỆN CÁC LOẠI'),(9,'THIẾT BỊ VĂN PHÒNG');
-/*!40000 ALTER TABLE danh_muc ENABLE KEYS */;
+LOCK TABLES category WRITE;
+/*!40000 ALTER TABLE category DISABLE KEYS */;
+INSERT INTO category VALUES (1,'LAPTOP'),(2,'SYNCHRONOUS PC & GAMING PC'),(3,'AUDIOVISUAL & ENTERTAINMENT EQUIPMENT'),(4,'COMPUTER COMPONENTS'),(5,'STORAGE DEVICES'),(6,'NETWORK DEVICES'),(7,'SURVEILLANCE CAMERA'),(8,'ACCESSORIES'),(9,'OFFICE EQUIPMENT');
+/*!40000 ALTER TABLE category ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS don_hang;
+DROP TABLE IF EXISTS orders;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE don_hang (
+CREATE TABLE orders (
   id bigint NOT NULL AUTO_INCREMENT,
-  dia_chi_nhan varchar(100),
-  ghi_chu varchar(100),
-  ho_ten_nguoi_nhan varchar(20),
-  ngay_dat_hang datetime,
-  ngay_giao_hang datetime,
-  ngay_nhan_hang datetime,
-  sdt_nhan_hang varchar(12),
-  trang_thai_don_hang varchar(15),
-  tong_gia_tri int,
-  ma_nguoi_dat bigint,
-  ma_shipper bigint,
+  delivery_address varchar(100),
+  note varchar(100),
+  receiver varchar(20),
+  order_date datetime,
+  delivery_date datetime,
+  received_date datetime,
+  received_phone varchar(12),
+  order_status varchar(15),
+  total_cost int,
+  orderer_id bigint,
+  deliver_id bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FKgndcrlvetoudr3jaif9b7ay37 FOREIGN KEY (ma_shipper) REFERENCES nguoi_dung (id),
-  CONSTRAINT FKnwjiboxao1uvw1siemkvs1jb9 FOREIGN KEY (ma_nguoi_dat) REFERENCES nguoi_dung (id)
+  CONSTRAINT FKgndcrlvetoudr3jaif9b7ay37 FOREIGN KEY (deliver_id) REFERENCES users (id),
+  CONSTRAINT FKnwjiboxao1uvw1siemkvs1jb9 FOREIGN KEY (orderer_id) REFERENCES users (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES don_hang WRITE;
-/*!40000 ALTER TABLE don_hang DISABLE KEYS */;
-INSERT INTO don_hang VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','Đang chờ duyệt', 16500000,NULL,NULL),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','created',17500000,2,NULL);
-/*!40000 ALTER TABLE don_hang ENABLE KEYS */;
+LOCK TABLES orders WRITE;
+/*!40000 ALTER TABLE orders DISABLE KEYS */;
+INSERT INTO orders VALUES (31,'bd','asdf','aaa','2018-12-01 14:38:26',NULL,NULL,'dsf','Waiting for approval', 16500000,NULL,NULL),(32,'fadf','asdf','aaa','2018-12-05 21:58:24',NULL,NULL,'13','created',17500000,2,NULL);
+/*!40000 ALTER TABLE orders ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS gio_hang;
+DROP TABLE IF EXISTS cart;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE gio_hang (
+CREATE TABLE cart (
   id bigint NOT NULL AUTO_INCREMENT,
-  tong_tien int,
-  ma_nguoi_dung bigint,
+  total_cost int,
+  user_id bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FKitverect56puwr47y7tyvy6er FOREIGN KEY (ma_nguoi_dung) REFERENCES nguoi_dung (id)
+  CONSTRAINT FKitverect56puwr47y7tyvy6er FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES gio_hang WRITE;
-/*!40000 ALTER TABLE gio_hang DISABLE KEYS */;
-INSERT INTO gio_hang VALUES (1,NULL,2),(2,NULL,1);
-/*!40000 ALTER TABLE gio_hang ENABLE KEYS */;
+LOCK TABLES cart WRITE;
+/*!40000 ALTER TABLE cart DISABLE KEYS */;
+INSERT INTO cart VALUES (1,NULL,2),(2,NULL,1);
+/*!40000 ALTER TABLE cart ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS hang_san_xuat;
+DROP TABLE IF EXISTS manufacturer;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE hang_san_xuat (
+CREATE TABLE manufacturer (
   id bigint NOT NULL AUTO_INCREMENT,
-  ten_hang_san_xuat varchar(9),
+  manufacturer_name varchar(9),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES hang_san_xuat WRITE;
-/*!40000 ALTER TABLE hang_san_xuat DISABLE KEYS */;
-INSERT INTO hang_san_xuat VALUES (2,'Apple'),(3,'Asus'),(4,'Acer'),(5,'Dell'),(6,'HP'),(7,'Lenovo'),(8,'MSI'),(9,'Masstel'),(10,'Haier');
-/*!40000 ALTER TABLE hang_san_xuat ENABLE KEYS */;
+LOCK TABLES manufacturer WRITE;
+/*!40000 ALTER TABLE manufacturer DISABLE KEYS */;
+INSERT INTO manufacturer VALUES (2,'Apple'),(3,'Asus'),(4,'Acer'),(5,'Dell'),(6,'HP'),(7,'Lenovo'),(8,'MSI'),(9,'Masstel'),(10,'Haier');
+/*!40000 ALTER TABLE manufacturer ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS lien_he;
+DROP TABLE IF EXISTS contact;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE lien_he (
+CREATE TABLE contact (
   id bigint NOT NULL AUTO_INCREMENT,
-  email_lien_he varchar(25),
-  ngay_lien_he datetime,
-  ngay_tra_loi datetime,
-  noi_dung_lien_he varchar(50),
-  noi_dung_tra_loi varchar(50),
-  trang_thai varchar(10),
-  ma_nguoi_tra_loi bigint,
+  email varchar(25),
+  contact_date datetime,
+  respond_date datetime,
+  contact_message varchar(50),
+  respond_message varchar(50),
+  status_ varchar(10),
+  respondent_id bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FK6jm47uh7f94pc3wix0duvedde FOREIGN KEY (ma_nguoi_tra_loi) REFERENCES nguoi_dung (id)
+  CONSTRAINT FK6jm47uh7f94pc3wix0duvedde FOREIGN KEY (respondent_id) REFERENCES users (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES lien_he WRITE;
-/*!40000 ALTER TABLE lien_he DISABLE KEYS */;
-/*!40000 ALTER TABLE lien_he ENABLE KEYS */;
+LOCK TABLES contact WRITE;
+/*!40000 ALTER TABLE contact DISABLE KEYS */;
+/*!40000 ALTER TABLE contact ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS nguoi_dung;
+DROP TABLE IF EXISTS users;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE nguoi_dung (
+CREATE TABLE users (
   id bigint NOT NULL AUTO_INCREMENT,
-  dia_chi varchar(150),
+  address varchar(150),
   email varchar(25) UNIQUE,
-  ho_ten varchar(30),
+  full_name varchar(30),
   password varchar(65),
-  do_dien_thoai varchar(12),
+  phone_number varchar(12),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES nguoi_dung WRITE;
-/*!40000 ALTER TABLE nguoi_dung DISABLE KEYS */;
-INSERT INTO nguoi_dung VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$/VFMNUPBKNVRMjxPFCYKZ.lKahoLQda0EaAxdqoun1w3DqwNLa2me','123456789'),(2,NULL,'member@gmail.com',NULL,'$2a$10$j7Upgupou72GBmukz0G6pOATk3wlCAgaoFCEqAhSvLToD/V/1wlpu',NULL),(3,NULL,'shipper@gmail.com',NULL,'$2a$10$u2B29HDxuWVYY3fUJ8R2qunNzXngfxij5GpvlFAEtIz3JpK/WFXF2',NULL),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$ZCqCO9gSWt8A8HNXAWq8luqfNbJm0uG3PsUlzry0aRLwO3VHQZTmy','123456'),(5,NULL,'nhat@gmail.com','nguyen minh nhat','nhat','123456789');
-/*!40000 ALTER TABLE nguoi_dung ENABLE KEYS */;
+LOCK TABLES users WRITE;
+/*!40000 ALTER TABLE users DISABLE KEYS */;
+INSERT INTO users VALUES (1,NULL,'admin@gmail.com','Nguyễn Xuân Nam','$2a$10$/VFMNUPBKNVRMjxPFCYKZ.lKahoLQda0EaAxdqoun1w3DqwNLa2me','123456789'),(2,NULL,'member@gmail.com',NULL,'$2a$10$j7Upgupou72GBmukz0G6pOATk3wlCAgaoFCEqAhSvLToD/V/1wlpu',NULL),(3,NULL,'shipper@gmail.com',NULL,'$2a$10$u2B29HDxuWVYY3fUJ8R2qunNzXngfxij5GpvlFAEtIz3JpK/WFXF2',NULL),(4,'Ha Noi','jvgiveup@gmail.com','Pham Tuan','$2a$10$ZCqCO9gSWt8A8HNXAWq8luqfNbJm0uG3PsUlzry0aRLwO3VHQZTmy','123456'),(5,NULL,'nhat@gmail.com','nguyen minh nhat','nhat','123456789');
+/*!40000 ALTER TABLE users ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS nguoidung_vaitro;
+DROP TABLE IF EXISTS user_role;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE nguoidung_vaitro (
-  ma_nguoi_dung bigint NOT NULL,
-  ma_vai_tro bigint NOT NULL,
-  PRIMARY KEY (ma_nguoi_dung,ma_vai_tro),
-  CONSTRAINT FKig6jxd861mqv02a8pn68r43fr FOREIGN KEY (ma_vai_tro) REFERENCES vai_tro (id),
-  CONSTRAINT FKocavcnspu1wcvp2w0s4usfgbf FOREIGN KEY (ma_nguoi_dung) REFERENCES nguoi_dung (id)
+CREATE TABLE user_role (
+  user_id bigint NOT NULL,
+  role_id bigint NOT NULL,
+  PRIMARY KEY (user_id,role_id),
+  CONSTRAINT FKig6jxd861mqv02a8pn68r43fr FOREIGN KEY (role_id) REFERENCES roles (id),
+  CONSTRAINT FKocavcnspu1wcvp2w0s4usfgbf FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES nguoidung_vaitro WRITE;
-/*!40000 ALTER TABLE nguoidung_vaitro DISABLE KEYS */;
-INSERT INTO nguoidung_vaitro VALUES (1,1),(1,2),(2,2),(4,2),(3,3);
-/*!40000 ALTER TABLE nguoidung_vaitro ENABLE KEYS */;
+LOCK TABLES user_role WRITE;
+/*!40000 ALTER TABLE user_role DISABLE KEYS */;
+INSERT INTO user_role VALUES (1,1),(1,2),(2,2),(4,2),(3,3);
+/*!40000 ALTER TABLE user_role ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS san_pham;
+DROP TABLE IF EXISTS product;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE san_pham (
+CREATE TABLE product (
   id bigint NOT NULL AUTO_INCREMENT,
   cpu varchar(30),
-  don_gia int NOT NULL,
-  don_vi_ban smallint NOT NULL,
-  don_vi_kho smallint NOT NULL,
-  dung_luong_pin_mAh smallint,
-  he_dieu_hanh varchar(30),
-  man_hinh varchar(50),
+  price int NOT NULL,
+  sales_unit smallint NOT NULL,
+  warehouse_unit smallint NOT NULL,
+  battery_capacity_mAh smallint,
+  operating_system varchar(30),
+  screen varchar(50),
   ram varchar(30),
-  ten_san_pham varchar(100),
-  thiet_ke varchar(255),
-  thong_tin_bao_hanh varchar(30),
-  thong_tin_chung varchar(255),
-  ma_danh_muc bigint,
-  ma_hang_sx bigint,
+  product_name varchar(100),
+  design varchar(255),
+  warranty_infor varchar(30),
+  general_infor varchar(255),
+  category_id bigint,
+  manufacturer_id bigint,
   PRIMARY KEY (id),
-  CONSTRAINT FKchvjvgjnq8lbt9mjtyfn5pksq FOREIGN KEY (ma_hang_sx) REFERENCES hang_san_xuat (id),
-  CONSTRAINT FKqss6n6gtx6lhb7flcka9un18t FOREIGN KEY (ma_danh_muc) REFERENCES danh_muc (id)
+  CONSTRAINT FKchvjvgjnq8lbt9mjtyfn5pksq FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
+  CONSTRAINT FKqss6n6gtx6lhb7flcka9un18t FOREIGN KEY (category_id) REFERENCES category (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES san_pham WRITE;
-/*!40000 ALTER TABLE san_pham DISABLE KEYS */;
-INSERT INTO san_pham VALUES   (3,'Intel, Core i5, 1.8 Ghz',2399,0,100,5800,' Mac Os',' 13.3 inch LED-backlit','8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 128GB MQD32SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng batteryCapacity_mAh cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
-							  (4,' Intel, Core i5, 1.8 Ghz',2899,0,100,6000,'Mac Os','13.3 inch LED-backlit',' 8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 256GB MQD42SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng batteryCapacity_mAh cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+LOCK TABLES product WRITE;
+/*!40000 ALTER TABLE product DISABLE KEYS */;
+INSERT INTO product VALUES   (3,'Intel, Core i5, 1.8 Ghz',2399,0,100,5800,' Mac Os',' 13.3 inch LED-backlit','8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 128GB MQD32SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+							  (4,' Intel, Core i5, 1.8 Ghz',2899,0,100,6000,'Mac Os','13.3 inch LED-backlit',' 8 GB, LPDDR3, 1600 Mhz','Macbook Air 13 256GB MQD42SA/A (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
                               (5,'Intel, Core M3, 1.2 GHz',3399,0,150,6000,'Mac Os',' 12 inch LED-backlit','8 GB, LPDDR3, 1866 MHz','Macbook 12 256GB (2017)','thiết kế không có thay đổi so với phiên bản 2016 nhưng Apple đã nâng cấp thêm bộ nhớ và giới thiệu bộ vi xử lý Intel thế hệ thứ 7','12 tháng','Thiết kế hoàn mỹ tinh tế và sang trọng',1,2),
-                              (6,' Intel, Core i5, 2.3 GHz',3399,0,200,6000,'Mac Os',' 13.3 inch LED-backlit',' 8 GB, LPDDR3, 2133MHz','Macbook Pro 13 inch 128GB (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng batteryCapacity_mAh cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
-                              (7,'Intel, Core i5, 2.3GHz',4499,0,100,7000,'Mac Os','13.3 inch, Retina (2560 x 1600 pixels)','8 GB, LPDDR3, 2133 MHz','Macbook Pro 13 Touch Bar 256 GB (2018)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng batteryCapacity_mAh cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
-                              (8,'Intel, Core i5, 2.3GHz',4999,0,150,7000,'Mac Os','13.3 inch, Retina (2560 x 1600 pixels)','8 GB, LPDDR3, 2133 MHz','Macbook Pro 13 Touch Bar 512 GB (2018)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng batteryCapacity_mAh cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
-                              (9,'Intel, Core i7, 2.2GHz',5999,0,200,7000,'Mac Os','15.4 inch, Retina (2880 x 1800 pix','16GB, LPDDR4, 2400MHz','Macbook Pro 15 Touch Bar 256 GB (2018)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng batteryCapacity_mAh cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
-                              (10,'Intel, Core i7, 2.2GHz',6999,0,120,7000,'Mac Os','15.4 inch, Retina (2880 x 1800 pi','16GB, LPDDR4, 2400MHz','Macbook Pro 15 Touch Bar 512 GB (2018)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng batteryCapacity_mAh cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+                              (6,' Intel, Core i5, 2.3 GHz',3399,0,200,6000,'Mac Os',' 13.3 inch LED-backlit',' 8 GB, LPDDR3, 2133MHz','Macbook Pro 13 inch 128GB (2017)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+                              (7,'Intel, Core i5, 2.3GHz',4499,0,100,7000,'Mac Os','13.3 inch, Retina (2560 x 1600 pixels)','8 GB, LPDDR3, 2133 MHz','Macbook Pro 13 Touch Bar 256 GB (2018)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+                              (8,'Intel, Core i5, 2.3GHz',4999,0,150,7000,'Mac Os','13.3 inch, Retina (2560 x 1600 pixels)','8 GB, LPDDR3, 2133 MHz','Macbook Pro 13 Touch Bar 512 GB (2018)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+                              (9,'Intel, Core i7, 2.2GHz',5999,0,200,7000,'Mac Os','15.4 inch, Retina (2880 x 1800 pix','16GB, LPDDR4, 2400MHz','Macbook Pro 15 Touch Bar 256 GB (2018)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
+                              (10,'Intel, Core i7, 2.2GHz',6999,0,120,7000,'Mac Os','15.4 inch, Retina (2880 x 1800 pi','16GB, LPDDR4, 2400MHz','Macbook Pro 15 Touch Bar 512 GB (2018)','thiết kế không thay đổi, vỏ nhôm sang trọng, siêu mỏng và siêu nhẹ','12 tháng','hiệu năng được nâng cấp, thời lượng pin cực lâu, phù hợp cho nhu cầu làm việc văn phòng nhẹ nhàng, không cần quá chú trọng vào hiển thị của màn hình',1,2),
                               (11,' Intel Celeron N3350',549,0,100,7000,'Windows 10','14 inch HD LED Glare',' 4 GB DDR3','Asus E402NA-GA034T','thiết kế với lớp vỏ bằng nhựa giúp cho máy trở nên nhẹ nhàng hơn','12 tháng','Bàn phím chiclet cùng Touchpad thông minh',1,3),
                               (12,'Intel Celeron N3060',549,0,200,7000,'Windows 10','14.0 inch HD Ultra Slim 200nits','2 GB DDR3L 1600 MHz','Asus Vivobook E406SA-BV001T','thiết kế với lớp vỏ bằng nhựa giúp cho máy trở nên nhẹ nhàng hơn','12 tháng','Bàn phím chiclet cùng Touchpad thông minh',1,3),
                               (13,'Intel Celeron N3060',549,0,200,7000,'Windows 10','14.0 inch HD Ultra Slim 200nits','2 GB DDR3 1600 MHz','Asus Vivobook E406SA-BV043T','thiết kế với lớp vỏ bằng nhựa giúp cho máy trở nên nhẹ nhàng hơn','12 tháng','gọn,nhẹ, độ bền cao',1,3),
@@ -284,10 +284,10 @@ INSERT INTO san_pham VALUES   (3,'Intel, Core i5, 1.8 Ghz',2399,0,100,5800,' Mac
                               (56,' Intel, Core i7, 2.80 GHz',2499,0,110,7000,' Free DOS',' 15.6 inchWide-View',' 8 GB, DDR4, 2400MHz','MSI GF62 7RE-1818XVN','Sỡ hữu phong cách thiết kế truyền thống của MSI','12 tháng','Lớp vỏ đen nhám được phủ cao su mềm đặc trưng đem đến trải nghiệm cầm nắm tốt hơn. Các thành phần của nắp máy bao gồm vỏ, màn hình và viền màn hình đều được ép chặt để tối ưu trọng lượng chỉ còn 2.2 kg',1,8),
                               (57,' Intel Core i7-8750H',2599,0,110,7000,'Windows 10 Home','15.6 inchs FullHD IPS 45%',' 8 GB DDR4 2666 MHz','MSI GF63 8RD-218VN/i7-8750H','Sỡ hữu phong cách thiết kế truyền thống của MSI','12 tháng','Lớp vỏ đen nhám được phủ cao su mềm đặc trưng đem đến trải nghiệm cầm nắm tốt hơn. Các thành phần của nắp máy bao gồm vỏ, màn hình và viền màn hình đều được ép chặt để tối ưu trọng lượng chỉ còn 2.2 kg',1,8),
                               (58,' Intel, Core i5, 2.50 GH',1999,0,100,8000,'Free DOS','15.6 inchWide-View',' 8 GB, DDR4, 2133 MHz','MSI GL62M 7RDX-1817XVN','Thiết kế gọn gàng để di chuyển','12 tháng','Lớp vỏ đen nhám được phủ cao su mềm đặc trưng đem đến trải nghiệm cầm nắm tốt hơn. Các thành phần của nắp máy bao gồm vỏ, màn hình và viền màn hình đều được ép chặt để tối ưu trọng lượng chỉ còn 2.2 kg',1,8),
-                              (59,'Intel Celeron N3350 1.10 GHz',499,0,100,5000,'Windows 10','13.3 inch FullHD IPS','3 GB LPDDR3 1600 MHz','Masstel L133','Thiết kế gọn gàng để di chuyển','6 tháng','thiết kế để giúp bạn làm việc hiệu quả suốt cả ngày dài, kể cả khi bạn đang di chuyển. Máy tính xách tay 13.3 inchs nhỏ gọn và có mức giá hợp lý, trọng lượng chỉ 1.2 Kg và thời lượng batteryCapacity_mAh bền bỉ, phù hợp với những bạn trẻ năng động',1,9),
-                              (60,'Intel Celeron N3350 1.10 GHz',549,0,100,5000,'Windows 10','13.3 inch FullHD IPS','3 GB LPDDR3 1600 MHz',' Masstel L133/Celeron N3350','Thiết kế gọn gàng để di chuyển','6 tháng','thiết kế để giúp bạn làm việc hiệu quả suốt cả ngày dài, kể cả khi bạn đang di chuyển. Máy tính xách tay 13.3 inchs nhỏ gọn và có mức giá hợp lý, trọng lượng chỉ 1.2 Kg và thời lượng batteryCapacity_mAh bền bỉ, phù hợp với những bạn trẻ năng động',1,9),
-                              (61,' Intel Celeron N3350 1.10 GHz',599,0,100,4000,'Windows 10',' 13.3 inch FullHD IPS',' 3 GB LPDDR3 1600 MHz','Masstel L133 Celeron N3350','Thiết kế gọn gàng để di chuyển','6 tháng','thiết kế để giúp bạn làm việc hiệu quả suốt cả ngày dài, kể cả khi bạn đang di chuyển. Máy tính xách tay 13.3 inchs nhỏ gọn và có mức giá hợp lý, trọng lượng chỉ 1.2 Kg và thời lượng batteryCapacity_mAh bền bỉ, phù hợp với những bạn trẻ năng động',1,9),
-                              (62,'Intel Celeron N4100',699,0,50,4000,'Windows 10','13.3 inchs FullHD IPS','4 GB LPDDR4','Masstel L133 Pro/Celeron N4100','Thiết kế siêu mỏng nhẹ','6 tháng','thiết kế để giúp bạn làm việc hiệu quả suốt cả ngày dài, kể cả khi bạn đang di chuyển. Máy tính xách tay 13.3 inchs nhỏ gọn và có mức giá hợp lý, trọng lượng chỉ 1.2 Kg và thời lượng batteryCapacity_mAh bền bỉ, phù hợp với những bạn trẻ năng động',1,9),
+                              (59,'Intel Celeron N3350 1.10 GHz',499,0,100,5000,'Windows 10','13.3 inch FullHD IPS','3 GB LPDDR3 1600 MHz','Masstel L133','Thiết kế gọn gàng để di chuyển','6 tháng','thiết kế để giúp bạn làm việc hiệu quả suốt cả ngày dài, kể cả khi bạn đang di chuyển. Máy tính xách tay 13.3 inchs nhỏ gọn và có mức giá hợp lý, trọng lượng chỉ 1.2 Kg và thời lượng pin bền bỉ, phù hợp với những bạn trẻ năng động',1,9),
+                              (60,'Intel Celeron N3350 1.10 GHz',549,0,100,5000,'Windows 10','13.3 inch FullHD IPS','3 GB LPDDR3 1600 MHz',' Masstel L133/Celeron N3350','Thiết kế gọn gàng để di chuyển','6 tháng','thiết kế để giúp bạn làm việc hiệu quả suốt cả ngày dài, kể cả khi bạn đang di chuyển. Máy tính xách tay 13.3 inchs nhỏ gọn và có mức giá hợp lý, trọng lượng chỉ 1.2 Kg và thời lượng pin bền bỉ, phù hợp với những bạn trẻ năng động',1,9),
+                              (61,' Intel Celeron N3350 1.10 GHz',599,0,100,4000,'Windows 10',' 13.3 inch FullHD IPS',' 3 GB LPDDR3 1600 MHz','Masstel L133 Celeron N3350','Thiết kế gọn gàng để di chuyển','6 tháng','thiết kế để giúp bạn làm việc hiệu quả suốt cả ngày dài, kể cả khi bạn đang di chuyển. Máy tính xách tay 13.3 inchs nhỏ gọn và có mức giá hợp lý, trọng lượng chỉ 1.2 Kg và thời lượng pin bền bỉ, phù hợp với những bạn trẻ năng động',1,9),
+                              (62,'Intel Celeron N4100',699,0,50,4000,'Windows 10','13.3 inchs FullHD IPS','4 GB LPDDR4','Masstel L133 Pro/Celeron N4100','Thiết kế siêu mỏng nhẹ','6 tháng','thiết kế để giúp bạn làm việc hiệu quả suốt cả ngày dài, kể cả khi bạn đang di chuyển. Máy tính xách tay 13.3 inchs nhỏ gọn và có mức giá hợp lý, trọng lượng chỉ 1.2 Kg và thời lượng pin bền bỉ, phù hợp với những bạn trẻ năng động',1,9),
                               (63,' Intel Celeron N3350',449,0,50,5000,'FreeDOS','13.3 inchs IPS LCD',' 3 GB DDR3L 1600 MHz','Haier S1 HR-13M/Celeron N3350','Thiết kế siêu mỏng nhẹ','6 tháng','Một chiếc laptop đời mới thời trang, siêu mỏng nhẹ phục vụ tối ưu cho công việc nhưng lại trong tầm giá rất rẻ',1,10),
                               (64,' Intel Pentium N4200',749,0,60,4000,'FreeDOS','13.3 inchs IPS LCD',' 6 GB DDR3L 1600 MHz','Haier S1 HR-13MZ/Pentium N4200','Thiết kế siêu mỏng nhẹ','6 tháng','Một chiếc laptop đời mới thời trang, siêu mỏng nhẹ phục vụ tối ưu cho công việc nhưng lại trong tầm giá rất rẻ',1,10),
                               (65,NULL,1030,0,100,NULL,NULL,NULL,NULL,'PC Acer Aspire TC-780 DT.B89SV.012 i5 7400/4G/1TB/DVDRW/WL/K+M/Dos',NULL,'12 tháng','-	Bộ vi xử lý Core i5-7400 (3.00GHz,6MB) \r\n-	RAM 4 GB DDR4 2133MHz UDIMM \r\n-	Ổ cứng 1TB 3.5 inch 7200rpm \r\n-	VGA Intel HD Graphics 530',2,4),
@@ -369,24 +369,24 @@ INSERT INTO san_pham VALUES   (3,'Intel, Core i5, 1.8 Ghz',2399,0,100,5800,' Mac
                               (141,NULL,10,0,100,NULL,NULL,NULL,NULL,'Cáp chuyển HDMI sang VGA ',NULL,'3 tháng','Cáp chuyển HDMI sang VGA Hỗ trợ Full HD DHTV-C20 Orico',9,5),
                               (142,NULL,14,0,100,NULL,NULL,NULL,NULL,'Cable HDMI 1.5m',NULL,'2 tháng','Cable HDMI 1.5m Version 2.0 hỗ trợ 4K 60Mhz',9,3),
                               (143,NULL,100,0,100,NULL,NULL,NULL,NULL,'Cáp chuyển TypeC ',NULL,'2 tháng','Cáp chuyển TypeC sang 5 cổng HDMI/TypeC/2*USB 3.0 RCH3A-GD Orico',9,6);
-/*!40000 ALTER TABLE san_pham ENABLE KEYS */;
+/*!40000 ALTER TABLE product ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS vai_tro;
+DROP TABLE IF EXISTS roles;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE vai_tro (
+CREATE TABLE roles (
   id bigint NOT NULL AUTO_INCREMENT,
-  ten_vai_tro varchar(20),
+  role_name varchar(20),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
-LOCK TABLES vai_tro WRITE;
-/*!40000 ALTER TABLE vai_tro DISABLE KEYS */;
-INSERT INTO vai_tro VALUES (1,'ADMIN'),(2,'MEMBER'),(3,'SHIPPER');
-/*!40000 ALTER TABLE vai_tro ENABLE KEYS */;
+LOCK TABLES roles WRITE;
+/*!40000 ALTER TABLE roles DISABLE KEYS */;
+INSERT INTO roles VALUES (1,'ROLE_ADMIN'),(2,'ROLE_MEMBER'),(3,'ROLE_SHIPPER');
+/*!40000 ALTER TABLE roles ENABLE KEYS */;
 UNLOCK TABLES;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
