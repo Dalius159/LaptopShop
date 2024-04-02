@@ -5,11 +5,11 @@
 	<title>Product Details</title>
 
 	<script th:inline="javascript">
-		/*<![CDATA[*/
-		document.addEventListener('DOMContentLoaded', function () {
-			document.getElementById('priceConvert').innerHTML = accounting.formatMoney([[${sp.price}]]);
-		});
-		/*]]>*/
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('priceConvert').innerHTML = accounting.formatMoney([[${product.price}]]);
+        });
+        /*]]>*/
 	</script>
 </head>
 <body>
@@ -23,31 +23,34 @@
 			<div class="wrapper row">
 				<div class="preview col-md-6">
 					<div class="preview-pic tab-content">
-						<div class="tab-pane active" id="pic-1"><img th:src="@{'/product_images/' + ${sp.id} + '.png'}" alt="product img"/></div>
+						<div class="tab-pane active" id="pic-1"><img
+								th:src="@{'/product_images/' + ${product.id} + '.png'}" alt="product img"/></div>
 					</div>
 				</div>
 				<div class="details col-md-6">
-					<p th:style="'display:none'" id="spid" th:text="${sp.id}"></p>
-					<h2 class="product-title" th:text="${sp.getProductName}"></h2>
+					<p th:style="'display:none'" th:text="${product.id}"></p>
+					<h2 class="product-title" th:text="${product.getProductName}"></h2>
 					<h4 class="price">Product description</h4>
-					<p th:if="${#strings.length(sp.cpu) > 0}" class="product-description"
-					   th:text="'CPU: ' + ${sp.cpu}"></p>
-					<p th:if="${#strings.length(sp.ram) > 0}" class="product-description"
-					   th:text="'RAM: ' + ${sp.ram}"></p>
-					<p th:if="${#strings.length(sp.getDesign) > 0}" class="product-description"
-					   th:text="'Design: ' + ${sp.getDesign}"></p>
-					<p th:if="${#strings.length(sp.getOperatingSystem) > 0}" class="product-description"
-					   th:text="'Operating system: ' + ${sp.getOperatingSystem}"></p>
-					<p th:if="${#strings.length(sp.getScreen) > 0}" class="product-description"
-					   th:text="'Screen: ' + ${sp.getScreen}"></p>
-					<p th:if="${#strings.length(sp.getBatteryCapacity_mAh) > 0}" class="product-description"
-                       th:text="'Battery Capacity: ' + ${sp.getBatteryCapacity_mAh}"></p>
-					<p class="product-description" th:text="'Producer brand: ' + ${sp.getManufacturer.getManufacturerName}"></p>
+					<p th:if="${#strings.length(product.cpu) > 0}" class="product-description"
+					   th:text="'CPU: ' + ${product.cpu}"></p>
+					<p th:if="${#strings.length(product.ram) > 0}" class="product-description"
+					   th:text="'RAM: ' + ${product.ram}"></p>
+					<p th:if="${#strings.length(product.getDesign) > 0}" class="product-description"
+					   th:text="'Design: ' + ${product.getDesign}"></p>
+					<p th:if="${#strings.length(product.getOperatingSystem) > 0}" class="product-description"
+					   th:text="'Operating system: ' + ${product.getOperatingSystem}"></p>
+					<p th:if="${#strings.length(product.getScreen) > 0}" class="product-description"
+					   th:text="'Screen: ' + ${product.getScreen}"></p>
+					<p th:if="${#strings.length(product.getBatteryCapacity_mAh) > 0}" class="product-description"
+					   th:text="'Battery Capacity: ' + ${product.getBatteryCapacity_mAh}"></p>
+					<p class="product-description"
+					   th:text="'Producer brand: ' + ${product.getManufacturer.getManufacturerName}"></p>
 					<p class="product-description">
-						<span class="important">GENERAL INFORMATION:</span> <span th:text="${sp.getGeneralInfor}"></span>
+						<span class="important">GENERAL INFORMATION:</span> <span
+							th:text="${product.getGeneralInfor}"></span>
 					</p>
 					<p class="product-description">
-						<span class="important">GUARANTEE:</span> <span th:text="${sp.getWarrantyInfor}"></span>
+						<span class="important">GUARANTEE:</span> <span th:text="${product.getWarrantyInfor}"></span>
 					</p>
 					<h4 class="price" id="blabla">Pricing: <span id="priceConvert"></span></h4>
 					<div class="action">

@@ -151,9 +151,9 @@ public class ClientController {
 	private String disqusSeed;
 
 	@GetMapping("/sp")
-	public String detailspPage(@RequestParam int id, Model model) {
-		Product sp = productService.getProductById(id);
-		model.addAttribute("sp", sp);
+	public String productDetail(@RequestParam int id, Model model) {
+		Product product = productService.getProductById(id);
+		model.addAttribute("product", product);
 		model.addAttribute("disqusSeed", disqusSeed);
 		return "client/productDetail";
 	}
