@@ -18,6 +18,8 @@
 </head>
 <body>
 <div th:insert="~{/client/include/homeHeader}"></div>
+
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-1"></div>
@@ -25,12 +27,12 @@
 			<br>
 			<p><b>Your order has been placed successfully</b></p><br>
 			<p>Order details:</p><br>
-			<p><b>ID/Order Code: </b><span th:text="${donhang.getId()}"></span></p><br>
-			<p><b>Recipient's Name: </b><span th:text="${donhang.getReceiver()}"></span></p><br>
-			<p><b>Phone Number: </b><span th:text="${donhang.getReceivedPhone()}"></span></p><br>
-			<p><b>Address: </b><span th:text="${donhang.getReceiveAddress()}"></span></p><br>
-			<p><b>Notes: </b><span th:text="${donhang.getNote()}"></span></p><br>
-			<p>At <span th:text="${donhang.getOrderDate()}"></span>, we received an order with the following products:
+			<p><b>ID/Order Code: </b><span th:text="${order.getId()}"></span></p><br>
+			<p><b>Recipient's Name: </b><span th:text="${order.getReceiver()}"></span></p><br>
+			<p><b>Phone Number: </b><span th:text="${order.getReceivedPhone()}"></span></p><br>
+			<p><b>Address: </b><span th:text="${order.getReceiveAddress()}"></span></p><br>
+			<p><b>Notes: </b><span th:text="${order.getNote()}"></span></p><br>
+			<p>At <span th:text="${order.getOrderDate()}"></span>, we received an order with the following products:
 			</p><br>
 
 			<table class="table-cart-checkout">
