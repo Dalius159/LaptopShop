@@ -45,19 +45,19 @@
 				</tr>
 				</thead>
 				<tbody>
-				<th:block th:each="sanpham : ${cart}">
+				<th:block th:each="product : ${cart}">
 					<tr style="text-align: center;">
 						<td>
-							<img th:src="@{/product_images/{id}.png(id=${sanpham.id})}" th:alt="${sanpham.id}"
+							<img th:src="@{/product_images/{id}.png(id=${product.id})}" th:alt="${product.id}"
 								 class="img-reponsive fix-size-img">
 						</td>
-						<td style="color:green" th:text="${sanpham.getProductName}"></td>
+						<td style="color:green" th:text="${product.getProductName}"></td>
 						<td class="donGia">
 							<div class="check" style="display: inline-block;"
-								 th:text="${sanpham.getPrice} + ' x ' + ${quantity[sanpham.id]}"></div>
+								 th:text="${product.getPrice} + ' x ' + ${quantity[product.id]}"></div>
 						</td>
 						<td>
-							<div class="total" th:text="${sanpham.getPrice * quantity[sanpham.id]}"></div>
+							<div class="total" th:text="${product.getPrice * quantity[product.id]}"></div>
 						</td>
 					</tr>
 				</th:block>
@@ -65,7 +65,7 @@
 			</table>
 
 			<br>
-			<p>Order total value: <b id="ordertotal"> </b></p><br>
+			<p>Order total value: <b id="orderTotal"> </b></p><br>
 
 			<p>We sincerely thanks you for trusting and using our services.</p>
 			<br>

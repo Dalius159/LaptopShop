@@ -52,6 +52,6 @@ function calculateOrder() {
 	for (let i = 0; i < element.length; i++) {
 		res = res + parseInt(element[i].textContent);
 	}
-	const element2 = document.getElementById("ordertotal");
+	const element2 = document.getElementById("orderTotal");
 	element2.innerHTML = accounting.formatMoney(res);
 }
