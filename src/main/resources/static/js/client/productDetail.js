@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 	document.querySelector(".add-to-cart").addEventListener('click', function () {
-		fetchAddToCart(document.getElementById("spid").textContent);
+		fetchAddToCart(document.getElementById("prod_id").textContent);
 	});
 
 	function fetchAddToCart(id) {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		this.page.identifier = disqus_seed + product_id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	};
 
-	var disqus_url = 'https://laptopshop-1.disqus.com/embed.js';  
+	var disqus_url = 'https://laptopshop-1.disqus.com/embed.js';
 	(function() { // DON'T EDIT BELOW THIS LINE
 	var d = document, s = d.createElement('script');
 	s.src = disqus_url;

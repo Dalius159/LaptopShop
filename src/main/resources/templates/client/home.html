@@ -3,6 +3,10 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Laptop Shop</title>
+
+	<link rel="stylesheet" th:href="@{/glide/glide.core.min.css}">
+	<link rel="stylesheet" th:href="@{/glide/glide.theme.min.css}">
+	<script th:src="@{/glide/glide.min.js}"></script>
 </head>
 <body>
 
@@ -10,20 +14,36 @@
 
 
 <script th:src="@{/js/client/add2cart.js}"></script>
-<script th:src="@{/js/client/homeAjax.js}"></script>
+<script th:src="@{/js/client/homeCatalog.js}"></script>
 <!--start-image-slider---->
 <div class="wrap">
 	<div class="image-slider">
-		<!-- Slideshow 1 -->
-		<ul class="rslides" id="slider1">
-			<li><img th:src="@{/images/laptop1.jpg}" src="/images/laptop1.jpg" alt="laptop1"></li>
-			<li><img th:src="@{/images/laptop2.png}" src="/images/laptop2.png" alt="laptop2"></li>
-			<li><img th:src="@{/images/laptop3.png}" src="/images/laptop3.png" alt="laptop3"></li>
-		</ul>
-		<!-- Slideshow 2 -->
+		<!-- Glide Slider -->
+		<div class="glide" id="glide1">
+			<div class="glide__track" data-glide-el="track">
+				<ul class="glide__slides">
+					<li class="glide__slide"><img th:src="@{/images/laptop1.jpg}" src="/images/laptop1.jpg"
+												  alt="laptop1"></li>
+					<li class="glide__slide"><img th:src="@{/images/laptop2.png}" src="/images/laptop2.png"
+												  alt="laptop2"></li>
+					<li class="glide__slide"><img th:src="@{/images/laptop3.png}" src="/images/laptop3.png"
+												  alt="laptop3"></li>
+				</ul>
+			</div>
+		</div>
+		<!-- End Glide Slider -->
 	</div>
 	<!--End-image-slider---->
 </div>
+
+<script>
+    new Glide('#glide1', {
+        type: 'carousel',
+        autoplay: 2000, // Adjust autoplay speed (in milliseconds) as needed
+        hoverpause: true // Pause autoplay on hover
+    }).mount();
+</script>
+
 
 <div class="clear"></div>
 <div class="wrap">

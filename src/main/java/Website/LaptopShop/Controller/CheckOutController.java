@@ -69,7 +69,7 @@ public class CheckOutController {
 	}
 
 	@GetMapping(value = "/thankyou")
-	public String thankyouPage(HttpServletRequest req, Model model) {
+	public String thankYouPage(HttpServletRequest req, Model model) {
 		Users currentUser = getSessionUser(req);
 		Orders order = orderService.findLatestOrderByOrdererID(currentUser.getId());
 		Map<Long, Long> quantity = new HashMap<>();
@@ -85,7 +85,7 @@ public class CheckOutController {
 		model.addAttribute("cart", productList);
 		model.addAttribute("quantity", quantity);
 
-		return "client/thank-you";
+		return "client/thankYou";
 	}
 
 	public void SaveOrder(Orders order, HttpServletRequest req, HttpServletResponse response, Model model, byte status) {
