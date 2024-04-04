@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 						  <li><a style="padding-right: 100px" href="${contextPath}/store?brand=${danhmuc.tenDanhMuc}">
 							  ${danhmuc.tenDanhMuc}
 							</a></li>`;
-					document.getElementById('danhmuc').insertAdjacentHTML('beforeend', content);
+					document.getElementById('category').insertAdjacentHTML('beforeend', content);
 					document.getElementById('danhmuc2').insertAdjacentHTML('beforeend', content2);
 				});
 			})

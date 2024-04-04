@@ -28,7 +28,7 @@
 					<form action="">
 						<input type="hidden" name="name" th:value="${name}"/>
 						<input type="hidden" name="range" th:value="${range}"/>
-						<input type="hidden" name="brand" th:value="${brand}"/>
+						<input type="hidden" name="category" th:value="${category}"/>
 						<input type="hidden" name="manufacturer" th:value="${manufacturer}"/>
 
 						<div class="inline">
@@ -54,19 +54,19 @@
 					<h4>No search result</h4>
 				</div>
 
-				<div th:each="sanpham, loop : ${list}">
+				<div th:each="product, loop : ${list}">
 					<!--switch case need testing-->
 					<div th:if="${loop.index != #lists.size(list)-1}" th:switch="${loop.index % 4}">
 
 						<div th:case="0" class="product_item products-info"
 							 style="width: 232px; height: 400px;">
-							<a th:href="@{'sp?id=' + ${sanpham.id}}">
-								<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+							<a th:href="@{'sp?id=' + ${product.id}}">
+								<img th:src="@{'/product_images/' + ${product.id} + '.png'}" th:alt="${product.id}"
 									 style="width: 15em; height: 15em;"/>
-								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+								<h3 style="font-weight: bold; height: 5em" th:text="${product.productName}"></h3>
 							</a>
-							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
+							<h3 class="changeToVND" th:text="${product.price}"></h3>
+							<button th:onclick="'addToCart(' + ${product.id} + ')'" class="btn btn-warning"
 									type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span>
 								Purchase
@@ -76,13 +76,13 @@
 
 						<div th:case="3" class="product_item products-info"
 							 style="width: 232px; height: 400px;">
-							<a th:href="@{/sp(id=${sanpham.id})}">
-								<img th:src="@{'/product_images/'+ ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+							<a th:href="@{/sp(id=${product.id})}">
+								<img th:src="@{'/product_images/'+ ${product.id} + '.png'}" th:alt="${product.id}"
 									 style="width: 15em; height: 15em;"/>
-								<h3 style="	font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+								<h3 style="	font-weight: bold; height: 5em" th:text="${product.productName}"></h3>
 							</a>
-							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
+							<h3 class="changeToVND" th:text="${product.price}"></h3>
+							<button th:onclick="'addToCart(' + ${product.id} + ')'" class="btn btn-warning"
 									type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span>
 								Purchase
@@ -92,13 +92,13 @@
 
 						<div th:case="*" class="product_item products-info"
 							 style="width: 232px; height: 400px;">
-							<a th:href="@{/sp(id=${sanpham.id})}">
-								<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+							<a th:href="@{/sp(id=${product.id})}">
+								<img th:src="@{'/product_images/' + ${product.id} + '.png'}" th:alt="${product.id}"
 									 style="width: 15em; height: 15em;"/>
-								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+								<h3 style="font-weight: bold; height: 5em" th:text="${product.productName}"></h3>
 							</a>
-							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'" class="btn btn-warning"
+							<h3 class="changeToVND" th:text="${product.price}"></h3>
+							<button th:onclick="'addToCart(' + ${product.id} + ')'" class="btn btn-warning"
 									type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
 							</button>
@@ -110,13 +110,13 @@
 					<div th:unless="${loop.index != #lists.size(list)-1}" th:switch="${loop.index % 4}">
 						<div th:case="0" class="product_item products-info"
 							 style="width: 232px; height: 400px;">
-							<a th:href="@{/sp(id=${sanpham.id})}">
-								<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+							<a th:href="@{/sp(id=${product.id})}">
+								<img th:src="@{'/product_images/' + ${product.id} + '.png'}" th:alt="${product.id}"
 									 style="width: 15em; height: 15em;"/>
-								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+								<h3 style="font-weight: bold; height: 5em" th:text="${product.productName}"></h3>
 							</a>
-							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-							<button th:onclick="addToCart(${sanpham.id})"
+							<h3 class="changeToVND" th:text="${product.price}"></h3>
+							<button th:onclick="addToCart(${product.id})"
 									class="btn btn-warning" type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
 							</button>
@@ -125,13 +125,13 @@
 
 						<div th:unless="0" class="product_item products-info"
 							 style="width: 232px; height: 400px;">
-							<a th:href="@{/sp(id=${sanpham.id})}">
-								<img th:src="@{'/product_images/' + ${sanpham.id} + '.png'}" th:alt="${sanpham.id}"
+							<a th:href="@{/sp(id=${product.id})}">
+								<img th:src="@{'/product_images/' + ${product.id} + '.png'}" th:alt="${product.id}"
 									 style="width: 15em; height: 15em;"/>
-								<h3 style="font-weight: bold; height: 5em" th:text="${sanpham.tenSanPham}"></h3>
+								<h3 style="font-weight: bold; height: 5em" th:text="${product.productName}"></h3>
 							</a>
-							<h3 class="changeToVND" th:text="${sanpham.donGia}"></h3>
-							<button th:onclick="'addToCart(' + ${sanpham.id} + ')'"
+							<h3 class="changeToVND" th:text="${product.price}"></h3>
+							<button th:onclick="'addToCart(' + ${product.id} + ')'"
 									class="btn btn-warning" type="button">
 								<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
 							</button>
@@ -186,10 +186,10 @@
 			<div class="select-range">
 				<select name="manufacturer" class="form-control">
 					<option value="">All manufacturer</option>
-					<option th:each="manufacturer : ${hangsx}" th:value="${manufacturer}" th:text="${manufacturer}"></option>
+					<option th:each="manufacturer : ${manufacturer}" th:value="${manufacturer}" th:text="${manufacturer}"></option>
 				</select>
 			</div>
-			<div th:if="${brand == 'Laptop'}">
+			<div th:if="${category == 'Laptop'}">
 				<p>OS</p>
 				<div class="select-range">
 					<select name="os" class="form-control">
@@ -217,11 +217,11 @@
 				<div class="select-range">
 					<select name="pin" class="form-control">
 						<option value="">All battery</option>
-						<option th:each="pin : ${pinSet}" th:value="${pin}" th:text="${pin}"></option>
+						<option th:each="pin : ${pinSet}" th:value="${battery}" th:text="${battery}"></option>
 					</select>
 				</div>
 			</div>
-			<input type="hidden" name="brand" th:value="${brand}">
+			<input type="hidden" name="brand" th:value="${category}">
 			<input class="search-submit" type="submit" value="Filter">
 		</form>
 	</div>

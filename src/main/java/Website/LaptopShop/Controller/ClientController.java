@@ -104,11 +104,11 @@ public class ClientController {
 		model.addAttribute("list", list.getContent());
 		model.addAttribute("currentPage", page);
 		model.addAttribute("range", range);
-		model.addAttribute("brand", category);
-		model.addAttribute("manufactor", manufacturer);
+		model.addAttribute("category", category);
+		model.addAttribute("manufacturer", manufacturer);
 		model.addAttribute("os", os);
 		model.addAttribute("ram", ram);
-		model.addAttribute("pin", battery);
+		model.addAttribute("battery", battery);
 		List<Integer> pagelist = new ArrayList<>();
 
 		//Get page list
@@ -142,7 +142,7 @@ public class ClientController {
 				pinSet.add(product.getBatteryCapacity_mAh());
 			}
 		}
-		model.addAttribute("hangsx", manufacturer2);
+		model.addAttribute("manufacturer", manufacturer2);
 		model.addAttribute("pinSet", pinSet);
 		return "client/store";
 	}

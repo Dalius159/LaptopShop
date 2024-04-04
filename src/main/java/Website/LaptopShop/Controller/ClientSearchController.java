@@ -92,8 +92,8 @@ public class ClientSearchController {
 			category2.add(sp.getCategory().getCategoryName());
 			manufacturer2.add(sp.getManufacturer().getManufacturerName());
 		}
-		model.addAttribute("danhmuc", category2);
-		model.addAttribute("hangsx", manufacturer2);
+		model.addAttribute("category", category2);
+		model.addAttribute("manufacturer", manufacturer2);
 
 		return "client/searchResult";
 	}
