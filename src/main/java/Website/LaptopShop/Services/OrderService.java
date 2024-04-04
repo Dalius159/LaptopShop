@@ -20,4 +20,10 @@ public interface OrderService {
     List<Orders> getOrderByUser(Users user);
 
     Orders findLatestOrderByOrdererID(Long ordererID);
+
+    List<Orders> findByOrderStatusAndDeliver(String status,Users deliver);
+
+    Page<Orders> findOrderByDeliver(SearchOrderObject object, int page, int size, Users deliver) throws ParseException;
+
+    int countByOrderStatus(String orderStatus);
 }

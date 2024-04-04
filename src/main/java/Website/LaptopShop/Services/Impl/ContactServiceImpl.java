@@ -52,4 +52,9 @@ public class ContactServiceImpl implements ContactService {
     public Contact save(Contact contact) {
         return Rep.save(contact);
     }
+
+    @Override
+    public int countByStatus(String status) {
+        return Rep.countByStatus(status);
+    }
 }

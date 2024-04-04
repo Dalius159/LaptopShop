@@ -215,4 +215,11 @@ public class ProductServiceImpl implements ProductService {
 
         return productRep.findAll(builder, PageRequest.of(page - 1, resultPerPage));
     }
+
+    @Override
+    public Page<Product> getProductByProductNameForAdmin(String productName, int page, int size) {
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(QProduct.product.productName.like("%" + productName + "%"));
+        return productRep.findAll(builder, PageRequest.of(page, size));
+    }
 }

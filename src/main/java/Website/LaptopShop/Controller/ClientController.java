@@ -111,7 +111,7 @@ public class ClientController {
 		model.addAttribute("pin", battery);
 		List<Integer> pagelist = new ArrayList<>();
 
-		//Lap ra danh sach cac trang
+		//Get page list
 		if (page >= 1 && page < 4) {
 			for (int i = 2; i <= 5 && i <= totalPage; i++) {
 				pagelist.add(i);

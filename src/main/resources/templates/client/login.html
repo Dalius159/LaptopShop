@@ -86,9 +86,9 @@
                     <i class='bx bxs-lock-alt' ></i>
                 </div>
                 <div class="input-box animation" style="--i:21; --j:4">
-                    <input type="text" th:field="*{getFullName}" required>
+                    <input type="text" th:field="*{fullName}" required>
                     <label>Fullname</label>
-                    <label th:if="${#fields.hasErrors('hoTen')}" th:errors="*{getFullName}" id="validate-fullname" class="validation-message"></label>
+                    <label th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" id="validate-fullname" class="validation-message"></label>
                     <i class='bx bxs-user' ></i>
                 </div>
                 <button type="submit" class="btn animation" style="--i:22; --j:5">Sign up</button>

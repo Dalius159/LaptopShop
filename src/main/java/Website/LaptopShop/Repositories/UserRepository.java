@@ -6,9 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
     Users findByEmail(String email);
     Page<Users> findByRoleIn(Set<Roles> role, Pageable of);
+
+    List<Users> findByRoleIn(Set<Roles> role);
 }

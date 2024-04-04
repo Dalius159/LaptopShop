@@ -75,4 +75,48 @@ public class OrderServiceImpl implements OrderService {
     public Orders findLatestOrderByOrdererID(Long ordererID) {
         return Rep.findLatestOrderByOrdererID(ordererID);
     }
+
+    @Override
+    public List<Orders> findByOrderStatusAndDeliver(String status, Users deliver) {
+        return Rep.findByOrderStatusAndDeliver(status, deliver);
+    }
+
+    @Override
+    public Page<Orders> findOrderByDeliver(SearchOrderObject object, int page, int size, Users deliver) throws ParseException {
+        BooleanBuilder builder = new BooleanBuilder();
+
+        String orderStatus = object.getOrderStatus();
+        String fromDate = object.getFromDate();
+        String toDate = object.getToDate();
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+
+        builder.and(QOrders.orders.deliver.eq(deliver));
+
+        if (!orderStatus.equals("")) {
+            builder.and(QOrders.orders.orderStatus.eq(orderStatus));
+        }
+
+        if (!fromDate.equals("") && fromDate != null) {
+            if (orderStatus.equals("Delivering")) {
+                builder.and(QOrders.orders.deliveryDate.goe(formatDate.parse(fromDate)));
+            } else { // completed
+                builder.and(QOrders.orders.receivedDate.goe(formatDate.parse(fromDate)));
+            }
+        }
+
+        if (!toDate.equals("") && toDate != null) {
+            if (orderStatus.equals("Delivering")) {
+                builder.and(QOrders.orders.deliveryDate.loe(formatDate.parse(toDate)));
+            } else { // completed
+                builder.and(QOrders.orders.receivedDate.loe(formatDate.parse(toDate)));
+            }
+        }
+
+        return Rep.findAll(builder, PageRequest.of(page - 1, size));
+    }
+
+    @Override
+    public int countByOrderStatus(String orderStatus) {
+        return Rep.countByOrderStatus(orderStatus);
+    }
 }
