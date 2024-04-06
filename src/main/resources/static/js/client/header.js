@@ -12,17 +12,17 @@ document.addEventListener('DOMContentLoaded', function () {
 				return response.json();
 			})
 			.then(result => {
-				result.forEach(danhmuc => {
+				result.forEach(category => {
 					const content = `
-						  <li><a href="${contextPath}/store?brand=${danhmuc.tenDanhMuc}">
-							  <span style="font-size: 16px; font-weight: 900;">${danhmuc.tenDanhMuc}</span>
+						  <li><a href="${contextPath}/store?brand=${category.categoryName}">
+							  <span style="font-size: 16px; font-weight: 900;">${category.categoryName}</span>
 							</a></li>`;
 					const content2 = `
-						  <li><a style="padding-right: 100px" href="${contextPath}/store?brand=${danhmuc.tenDanhMuc}">
-							  ${danhmuc.tenDanhMuc}
+						  <li><a style="padding-right: 100px" href="${contextPath}/store?brand=${category.categoryName}">
+							  ${category.categoryName}
 							</a></li>`;
-					document.getElementById('danhmuc').insertAdjacentHTML('beforeend', content);
-					document.getElementById('danhmuc2').insertAdjacentHTML('beforeend', content2);
+					document.getElementById('category').insertAdjacentHTML('beforeend', content);
+					document.getElementById('category2').insertAdjacentHTML('beforeend', content2);
 				});
 			})
 			.catch(error => {

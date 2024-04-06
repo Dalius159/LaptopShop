@@ -17,13 +17,13 @@ function changeInformation()
 	if(address.length == 0)
 	{
 		flag = 1;
-		document.getElementById("addressWarning").innerHTML = "Adress can't be empty";
+		document.getElementById("addressWarning").innerHTML = "Address can't be empty";
 	}
-	var pat = "[0-9]+{9,10}"
+	const pat = "[0-9]+{9,10}";
 	if(!/^([0-9]{9,10})$/.test(phone))
 	{
 		flag = 1;
-		document.getElementById("phoneWarning").innerHTML = "Your phone call shold have 9 or 10 number";
+		document.getElementById("phoneWarning").innerHTML = "Your phone number should have 9 or 10 number";
 	}
 	if(flag == 1)
 	{

@@ -10,13 +10,24 @@
 	<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css" media="all"/>
 	<link th:href="@{'//fonts.googleapis.com/css?family=Londrina+Solid|Coda+Caption:800|Open+Sans'}" rel="stylesheet"
 		  type="text/css">
-	<link rel="stylesheet" th:href="@{/jquery/responsiveslides.css}">
 	<script th:src="@{/js/accounting.min.js}"></script>
+	<script th:src="@{/glide/glide.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/glide/glide.core.min.css}" type="text/css"/>
+	<link rel="stylesheet" th:href="@{/glide/glide.theme.min.css}" type="text/css"/>
+
 
 	<script>
-		$(function () {
-			$("#slider1").responsiveSlides({maxwidth: 1600, speed: 600});
-		});
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Glide.js slider
+            new Glide('#slider1', {
+                type: 'carousel',
+                perView: 1,
+                autoplay: 3000,
+                hoverpause: true,
+                animationDuration: 600,
+                breakpoints: {1600: {perView: 1}}
+            }).mount();
+        });
 	</script>
 	<title>HTML Boilerplate Page</title>
 </head>
@@ -35,7 +46,7 @@
 		<!--integrate with spring security, need testing-->
 		<div class="header-top-nav" sec:authorize="isAuthenticated()">
 			<ul>
-				<li>Hello, <span th:text="${loggedInUser.hoTen}"></span></li>
+				<li>Hello, <span th:text="${loggedInUser.fullName}"></span></li>
 				<li><a th:href="@{/account}">Account</a></li>
 				<li><a th:href="@{/cart}">
 					<span>Shopping Cart&nbsp;&nbsp;</span>
@@ -61,17 +72,17 @@
 <div class="top-header">
 	<div class="wrap">
 		<!--start-logo-->
-			<a th:href="@{/}">
-				<img th:src="@{/images/logo3.png}"
-					 src="/images/logo3.png" title="logo" alt="logo" style="max-width: 25%; height: auto;" />
-			</a>
+		<a th:href="@{/}">
+			<img th:src="@{/images/logo3.png}"
+				 src="/images/logo3.png" title="logo" alt="logo" style="max-width: 25%; height: auto;"/>
+		</a>
 		<div class="top-nav">
 			<ul>
 				<li><a th:href="@{/}">Home Page</a></li>
 
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Shopping<span class="caret"></span></a>
-					<ul class="dropdown-menu" style="background: #94cb32" id="danhmuc2"></ul>
+					<ul class="dropdown-menu" style="background: #94cb32" id="category2"></ul>
 				</li>
 				<li><a th:href="@{/guarantee}">On-site Guarantee</a></li>
 				<li><a th:href="@{/contact}">Contact</a></li>

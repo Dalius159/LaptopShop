@@ -15,28 +15,28 @@ document.addEventListener('DOMContentLoaded', function () {
 				const section = '<div class="section group">';
 				const end_section = '</div>' + '<br>';
 
-				result.forEach((sanpham, i) => {
+				result.forEach((product, i) => {
 					if (i !== result.length - 1) {
 						if (i % 4 === 0) {
 							content = `<div class="grid_1_of_4 images_1_of_4 products-info">
-                                <a href="sp?id=${sanpham.id}">
-                                    <img style="width: 300px; height: 238px" src="/product_images/${sanpham.id}.png" alt="product_img">
-                                    <h3 style="font-weight: bold;">${sanpham.tenSanPham}</h3>
+                                <a href="sp?id=${product.id}">
+                                    <img style="width: 300px; height: 238px" src="/product_images/${product.id}.png" alt="product_img">
+                                    <h3 style="font-weight: bold;">${product.productName}</h3>
                                 </a>
-                                <h3>${accounting.formatMoney(sanpham.donGia)}</h3>
-                                <button onClick="addToCart(${sanpham.id})" class="btn btn-warning">
+                                <h3>${accounting.formatMoney(product.price)}</h3>
+                                <button onClick="addToCart(${product.id})" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-shopping-cart pull-center"></span>Add to cart
                                 </button>
                                 <h3></h3>
                             </div>`;
 						} else {
 							content += `<div class="grid_1_of_4 images_1_of_4 products-info">
-                                <a href="sp?id=${sanpham.id}">
-                                    <img style="width: 300px; height: 238px" src="/product_images/${sanpham.id}.png" alt="product_img">
-                                    <h3 style="font-weight: bold;">${sanpham.tenSanPham}</h3>
+                                <a href="sp?id=${product.id}">
+                                    <img style="width: 300px; height: 238px" src="/product_images/${product.id}.png" alt="product_img">
+                                    <h3 style="font-weight: bold;">${product.productName}</h3>
                                 </a>
-                                <h3>${accounting.formatMoney(sanpham.donGia)} </h3>
-                                <button onClick="addToCart(${sanpham.id})" class="btn btn-warning">
+                                <h3>${accounting.formatMoney(product.price)} </h3>
+                                <button onClick="addToCart(${product.id})" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-shopping-cart pull-center"></span>Add to cart
                                 </button>
                                 <h3></h3>
@@ -49,12 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
 					} else {
 						if (i % 4 === 0) {
 							content = `<div class="grid_1_of_4 images_1_of_4 products-info">
-                                <a href="sp?id=${sanpham.id}">
-                                    <img style="width: 300px; height: 238px" src="/product_images/${sanpham.id}.png" alt="product_img">
-                                    <h3 style="font-weight: bold;">${sanpham.tenSanPham}</h3>
+                                <a href="sp?id=${product.id}">
+                                    <img style="width: 300px; height: 238px" src="/product_images/${product.id}.png" alt="product_img">
+                                    <h3 style="font-weight: bold;">${product.productName}</h3>
                                 </a>
-                                <h3>${accounting.formatMoney(sanpham.donGia)} </h3>
-                                <button onClick="addToCart(${sanpham.id})" class="btn btn-warning">
+                                <h3>${accounting.formatMoney(product.price)} </h3>
+                                <button onClick="addToCart(${product.id})" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-shopping-cart pull-center"></span>Add to cart
                                 </button>
                                 <h3></h3>
@@ -63,12 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
 							document.querySelector('.content-grids').insertAdjacentHTML('beforeend', content);
 						} else {
 							content += `<div class="grid_1_of_4 images_1_of_4 products-info">
-                                <a href="sp?id=${sanpham.id}">
-                                    <img style="width: 300px; height: 238px" src="/product_images/${sanpham.id}.png" alt="product_img">
-                                    <h3 style="font-weight: bold;">${sanpham.tenSanPham}</h3>
+                                <a href="sp?id=${product.id}">
+                                    <img style="width: 300px; height: 238px" src="/product_images/${product.id}.png" alt="product_img">
+                                    <h3 style="font-weight: bold;">${product.productName}</h3>
                                 </a>
-                                <h3>${accounting.formatMoney(sanpham.donGia)} </h3>
-                                <button onClick="addToCart(${sanpham.id})" class="btn btn-warning">
+                                <h3>${accounting.formatMoney(product.price)} </h3>
+                                <button onClick="addToCart(${product.id})" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-shopping-cart pull-center"></span>Add to cart
                                 </button>
                                 <h3></h3>
