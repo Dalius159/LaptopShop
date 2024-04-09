@@ -165,13 +165,12 @@
 	</div>
 
 	<div class="content-sidebar">
-		<h4>Filter</h4>
+		<h4>Filter products</h4>
 		<!--default http is GET, default action url is #-->
 		<form>
 			<input type="hidden" name="name" th:value="${name}">
-			<p>Price Range</p>
 			<div class="select-range">
-				<label>Filter products
+				<label>Price Range
 					<select name="range" class="form-control">
 						<option value="">All prices</option>
 						<option value="Under 400">Under 400</option>
@@ -186,10 +185,10 @@
 			<div class="select-range">
 				<select name="manufacturer" class="form-control">
 					<option value="">All manufacturer</option>
-					<option th:each="manufacturer : ${hangsx}" th:value="${manufacturer}" th:text="${manufacturer}"></option>
+					<option th:each="mnft : ${manufacturer2}" th:value="${mnft}" th:text="${mnft}"></option>
 				</select>
 			</div>
-			<div th:if="${brand == 'Laptop'}">
+			<div th:if="${category == 'Laptop'}">
 				<p>OS</p>
 				<div class="select-range">
 					<select name="os" class="form-control">

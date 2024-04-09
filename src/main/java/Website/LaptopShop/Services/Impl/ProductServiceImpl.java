@@ -122,6 +122,11 @@ public class ProductServiceImpl implements ProductService {
         String[] keywords = object.getKeyword();
         String price = object.getPrice();
         // Keyword
+        searchKeyword(builder, keywords, price);
+        return productRep.findAll(builder);
+    }
+
+    private void searchKeyword(BooleanBuilder builder, String[] keywords, String price) {
         builder.and(QProduct.product.productName.like("%" + keywords[0] + "%"));
         if (keywords.length > 1) {
             for (int i = 1; i < keywords.length; i++) {
@@ -129,7 +134,6 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         FilterByPrice(price, builder);
-        return productRep.findAll(builder);
     }
 
     @Override
@@ -145,14 +149,7 @@ public class ProductServiceImpl implements ProductService {
         String category = object.getCategory();
         String manufacturer = object.getManufacturer();
         // Keyword
-        builder.and(QProduct.product.productName.like("%" + keywords[0] + "%"));
-        if (keywords.length > 1) {
-            for (int i = 1; i < keywords.length; i++) {
-                builder.and(QProduct.product.productName.like("%" + keywords[i] + "%"));
-            }
-        }
-
-        FilterByPrice(price, builder);
+        searchKeyword(builder, keywords, price);
 
         // category and manufacturer
         if (category.length()>1) {

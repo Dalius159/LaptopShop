@@ -42,7 +42,6 @@ public class ClientSearchController {
 						   @RequestParam(defaultValue = "") String sort,
 						   @RequestParam(defaultValue = "") String range,
 						   @RequestParam(defaultValue = "") String category,
-//						   todo: fix typo
 						   @RequestParam(defaultValue = "") String manufacturer,
 						   Model model) {
 		SearchProductObject obj = new SearchProductObject();
@@ -60,7 +59,7 @@ public class ClientSearchController {
 		model.addAttribute("sort", sort);
 		model.addAttribute("range", range);
 		model.addAttribute("brand", category);
-		model.addAttribute("manufactor", manufacturer);
+		model.addAttribute("manufacturer", manufacturer);
 		List<Integer> pagelist = new ArrayList<>();
 
 		// Page list, need refactoring
@@ -93,7 +92,7 @@ public class ClientSearchController {
 			manufacturer2.add(sp.getManufacturer().getManufacturerName());
 		}
 		model.addAttribute("category", category2);
-		model.addAttribute("hangsx", manufacturer2);
+		model.addAttribute("brand", manufacturer2);
 
 		return "client/searchResult";
 	}

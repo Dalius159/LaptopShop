@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			.then(result => {
 				result.forEach(category => {
 					const content = `
-						  <li><a href="${contextPath}/store?brand=${category.categoryName}">
+						  <li><a href="${contextPath}/store?category=${category.categoryName}">
 							  <span style="font-size: 16px; font-weight: 900;">${category.categoryName}</span>
 							</a></li>`;
 					const content2 = `
-						  <li><a style="padding-right: 100px" href="${contextPath}/store?brand=${category.categoryName}">
+						  <li><a style="padding-right: 100px" href="${contextPath}/store?category=${category.categoryName}">
 							  ${category.categoryName}
 							</a></li>`;
 					document.getElementById('category').insertAdjacentHTML('beforeend', content);
