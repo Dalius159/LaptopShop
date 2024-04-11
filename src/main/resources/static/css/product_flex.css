@@ -1,11 +1,16 @@
-.product_container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .product_item {
-    width: 200px;
-    height: 150px;
+    width: 15em;
+    height: 22em;
     margin: 10px;
     border: 1px solid #ccc;
+}
+
+.product_image {
+    width: 15em;
+    height: 15em;
+}
+
+.product_name {
+    font-weight: bold;
+    height: 2em;
 }
