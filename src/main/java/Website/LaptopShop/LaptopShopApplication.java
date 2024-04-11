@@ -5,15 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //	TODO: thymeleaf - spring boot integration eliminate the need for model DTOs
-//	TODO: refactor thymeleaf fragments, dynamic images link for all, replace jquery responsive_slide with vanilla js
-//	TODO: 'quantity' typo
-//	TODO: change codebase to english
 //	TODO: field injection to constructor injection
-
-//	TODO: thymeleaf - spring boot integration eliminate the need for model DTOs
-//	TODO: refactor thymeleaf fragments, dynamic images link for all, replace jquery responsive_slide with vanilla js
-//	TODO: change codebase to english
-//	TODO: field injection to constructor injection
+//	TODO: fix store sort, fix search filter
 
 @SpringBootApplication
 @EnableJpaRepositories("Website.LaptopShop.Repositories")
