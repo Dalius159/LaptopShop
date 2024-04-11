@@ -1,4 +1,4 @@
-package Website.LaptopShop.API;
+package Website.LaptopShop.API.Admin;
 
 import Website.LaptopShop.DTO.ContactDTO;
 import Website.LaptopShop.DTO.ResponseObject;
@@ -6,6 +6,7 @@ import Website.LaptopShop.DTO.SearchContactObject;
 import Website.LaptopShop.Entities.Contact;
 import Website.LaptopShop.Services.ContactService;
 import Website.LaptopShop.Services.UserService;
+import Website.LaptopShop.Ultilities.EmailUlti;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,9 +30,8 @@ public class ContactAPI {
 	@Autowired
 	private UserService userService;
 
-//	email contact, not fully implemented
-//	@Autowired
-//	private EmailUlti emailUlti;
+	@Autowired
+	private EmailUlti emailUlti;
 
 	@GetMapping("/all")
 	public Page<Contact> getContactByFilter(@RequestParam(defaultValue = "1") int page,
@@ -62,17 +62,12 @@ public class ContactAPI {
 					.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
 			ro.setErrorMessages(errors);
 
-//			List<String> keys = new ArrayList<String>(errors.keySet());
-//			for (String key : keys) {
-//				System.out.println(key + ": " + errors.get(key));
-//			}
-
 			ro.setStatus("fail");
 		} else {
 			System.out.println(dto.toString());
 
-//			need to implement email
-//			emailUlti.sendEmail(dto.getDiaChiDen(), dto.getTieuDe(), dto.getRespondMessage());
+
+			emailUlti.sendEmail(dto.getToEmail(), dto.getTitle(), dto.getRespondMessage());
 			
 			Contact contact = contactService.findById(dto.getId());
 			contact.setStatus("Reponded");
@@ -83,6 +78,5 @@ public class ContactAPI {
 			ro.setStatus("success");
 		}
 		return ro;
-
 	}
 }

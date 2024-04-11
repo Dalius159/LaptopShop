@@ -1,4 +1,4 @@
-package Website.LaptopShop.API;
+package Website.LaptopShop.API.Admin;
 
 import Website.LaptopShop.DTO.SearchOrderObject;
 import Website.LaptopShop.Entities.OrderDetails;
@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/don-hang")
+@RequestMapping("/api/order")
 public class OrderAPI {
 
 	@Autowired

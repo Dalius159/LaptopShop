@@ -1,4 +1,4 @@
-package Website.LaptopShop.API;
+package Website.LaptopShop.API.Admin;
 
 import Website.LaptopShop.DTO.ResponseObject;
 import Website.LaptopShop.Entities.Manufacturer;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/api/nhan-hieu")
+@RequestMapping("/api/manufacturer")
 public class ManufacturerAPI {
 
 	@Autowired
