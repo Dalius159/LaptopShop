@@ -92,7 +92,7 @@ public class ClientSearchController {
 			manufacturer2.add(sp.getManufacturer().getManufacturerName());
 		}
 		model.addAttribute("category", category2);
-		model.addAttribute("brand", manufacturer2);
+		model.addAttribute("manufacturer2", manufacturer2);
 
 		return "client/searchResult";
 	}
