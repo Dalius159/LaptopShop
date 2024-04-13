@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	ajaxGet2(contextPath);
 
 	function ajaxGet2(contextPath) {
-		fetch('http://localhost:8080/api/danh-muc/allForReal')
+		fetch('http://localhost:8080/api/category/allForReal')
 			.then(response => {
 				if (!response.ok) {
 					throw new Error('Network response was not ok');

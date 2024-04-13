@@ -7,7 +7,7 @@ public class SearchProductObject {
     private String manufacturerID;
     private String price;
 
-    // sap xep theo gia
+    // sort by price
     private String sortByPrice;
     private String[] keyword;
     private String sort;

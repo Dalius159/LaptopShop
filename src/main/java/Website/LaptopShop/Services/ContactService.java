@@ -12,4 +12,6 @@ public interface ContactService {
     Contact findById(long id);
 
     Contact save(Contact contact);
+
+    int countByStatus(String status);
 }

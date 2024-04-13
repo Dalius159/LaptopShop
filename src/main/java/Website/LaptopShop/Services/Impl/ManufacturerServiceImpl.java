@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ManufacturerServiceImpl implements ManufacturerService {
     @Autowired
@@ -23,5 +25,11 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     public void deleteById(long id) {Rep.deleteById(id);}
 
     @Override
-    public Page<Manufacturer> getALlManufacturer(int page, int size) {return Rep.findAll(PageRequest.of(page, size));}
+    public Page<Manufacturer> getALlManufacturer(int page, int size) {
+        return Rep.findAll(PageRequest.of(page, size));}
+
+    @Override
+    public List<Manufacturer> getALlManufacturer() {
+        return Rep.findAll();
+    }
 }

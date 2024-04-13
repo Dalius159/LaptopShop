@@ -1,4 +1,4 @@
-package Website.LaptopShop.API;
+package Website.LaptopShop.API.Admin;
 
 import Website.LaptopShop.DTO.ResponseObject;
 import Website.LaptopShop.Entities.Category;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("api/danh-muc")
+@RequestMapping("api/category")
 public class CategoryAPI {
 
 	@Autowired

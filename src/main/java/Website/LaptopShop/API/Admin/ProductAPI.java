@@ -1,4 +1,4 @@
-package Website.LaptopShop.API;
+package Website.LaptopShop.API.Admin;
 
 import Website.LaptopShop.DTO.ResponseObject;
 import Website.LaptopShop.DTO.ProductDTO;
@@ -63,11 +63,11 @@ public class ProductAPI {
 	}
 
 
-	// lấy sản phẩm theo tên
-//	@GetMapping("/")
-//	public Page<SanPham> getSanPhamById(@RequestParam String tenSanPham, @RequestParam(defaultValue = "1") int page) {
-//		return sanPhamService.getSanPhamByTenSanPhamForAdmin(tenSanPham, page-1, 10 );
-//	}
+    //get product by name
+	@GetMapping("/")
+	public Page<Product> getProductById(@RequestParam String productName, @RequestParam(defaultValue = "1") int page) {
+		return productService.getProductByProductNameForAdmin(productName, page-1, 10 );
+	}
 
 	// save product into db
 	@PostMapping(value = "/save")

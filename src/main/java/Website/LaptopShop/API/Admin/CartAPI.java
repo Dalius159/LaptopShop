@@ -1,4 +1,4 @@
-package Website.LaptopShop.API;
+package Website.LaptopShop.API.Admin;
 
 import Website.LaptopShop.DTO.ResponseObject;
 import Website.LaptopShop.Entities.CartPointer;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("api/gio-hang")
+@RequestMapping("api/cart")
 @SessionAttributes("loggedInUser")
 public class CartAPI {
 

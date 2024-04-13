@@ -1,4 +1,4 @@
-package Website.LaptopShop.API;
+package Website.LaptopShop.API.Admin;
 
 import Website.LaptopShop.DTO.PasswordDTO;
 import Website.LaptopShop.DTO.ResponseObject;

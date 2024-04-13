@@ -74,18 +74,18 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="sanpham : ${cart}" style="text-align: center;">
+      <tr th:each="product : ${cart}" style="text-align: center;">
         <td>
-          <img th:src="@{/product_images/${sanpham.id}.png}" th:alt="${sanpham.id}"
-               class="img-reponsive fix-size-img">
+          <img th:src="@{/product_images/${product.id}.png}" th:alt="${product.id}"
+               class="fix-size-img">
         </td>
-        <td style="color:green" th:text="${sanpham.getProductName}"></td>
+        <td style="color:green" th:text="${product.getProductName}"></td>
         <td class="donGia">
-          <div class="check" style="display: inline-block;" th:text="${sanpham.getPrice}"></div>
-          <div style="display: inline-block;" th:text="' x ' + ${quantity[sanpham.id]}"></div>
+          <div class="check" style="display: inline-block;" th:text="${product.getPrice}"></div>
+          <div style="display: inline-block;" th:text="' x ' + ${quantity[product.id]}"></div>
         </td>
         <td>
-          <div class="total" th:text="${sanpham.getPrice * quantity[sanpham.id]}"></div>
+          <div class="total" th:text="${product.getPrice * quantity[product.id]}"></div>
         </td>
       </tr>
       </tbody>
@@ -105,7 +105,7 @@
 
 </form>
 
-<script th:src="@{/js/client/checkoutAjax.js}"></script>
+<script th:src="@{/js/client/checkout.js}"></script>
 
 
 <div th:insert="~{client/include/homeFooter}"></div>

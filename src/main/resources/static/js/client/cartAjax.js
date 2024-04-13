@@ -2,7 +2,7 @@ calculateOrder()
 
 //	TODO: fix typo
 function changeQuantity(id, value, price) {
-	fetch(`http://localhost:8080/api/gio-hang/changProductQuanity?id=${id}&value=${value}`, {
+	fetch(`http://localhost:8080/api/cart/changProductQuanity?id=${id}&value=${value}`, {
 		method: 'GET',
 	})
 		.then(response => {
@@ -22,7 +22,7 @@ function changeQuantity(id, value, price) {
 }
 
 function deleteFromCart(id) {
-	fetch(`http://localhost:8080/api/gio-hang/deleteFromCart?id=${id}`, {
+	fetch(`http://localhost:8080/api/cart/deleteFromCart?id=${id}`, {
 		method: 'GET',
 	})
 		.then(response => {

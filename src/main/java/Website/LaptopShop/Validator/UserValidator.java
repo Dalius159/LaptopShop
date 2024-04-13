@@ -22,10 +22,10 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
 
         Users user = (Users) target;
-
-        ValidationUtils.rejectIfEmpty(errors, "email", "error.fullName", "Fullname can't be empty");
-        //ValidationUtils.rejectIfEmpty(errors, "soDienThoai", "error.soDienThoai", "Phone number can't be empty");
-        //ValidationUtils.rejectIfEmpty(errors, "diaChi", "error.diaChi", "Address can't be empty");
+//
+//        ValidationUtils.rejectIfEmpty(errors, "fullName", "error.fullName", "Fullname can't be empty");
+//        ValidationUtils.rejectIfEmpty(errors, "phoneNumber", "error.phoneNumber", "Phone number can't be empty");
+//        ValidationUtils.rejectIfEmpty(errors, "address", "error.address", "Address can't be empty");
 
         // validate for email check for empty
         ValidationUtils.rejectIfEmpty(errors, "email", "error.email", "Email can't be empty");

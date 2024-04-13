@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	function fetchAddToCart(id) {
-		fetch("http://localhost:8080/api/gio-hang/addSanPham?id=" + id, {
+		fetch("http://localhost:8080/api/cart/addSanPham?id=" + id, {
 			method: 'GET',
 		})
 			.then(response => {

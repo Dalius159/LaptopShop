@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Orders, Long>, QuerydslPredicateExecutor<Orders> {
+
+
     @Query(value = "select DATE_FORMAT(dh.receivedDate, '%m') as month, "
             + " DATE_FORMAT(dh.receivedDate, '%Y') as year, sum(ct.receivedQuantity * ct.cost) as total "
             + " from Orders dh, OrderDetails ct"
@@ -21,4 +23,8 @@ public interface OrderRepository extends JpaRepository<Orders, Long>, QuerydslPr
 
     @Query(value = "SELECT od.* FROM orders od WHERE od.id = (SELECT MAX(od2.id) FROM orders od2 WHERE od2.orderer_id = :ordererID)", nativeQuery = true)
     public Orders findLatestOrderByOrdererID(@Param("ordererID") Long ordererID);
+
+    public List<Orders> findByOrderStatusAndDeliver(String status, Users deliver);
+
+    public int countByOrderStatus(String orderStatus);
 }

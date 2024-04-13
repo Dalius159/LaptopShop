@@ -28,4 +28,6 @@ public interface ProductService {
     Iterable<Product> getProductByCategoryName(String category);
 
     public Page<Product> getProductByCategory(SearchProductObject object, int page, int resultPerPage);
+
+    Page<Product> getProductByProductNameForAdmin(String productName, int page, int size);
 }

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public Users saveUserForMember(Users nd) {
         nd.setPassword(bCryptPasswordEncoder.encode(nd.getPassword()));
         Set<Roles> setRoles = new HashSet<>();
-        setRoles.add(roleRepo.findByRoleName("ROLE_MEMBER"));
+        setRoles.add(roleRepo.findByRoleName("MEMBER"));
         nd.setRole(setRoles);
         return userRepo.save(nd);
     }
@@ -63,6 +64,9 @@ public class UserServiceImpl implements UserService {
     public Page<Users> getUserByRole(Set<Roles> roles, int page) {
         return userRepo.findByRoleIn(roles, PageRequest.of(page - 1, 6));
     }
+
+    @Override
+    public List<Users> getUserByRole(Set<Roles> role) {return userRepo.findByRoleIn(role);}
 
     @Override
     public Users saveUserForAdmin(AcountDTO dto) {

@@ -1,5 +1,5 @@
 function addToCart(id) {
-	fetch(`http://localhost:8080/api/gio-hang/addSanPham?id=${id}`)
+	fetch(`http://localhost:8080/api/cart/addSanPham?id=${id}`)
 		.then(response => response.json())
 		.then(result => {
 			if (result.status === "false") {

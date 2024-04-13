@@ -28,7 +28,7 @@
 					</div>
 				</div>
 				<div class="details col-md-6">
-					<p th:style="'display:none'" th:text="${product.id}"></p>
+					<p th:style="'display:none'" th:text="${product.id}" th:id="prod_id"></p>
 					<h2 class="product-title" th:text="${product.getProductName}"></h2>
 					<h4 class="price">Product description</h4>
 					<p th:if="${#strings.length(product.cpu) > 0}" class="product-description"
@@ -52,7 +52,7 @@
 					<p class="product-description">
 						<span class="important">GUARANTEE:</span> <span th:text="${product.getWarrantyInfor}"></span>
 					</p>
-					<h4 class="price" id="blabla">Pricing: <span id="priceConvert"></span></h4>
+					<h4 class="price">Pricing: <span id="priceConvert"></span></h4>
 					<div class="action">
 						<button class="add-to-cart btn btn-warning" type="button">
 							<span class="glyphicon glyphicon-shopping-cart pull-center"></span> Purchase
