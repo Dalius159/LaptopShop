@@ -49,8 +49,8 @@ public class SecurityConfig {
 		http
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests((requests) -> requests
-						//.requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
-						//.requestMatchers("/shipper/**").hasRole("ROLE_SHIPPER")
+						.requestMatchers("/admin/**").hasRole("ADMIN")
+						.requestMatchers("/shipper/**").hasRole("SHIPPER")
 						.requestMatchers("/checkout", "/thankyou").hasRole("MEMBER")
 						.requestMatchers("/**").permitAll())
 				.formLogin((form) -> form.loginPage("/login")
