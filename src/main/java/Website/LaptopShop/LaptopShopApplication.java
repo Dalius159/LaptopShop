@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //	TODO: thymeleaf - spring boot integration eliminate the need for model DTOs
 //	TODO: field injection to constructor injection
 //	TODO: fix store sort, fix search filter
+//	TODO: add customer info edit
 
 @SpringBootApplication
 @EnableJpaRepositories("Website.LaptopShop.Repositories")
