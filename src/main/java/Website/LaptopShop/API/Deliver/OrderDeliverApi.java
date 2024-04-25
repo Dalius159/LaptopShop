@@ -67,7 +67,7 @@ public class OrderDeliverApi {
             e.printStackTrace();
         }
 
-        order.setOrderStatus("Waiting for approve");
+        order.setOrderStatus("Waiting for approval");
 
         String ghiChu = updateOrderDeliver.getDeliverNote();
 
