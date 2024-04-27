@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div class="col-md-9 animated bounce">
+            <h3 class="page-header">Assignment</h3>
+            <div th:if="${listAssignment.newOrderQuantity > 0}">
+                <p>You have: <a th:href="@{/admin/order}"> <span th:text="${listAssignment.newOrderQuantity}"></span> new orders</a><p>
+            </div>
+
+            <div th:if="${listAssignment.orderPendingApprovalQuantity > 0}">
+                <p>You have: <a th:href="@{/admin/order}"> <span th:text="${listAssignment.orderPendingApprovalQuantity}"></span> pending approval orders</a><p>
+            </div>
+
+            <div th:if="${listAssignment.newContactQuantity > 0}">
+                <p>You have: <a th:href="@{/admin/contact}"> <span th:text="${listAssignment.newContactQuantity}"></span> new contacts</a><p>
+            </div>
+
+        </div>
+    </body>
+</html>
