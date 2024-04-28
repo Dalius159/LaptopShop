@@ -108,6 +108,6 @@ public class AdminController {
         return "admin/manageAccount";
     }
 
-    @GetMapping("/statistic")
-    public String statisticalPage(Model model) { return "admin/statistic";}
+    @GetMapping("/statistics")
+    public String statisticalPage(Model model) { return "admin/statistics";}
 }
