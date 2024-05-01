@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Administrator Page</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Administrator Page</title>
 </head>
 <body>
 <div th:insert="~{/admin/include/header}"></div>
@@ -10,18 +10,26 @@
 
 
 <div class="col-md-9 animated bounce">
-    <h3 class="page-header">Assignment</h3>
-    <div th:if="${listAssignment.newOrderQuantity > 0}">
-        <p>You have: <a th:href="@{/admin/order}"> <span th:text="${listAssignment.newOrderQuantity}"></span> new orders</a><p>
-    </div>
+	<h3 class="page-header">Assignment</h3>
 
-    <div th:if="${listAssignment.orderPendingApprovalQuantity > 0}">
-        <p>You have: <a th:href="@{/admin/order}"> <span th:text="${listAssignment.orderPendingApprovalQuantity}"></span> pending approval orders</a><p>
-    </div>
+	<div th:if="${listAssignment.newOrderQuantity > 0}">
+		<a th:href="@{/admin/order}"> You have:
+			<span th:text="${listAssignment.newOrderQuantity}"></span>
+			new orders</a>
+	</div>
 
-    <div th:if="${listAssignment.newContactQuantity > 0}">
-        <p>You have: <a th:href="@{/admin/contact}"> <span th:text="${listAssignment.newContactQuantity}"></span> new contacts</a><p>
-    </div>
+	<div th:if="${listAssignment.orderPendingApprovalQuantity > 0}">
+		<a th:href="@{/admin/order}">You have:
+			<span th:text="${listAssignment.orderPendingApprovalQuantity}"></span>
+			orders pending for approval</a>
+	</div>
+
+	<div th:if="${listAssignment.newContactQuantity > 0}">
+		<a th:href="@{/admin/contact}">You have:
+			<span th:text="${listAssignment.newContactQuantity}"></span>
+			new contacts</a>
+		<p>
+	</div>
 
 </div>
 
