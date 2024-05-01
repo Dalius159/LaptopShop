@@ -30,13 +30,13 @@
     <br>
     <p class="border-p" style="line-height:1.5;"><b>Customer info</b></p>
     <p style="line-height:2;">Full name</p>
-    <input size="27" th:value="${user.getFullName}" th:disabled="true">
+    <input size="27" th:value="${user.fullName}" th:disabled="true">
     <p style="line-height:2;">Email address</p>
     <input size="27" th:value="${user.email}" th:disabled="true">
     <p style="line-height:2;">Phone number</p>
-    <input size="27" th:value="${user.getPhoneNumber}" th:disabled="true">
+    <input size="27" th:value="${user.phoneNumber}" th:disabled="true">
     <p style="line-height:2;">Home address</p>
-    <textarea rows="5" cols="29" th:value="${user.getAddress}" th:disabled="true"></textarea>
+    <textarea rows="5" cols="29" th:value="${user.address}" th:disabled="true"></textarea>
     <br><br>
   </div>
 
@@ -44,19 +44,19 @@
     <br>
     <p class="border-p" style="line-height:1.5;"><b>Delivery Information</b></p>
     <p style="line-height:2;">Receiver's name</p>
-    <input size="27" th:field="*{getReceiver}" th:id="hoTenNguoiNhan" required="required">
+    <input size="27" th:field="*{receiver}" th:id="receiver" required="required">
     <p style="line-height:2;">Phone number</p>
-    <input size="27" th:field="*{getReceivedPhone}" th:id="sdtNhanHang" required="required">
+    <input size="27" th:field="*{receivedPhone}" th:id="receivedPhone" required="required">
     <p style="line-height:2;">Address</p>
-    <textarea rows="5" cols="29" th:field="*{getReceiveAddress}" th:id="diaChiNhan" required="required"></textarea>
+    <textarea rows="5" cols="29" th:field="*{receiveAddress}" th:id="receiveAddress" required="required"></textarea>
     <br><br>
     <div class="alert" th:id="alertMsg"
-         th:style="${#fields.hasErrors('hoTenNguoiNhan') or #fields.hasErrors('sdtNhanHang') or #fields.hasErrors('diaChiNhan')} ? '' : 'display:none;'">
+         th:style="${#fields.hasErrors('receiver') or #fields.hasErrors('receivedPhone') or #fields.hasErrors('receiveAddress')} ? '' : 'display:none;'">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
       Please provide all information
     </div>
     <br><br>
-    <input type="hidden" th:id="tongGiaTri" th:field="*{getTotalCost}">
+    <input type="hidden" th:id="totalCost" th:field="*{totalCost}">
   </div>
 
   <div class="col-md-6">
@@ -77,15 +77,15 @@
       <tr th:each="product : ${cart}" style="text-align: center;">
         <td>
           <img th:src="@{/product_images/${product.id}.png}" th:alt="${product.id}"
-               class="fix-size-img">
+               class="img-reponsive fix-size-img">
         </td>
-        <td style="color:green" th:text="${product.getProductName}"></td>
+        <td style="color:green" th:text="${product.productName}"></td>
         <td class="donGia">
-          <div class="check" style="display: inline-block;" th:text="${product.getPrice}"></div>
+          <div class="check" style="display: inline-block;" th:text="${product.price}"></div>
           <div style="display: inline-block;" th:text="' x ' + ${quantity[product.id]}"></div>
         </td>
         <td>
-          <div class="total" th:text="${product.getPrice * quantity[product.id]}"></div>
+          <div class="total" th:text="${product.price * quantity[product.id]}"></div>
         </td>
       </tr>
       </tbody>
