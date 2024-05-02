@@ -59,7 +59,7 @@ public class AdminController {
     }
 
     @GetMapping("/category")
-    public String manageCategoryPage() { return "admin/manageCtegory";}
+    public String manageCategoryPage() { return "admin/manageCategory";}
 
     @GetMapping("/manufacturer")
     public String manageManufacturerPage() { return "admin/manageManufacturer";}

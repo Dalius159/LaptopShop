@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Management</title>
+</head>
+<body>
+<div th:replace="template/header :: header"></div>
+<div th:replace="template/sidebar :: sidebar"></div>
+
+<div class="col-md-9 animated bounce">
+    <h3 class="page-header">Account Management</h3>
+
+    <button class="btn btn-success btnThemTaiKhoan">New</button>
+    <hr>
+    <div class="form-group form-inline">
+        <label for="role"><strong>Account Filter:</strong> </label>
+        <select id="role" class="form-control">
+            <option th:each="role : ${roleList}" th:value="${role.roleName}" th:text="${role.roleName}"></option>
+        </select>
+    </div>
+    <hr>
+
+    <table class="table table-hover accountTable" style="text-align: center;">
+        <thead>
+        <tr>
+            <th>Identify Code</th>
+            <th>Fullname</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Populate table rows here -->
+        </tbody>
+    </table>
+</div>
+
+<div class="row col-md-6">
+    <form class="accountForm" id="form">
+        <div>
+            <div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New Account</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:(8-32 characters)</label>
+                                <input type="password" class="form-control" name="password" id="password" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password:</label>
+                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Role:</label>
+                                <div th:each="role : ${roleList}">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="roleName" th:value="${role.roleName}" checked="checked" th:text="${role.roleName}">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fullName">Fullname:</label>
+                                <input type="text" class="form-control" name="fullName" id="fullName" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number:</label>
+                                <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address:</label>
+                                <input type="text" class="form-control" name="address" id="address" required />
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <input class="btn btn-primary" id="btnSubmit" type="button" value="confirm" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.js"></script>
+<script th:src="@{/js/accountAjax.js}"></script>
+</body>
+</html>
