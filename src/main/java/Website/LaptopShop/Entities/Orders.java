@@ -33,7 +33,7 @@ public class Orders {
     private Date receivedDate;
 
     private String receivedPhone;
-    // TODO: should be enum, need change
+//  TODO: to enum(Waiting for delivery, Cancelled, Delivering, Waiting for approval, Completed ..?)
     private String orderStatus;
     private long totalCost;
 
