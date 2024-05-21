@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+</head>
+<body>
+<div class="col-md-9 animated bounce">
+    <h1 class="page-header">Dashboard</h1>
+    <ul class="breadcrumb">
+        <li><span class="glyphicon glyphicon-home">&nbsp;</span>Home</li>
+        <li><a href="#">Dashboard</a></li>
+    </ul>
+    <table class="table table-hover categoryTable">
+        <thead>
+        <tr>
+            <th>Category ID</th>
+            <th>Category Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categoryList}">
+            <td th:text="${category.id}"></td>
+            <td th:text="${category.categoryName}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

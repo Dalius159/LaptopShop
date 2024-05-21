@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Shipper Page</title>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="col-md-3">
+        <div id="sidebar">
+            <div class="container-fluid tmargin">
+                <div class="input-group">
+                    <!-- Commented out search input -->
+                    <!-- <input type="text" class="form-control" placeholder="Search..." />
+                    <span class="input-group-btn">
+                      <button class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                      </button>
+                    </span> -->
+                </div>
+            </div>
+
+            <ul class="nav navbar-nav side-bar">
+                <li class="side-bar tmargin">
+                    <a th:href="@{/deliver/order}">
+                        <span class="glyphicon glyphicon-shopping-cart">&nbsp;</span>Manage Order</a>
+                </li>
+
+                <li class="side-bar">
+                    <a th:href="@{/deliver/profile}">
+                        <span class="glyphicon glyphicon-user">&nbsp;</span>Personal Information</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/admin.js}"></script>
+</body>
+</html>
