@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class OrderDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private long cost;

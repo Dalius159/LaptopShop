@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (!fromDate.equals("") && fromDate != null) {
-            if (orderStatus.equals("") || orderStatus.equals("Waiting for delivery") || orderStatus.equals("Cancelled")) {
+            if (orderStatus.equals("") || orderStatus.equals("Waiting for Delivery") || orderStatus.equals("Cancelled")) {
                 builder.and(QOrders.orders.orderDate.goe(formatDate.parse(fromDate)));
             } else if (orderStatus.equals("Delivering")) {
                 builder.and(QOrders.orders.deliveryDate.goe(formatDate.parse(fromDate)));
@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (!toDate.equals("") && toDate != null) {
-            if (orderStatus.equals("") || orderStatus.equals("Waiting for delivery") || orderStatus.equals("Cancelled")) {
+            if (orderStatus.equals("") || orderStatus.equals("Waiting for Delivery") || orderStatus.equals("Cancelled")) {
                 builder.and(QOrders.orders.orderDate.loe(formatDate.parse(toDate)));
             } else if (orderStatus.equals("Delivering")) {
                 builder.and(QOrders.orders.deliveryDate.loe(formatDate.parse(toDate)));

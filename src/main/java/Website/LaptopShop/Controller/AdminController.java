@@ -50,7 +50,7 @@ public class AdminController {
     @GetMapping
     public String adminPage(Model model) {
         ListAssignmentDTO listAssignment = new ListAssignmentDTO();
-        listAssignment.setNewOrderQuantity(orderService.countByOrderStatus("Waiting for delivery"));
+        listAssignment.setNewOrderQuantity(orderService.countByOrderStatus("Waiting for Delivery"));
         listAssignment.setOrderPendingApprovalQuantity(orderService.countByOrderStatus("Waiting for approval"));
         listAssignment.setNewContactQuantity(contactService.countByStatus("Waiting for respond"));
 

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //	TODO: fix store sort, fix search filter
 //	TODO: add customer info edit
 //	TODO: db scheme and MVC models need enum, error prone
+//	TODO: jquery 3.2.1 to latest
 
 @SpringBootApplication
 @EnableJpaRepositories("Website.LaptopShop.Repositories")
