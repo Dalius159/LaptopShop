@@ -35,15 +35,12 @@
         /*]]>*/
 	</script>
 
-<!--	bootstrap must load after jquery for modal to work-->
-	<script th:src="@{/jquery/jquery.min.js}"></script>
-	<script th:src="@{/bootstrap/bootstrap.min.js}"></script>
-	<script th:src="@{/js/admin/manageOrder.js}"></script>
-
-
 </head>
 <body>
 <div th:insert="~{/admin/include/header}"></div>
+
+<!-- all jquery scripts must be imported after header -->
+<script th:src="@{/js/admin/manageOrder.js}"></script>
 
 <div class="container-fluid">
 
@@ -72,7 +69,7 @@
 					   placeholder="To date">
 			</div>
 			&nbsp;&nbsp; &nbsp;&nbsp;
-			<button type="button" class="btn btn-primary" id="btnDuyetDonHang">Filter</button>
+			<button type="button" class="btn btn-primary" id="btnFilterOrder">Filter</button>
 			<div class="form-group" style="float: right; margin-right: 20px">
 				<input class="form-control" type="number" id="searchById"
 					   placeholder="Enter id to quick search"> <span

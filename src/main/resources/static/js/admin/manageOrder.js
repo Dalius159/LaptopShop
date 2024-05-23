@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    // load first when coming page
+    // load first page on the first time opening page
     ajaxGet(1);
 
     function ajaxGet(page) {
@@ -34,10 +34,10 @@ $(document).ready(function () {
                         '<td>' + order.deliveryDate + '</td>' +
                         '<td>' + order.receivedDate + '</td>' +
                         '<td width="0%">' + '<input type="hidden" class="donHangId" value=' + order.id + '>' + '</td>' +
-                        '<td><button class="btn btn-warning btnChiTiet" >Details</button>';
+                        '<td><button class="btn btn-warning btnOrderDetail" >Details</button>';
                     if (order.orderStatus == "Waiting for Delivery" || order.orderStatus == "Delivering") {
                         orderEntry += ' &nbsp;<button class="btn btn-primary btnAssignDeliverer">Assign</button>' +
-                            ' &nbsp;<button class="btn btn-danger btnHuy">Cancel order</button>';
+                            ' &nbsp;<button class="btn btn-danger btnCancelOrder">Cancel order</button>';
                     } else if (order.orderStatus == "Waiting for approval") {
                         orderEntry += ' &nbsp;<button class="btn btn-primary btnUpdateOrder" >Update</button> </td>';
                     }
@@ -112,18 +112,20 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '#btnDuyetDonHang', function (event) {
+    $(document).on('click', '#btnFilterOrder', function (event) {
         event.preventDefault();
         resetData();
     });
 
     // reset table after post, put, filter
+    // TODO: quick fix since change in sidebar mean the old code no longer work
     function resetData() {
-        const page = $('li.active').children().text();
+        // const page = $('li.active').children().text();
         $('.donHangTable tbody tr').remove();
         $('.pagination li').remove();
-        ajaxGet(page);
-    };
+        // ajaxGet(page);
+        ajaxGet(1);
+    }
 
     // event - clicking on order paging
     $(document).on('click', '.pageNumber', function (event) {
@@ -135,7 +137,7 @@ $(document).ready(function () {
     });
 
     // event - clicking on order detail button
-    $(document).on('click', '.btnChiTiet', function (event) {
+    $(document).on('click', '.btnOrderDetail', function (event) {
         event.preventDefault();
 
         const orderID = $(this).parent().prev().children().val();
@@ -208,7 +210,7 @@ $(document).ready(function () {
         if (orderID !== '') {
             $('.donHangTable tbody tr').remove();
             $('.pagination li').remove();
-            var href = "http://localhost:8080/api/order/" + orderID;
+            const href = "http://localhost:8080/api/order/" + orderID;
             $.get(href, function (order) {
                 // order gross
                 let sum = 0;
@@ -233,7 +235,7 @@ $(document).ready(function () {
                     '<td>' + order.deliveryDate + '</td>' +
                     '<td>' + order.receivedDate + '</td>' +
                     '<td width="0%">' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
-                    '<td><button class="btn btn-primary btnChiTiet" >Chi Tiết</button>';
+                    '<td><button class="btn btn-primary btnOrderDetail" >Detail</button>';
 
                 if (order.orderStatus == "Waiting for Delivery" || order.orderStatus == "Delivering") {
                     rowOrder += ' &nbsp;<button class="btn btn-danger btnAssignDeliverer">Assign</button>';
@@ -307,7 +309,7 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on('click', '.btnHuy', function (event) {
+    $(document).on('click', '.btnCancelOrder', function (event) {
         event.preventDefault();
         const orderID = $(this).parent().prev().children().val();
         const confirmation = confirm("Confirm cancelling this order?");
@@ -318,12 +320,12 @@ $(document).ready(function () {
     });
 
     // post request cancelling order
-    function postCancellingOrder(donHangId) {
+    function postCancellingOrder(orderID) {
         $.ajax({
             async: false,
             type: "POST",
             contentType: "application/json",
-            url: "http://localhost:8080/api/order/cancel?orderID=" + donHangId,
+            url: "http://localhost:8080/api/order/cancel?orderID=" + orderID,
             success: function (response) {
                 alert("Cancelling successfully");
             },
