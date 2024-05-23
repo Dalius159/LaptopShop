@@ -35,7 +35,9 @@
         /*]]>*/
 	</script>
 
+<!--	bootstrap must load after jquery for modal to work-->
 	<script th:src="@{/jquery/jquery.min.js}"></script>
+	<script th:src="@{/bootstrap/bootstrap.min.js}"></script>
 	<script th:src="@{/js/admin/manageOrder.js}"></script>
 
 
@@ -119,7 +121,7 @@
 						<div class="modal-body">
 							<div class="row">
 								<div class="col-12">
-									<div class="card" style="padding-left: 40px;padding-right: 40px">
+									<div class="card">
 
 										<div class="row pb-5 p-5">
 											<div class="col-md-6">
@@ -132,7 +134,7 @@
 											</div>
 
 											<div class="col-md-6 text-right"
-												 style="text-align: left; padding-left: 100px">
+												 style="text-align: left">
 												<h5 class="font-weight-bold mb-4">
 													<strong>Order info</strong>
 												</h5>
@@ -229,7 +231,7 @@
 									<button type="button" class="btn btn-secondary"
 											data-dismiss="modal">Hủy
 									</button>
-									<input class="btn btn-primary" id="btnPhanCongSubmit"
+									<input class="btn btn-primary" id="btnAssignDelivererSubmit"
 										   type="button" value="Xác nhận"/>
 								</div>
 							</div>

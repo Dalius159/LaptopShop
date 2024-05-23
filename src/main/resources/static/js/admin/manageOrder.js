@@ -1,400 +1,347 @@
-import bootstrap from "../../bootstrap/bootstrap.min";
+$(document).ready(function () {
 
-document.addEventListener("DOMContentLoaded", function () {
-    // load first page by default
+    // load first when coming page
     ajaxGet(1);
 
-    // reset table after request
-    function resetData() {
-        const activePage = document.querySelector('li.active').textContent.trim();
-        document.querySelectorAll('.donHangTable tbody tr').forEach(function (row) {
-            row.remove();
-        });
-        document.querySelectorAll('.pagination li').forEach(function (li) {
-            li.remove();
-        });
-        ajaxGet(activePage);
-    }
-
-
     function ajaxGet(page) {
-        const data = {
-            status: document.getElementById('status').value,
-            fromDate: document.getElementById('fromDate').value,
-            toDate: document.getElementById('toDate').value
-        };
-
-        const url = "http://localhost:8080/laptopshop/api/order/all" + '?page=' + page;
-
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(result => {
-                result.content.forEach(function (orderPage_respose) {
+        const data = {status: $('#status').val(), fromDate: $('#fromDate').val(), toDate: $('#toDate').val()};
+        $.ajax({
+            type: "GET",
+            data: data,
+            contentType: "application/json",
+            url: "http://localhost:8080/api/order/all" + '?page=' + page,
+            success: function (result) {
+                $.each(result.content, function (i, order) {
+                    // calculate order gross value
                     let sum = 0;
-                    const check = orderPage_respose.orderStatus === "Hoàn thành" || orderPage_respose.orderStatus === "Chờ duyệt";
-                    orderPage_respose.orderDetailsList.forEach(function (detail) {
-                        sum += check ? detail.cost * detail.receivedQuantity : detail.cost * detail.orderQuantity;
-                    });
+                    const check = order.orderStatus == "Completed" || order.orderStatus == "Waiting for approval";
+                    if (check) {
+                        $.each(order.orderDetailsList, function (i, details) {
+                            sum += details.cost * details.receivedQuantity;
+                        });
+                    } else {
+                        $.each(order.orderDetailsList, function (i, details) {
+                            sum += details.cost * details.orderQuantity;
+                        });
+                    }
 
-                    let orderRow = '<tr>' +
-                        '<td>' + orderPage_respose.id + '</td>' +
-                        '<td>' + orderPage_respose.receiver + '</td>' +
-                        '<td>' + orderPage_respose.orderStatus + '</td>' +
+                    let orderEntry = '<tr>' +
+                        '<td>' + order.id + '</td>' +
+                        '<td>' + order.receiver + '</td>' +
+                        '<td>' + order.orderStatus + '</td>' +
                         '<td>' + sum + '</td>' +
-                        '<td>' + orderPage_respose.orderDate + '</td>' +
-                        '<td>' + orderPage_respose.deliveryDate + '</td>' +
-                        '<td>' + orderPage_respose.receivedDate + '</td>' +
-                        '<td width="0%"><input type="hidden" class="donHangId" value=' + orderPage_respose.id + '></td>' +
-                        '<td><button class="btn btn-warning btnChiTiet">Detail</button>';
-
-                    if (orderPage_respose.orderStatus === "Waiting for delivery" || orderPage_respose.orderStatus === "Delivering") {
-                        orderRow += ' &nbsp;<button class="btn btn-primary btnPhanCong">Assign task</button>' +
+                        '<td>' + order.orderDate + '</td>' +
+                        '<td>' + order.deliveryDate + '</td>' +
+                        '<td>' + order.receivedDate + '</td>' +
+                        '<td width="0%">' + '<input type="hidden" class="donHangId" value=' + order.id + '>' + '</td>' +
+                        '<td><button class="btn btn-warning btnChiTiet" >Details</button>';
+                    if (order.orderStatus == "Waiting for Delivery" || order.orderStatus == "Delivering") {
+                        orderEntry += ' &nbsp;<button class="btn btn-primary btnAssignDeliverer">Assign</button>' +
                             ' &nbsp;<button class="btn btn-danger btnHuy">Cancel order</button>';
-                    } else if (orderPage_respose.orderStatus === "Waiting for approval") {
-                        orderRow += ' &nbsp;<button class="btn btn-primary btnCapNhat">Update</button> </td>';
+                    } else if (order.orderStatus == "Waiting for approval") {
+                        orderEntry += ' &nbsp;<button class="btn btn-primary btnUpdateOrder" >Update</button> </td>';
                     }
 
-                    document.querySelector('.donHangTable tbody').insertAdjacentHTML('beforeend', orderRow);
-                });
+                    $('.donHangTable tbody').append(orderEntry);
 
-                document.querySelectorAll('td').forEach(function (td) {
-                    if (td.innerHTML === 'null') {
-                        td.innerHTML = '';
-                    }
+                    $('td').each(function (i) {
+                        if ($(this).html() === 'null') {
+                            $(this).html('');
+                        }
+                    });
                 });
 
                 if (result.totalPages > 1) {
-                    for (var numberPage = 1; numberPage <= result.totalPages; numberPage++) {
-                        var li = '<li class="page-item"><a class="pageNumber">' + numberPage + '</a></li>';
-                        document.querySelector('.pagination').insertAdjacentHTML('beforeend', li);
+                    for (let numberPage = 1; numberPage <= result.totalPages; numberPage++) {
+                        const li = '<li class="page-item "><a class="pageNumber">' + numberPage + '</a></li>';
+                        $('.pagination').append(li);
                     }
+                    ;
 
-                    document.querySelectorAll('.pageNumber').forEach(function (pageNumber) {
-                        if (pageNumber.textContent === page.toString()) {
-                            pageNumber.parentElement.classList.add('active');
+                    // active page pagination
+                    $(".pageNumber").each(function (index) {
+                        if ($(this).text() === page) {
+                            $(this).parent().removeClass().addClass("page-item active");
                         }
                     });
                 }
-            })
-            .catch(error => {
-                alert("Error: " + error.message);
-                console.error("Error", error);
-            });
-    }
-
-    document.addEventListener('click', function (event) {
-        if (event.target && event.target.classList.contains('btnPhanCong')) {
-            event.preventDefault();
-            const donHangId = event.target.parentElement.previousElementSibling.firstElementChild.value;
-            document.getElementById('donHangId').value = donHangId;
-            console.log(donHangId);
-            const modal = document.getElementById('phanCongModal');
-            if (typeof modal !== 'undefined' && modal !== null) {
-                const modalInstance = new bootstrap.Modal(modal);
-                modalInstance.show();
+            },
+            error: function (e) {
+                alert("Error fetching orders from db! ");
+                console.log("Error", e);
             }
-        }
+        });
+    };
+
+
+    // event - clicking on order assigning button
+    $(document).on('click', '.btnAssignDeliverer', function (event) {
+        event.preventDefault();
+        const orderID = $(this).parent().prev().children().val();
+        $("#donHangId").val(orderID);
+        console.log(orderID);
+        $("#phanCongModal").modal();
     });
 
-    document.addEventListener('click', async function (event) {
-        if (event.target && event.target.id === 'btnPhanCongSubmit') {
-            const email = document.querySelector('select[name=shipper]').value;
-            const orderID = document.getElementById('donHangId').value;
-            console.log(orderID);
-            try {
-                const response = await ajaxPostPhanCongDonHang(email, orderID);
-                if (response.ok) {
-                    alert("Asking delivery order successfully");
-                    // reload page
-                    location.href = window.location.href;
+    $(document).on('click', '#btnAssignDelivererSubmit', function (event) {
+        const email = $("select[name=shipper]").val();
+        const orderID = $("#donHangId").val();
+        console.log(orderID);
+        ajaxPostPhanCongDonHang(email, orderID)
+
+    });
+
+    function ajaxPostPhanCongDonHang(email, orderID) {
+
+        $.ajax({
+            async: false,
+            type: "POST",
+            contentType: "application/json",
+            url: "http://localhost:8080/api/order/assign?shipper=" + email + "&orderID=" + orderID,
+            enctype: 'multipart/form-data',
+
+            success: function (response) {
+                alert("Assigning order successfully");
+                const status = $('#status').val();
+                location.href = window.location.href;
+            },
+            error: function (e) {
+                alert("Error assigning deliverer to an order")
+                console.log("ERROR: ", e);
+            }
+        });
+    }
+
+    $(document).on('click', '#btnDuyetDonHang', function (event) {
+        event.preventDefault();
+        resetData();
+    });
+
+    // reset table after post, put, filter
+    function resetData() {
+        const page = $('li.active').children().text();
+        $('.donHangTable tbody tr').remove();
+        $('.pagination li').remove();
+        ajaxGet(page);
+    };
+
+    // event - clicking on order paging
+    $(document).on('click', '.pageNumber', function (event) {
+//		event.preventDefault();
+        const page = $(this).text();
+        $('.donHangTable tbody tr').remove();
+        $('.pagination li').remove();
+        ajaxGet(page);
+    });
+
+    // event - clicking on order detail button
+    $(document).on('click', '.btnChiTiet', function (event) {
+        event.preventDefault();
+
+        const orderID = $(this).parent().prev().children().val();
+//		console.log(donHangId);
+        const href = "http://localhost:8080/api/order/" + orderID;
+        $.get(href, function (order) {
+            $('#maDonHang').text("Order ID: " + order.id);
+            $('#hoTenNguoiNhan').text("Người nhận: " + order.receiver);
+            $('#sdtNhanHang').text("Phone num.: " + order.receivedPhone);
+            $('#diaChiNhan').text("Address: " + order.receiveAddress);
+            $('#trangThaiDonHang').text("Order status:" + order.orderStatus);
+            $("#ngayDatHang").text("Order date: " + order.orderDate);
+
+            if (order.deliveryDate != null) {
+                $("#ngayShipHang").text("Delivery date: " + order.deliveryDate);
+            }
+
+            if (order.receivedDate != null) {
+                $("#ngayNhanHang").text("Retrieval date: " + order.receivedDate);
+            }
+
+            if (order.note != null) {
+                $("#ghiChu").html("<strong>Note</strong>:<br> " + order.note);
+            }
+
+            if (order.orderer != null) {
+                $("#nguoiDat").html("<strong>Ordering party</strong>:  " + order.orderer.fullName);
+            }
+
+            if (order.shipper != null) {
+                $("#shipper").html("<strong>Shipper</strong>: " + order.shipper.hoTen);
+            }
+
+            const check = order.orderStatus == "Completed" || order.orderStatus == "Waiting for approval";
+            if (check) {
+                $('.chiTietTable').find('thead tr').append('<th id="soLuongNhanTag" class="border-0 text-uppercase small font-weight-bold">Receiving quantity</th>');
+            }
+            // add table
+            let sum = 0; // order gross value
+            let no = 1;
+            $.each(order.orderDetailsList, function (i, details) {
+                let rowDetails = '<tr>' +
+                    '<td>' + no + '</td>' +
+                    '<td>' + details.product.productName + '</td>' +
+                    '<td>' + details.cost + '</td>' +
+                    '<td>' + details.orderQuantity + '</td>';
+
+                if (check) {
+                    rowDetails += '<td>' + details.receivedQuantity + '</td>';
+                    sum += details.cost * details.receivedQuantity;
                 } else {
-                    throw new Error('Network response was not ok');
+                    sum += details.cost * details.orderQuantity;
                 }
-            } catch (error) {
-                alert("Error!");
-                console.error("Error in handling AJAX call:", error);
-            }
+
+                $('.chiTietTable tbody').append(rowDetails);
+                no++;
+            });
+
+            $("#tongTien").text("Total: " + sum);
+        });
+        $("#chiTietModal").modal();
+    });
+
+
+    // event - clicking on finding order by id
+    $(document).on('keyup', '#searchById', function (event) {
+        event.preventDefault();
+        const orderID = $('#searchById').val();
+        console.log(orderID);
+        if (orderID !== '') {
+            $('.donHangTable tbody tr').remove();
+            $('.pagination li').remove();
+            var href = "http://localhost:8080/api/order/" + orderID;
+            $.get(href, function (order) {
+                // order gross
+                let sum = 0;
+                const check = order.orderStatus == "Completed" || order.orderStatus == "Waiting for approval";
+
+                if (check) {
+                    $.each(order.orderDetailsList, function (i, details) {
+                        sum += details.cost * details.receivedQuantity;
+                    });
+                } else {
+                    $.each(order.orderDetailsList, function (i, details) {
+                        sum += details.cost * details.orderQuantity;
+                    });
+                }
+
+                let rowOrder = '<tr>' +
+                    '<td>' + order.id + '</td>' +
+                    '<td>' + order.receiver + '</td>' +
+                    '<td>' + order.orderStatus + '</td>' +
+                    '<td>' + sum + '</td>' +
+                    '<td>' + order.orderDate + '</td>' +
+                    '<td>' + order.deliveryDate + '</td>' +
+                    '<td>' + order.receivedDate + '</td>' +
+                    '<td width="0%">' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
+                    '<td><button class="btn btn-primary btnChiTiet" >Chi Tiết</button>';
+
+                if (order.orderStatus == "Waiting for Delivery" || order.orderStatus == "Delivering") {
+                    rowOrder += ' &nbsp;<button class="btn btn-danger btnAssignDeliverer">Assign</button>';
+                } else if (order.orderStatus == "Waiting for approval") {
+                    rowOrder += ' &nbsp;<button class="btn btn-warning btnUpdateOrder" >Update</button> </td>';
+                }
+
+                $('.donHangTable tbody').append(rowOrder);
+                $('td').each(function (i) {
+                    if ($(this).html() === 'null') {
+                        $(this).html('');
+                    }
+                });
+            });
+        } else {
+            resetData();
         }
     });
 
-    // on clicking on order pagination
-    async function ajaxPostPhanCongDonHang(email, orderID) {
-        try {
-            return await fetch(`http://localhost:8080/laptopshop/api/order/assign?shipper=${email}&orderID=${orderID}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'enctype': 'multipart/form-data'
-                },
-                body: JSON.stringify({})
+    // event - clicking on update order button
+    $(document).on('click', '.btnUpdateOrder', function (event) {
+        event.preventDefault();
+        const orderID = $(this).parent().prev().children().val();
+        $("#idDonHangXacNhan").val(orderID);
+        const href = "http://localhost:8080/api/order/" + orderID;
+        $.get(href, function (order) {
+            // add table
+            let no = 1;
+            $.each(order.orderDetailsList, function (i, details) {
+                const rowDetails = '<tr>' +
+                    '<td>' + no + '</td>' +
+                    '<td>' + details.product.productName + '</td>' +
+                    '<td>' + details.cost + '</td>' +
+                    '<td>' + details.orderQuantity + '</td>' +
+                    '<td>' + details.receivedQuantity + '</td>' +
+                    '<td><input type="hidden" value="' + details.id + '" ></td>';
+                $('.chiTietTable tbody').append(rowDetails);
+                no++;
             });
-        } catch (error) {
-            console.error("ERROR: ", error);
-            throw error; // Re-throw the error for the caller to handle
-        }
+            var sum = 0;
+            $.each(order.orderDetailsList, function (i, details) {
+                sum += details.cost * details.receivedQuantity;
+            });
+            $("#tongTienXacNhan").text("Total: " + sum);
+        });
+        $("#capNhatTrangThaiModal").modal();
+    });
+
+    $(document).on('click', '#btnXacNhan', function (event) {
+        event.preventDefault();
+        postCompletionConfirm();
+        resetData();
+    });
+
+    // post request confirming order completion
+    function postCompletionConfirm() {
+        $.ajax({
+            async: false,
+            type: "POST",
+            contentType: "application/json",
+            url: "http://localhost:8080/api/order/update?orderID=" + $("#idDonHangXacNhan").val() + "&adminNote=" + $("#ghiChuAdmin").val(),
+            enctype: 'multipart/form-data',
+            success: function (response) {
+                $("#capNhatTrangThaiModal").modal('hide');
+                alert("Confirming order completion successfully");
+            },
+            error: function (e) {
+                alert("Error!")
+                console.log("ERROR: ", e);
+            }
+        });
     }
 
-    // on clicking on order details button
-    document.addEventListener('click', function (event) {
-        if (event.target && event.target.classList.contains('btnChiTiet')) {
-            event.preventDefault();
+    $(document).on('click', '.btnHuy', function (event) {
+        event.preventDefault();
+        const orderID = $(this).parent().prev().children().val();
+        const confirmation = confirm("Confirm cancelling this order?");
+        if (confirmation) {
+            postCancellingOrder(orderID);
+            resetData();
+        }
+    });
 
-            const donHangId = event.target.parentElement.previousElementSibling.firstElementChild.value;
-            // console.log(donHangId);
-            const href = "http://localhost:8080/laptopshop/api/order/" + donHangId;
-            fetch(href)
-                .then(response => response.json())
-                .then(function (order) {
-                    document.getElementById('maDonHang').textContent = "Order ID: " + order.id;
-                    document.getElementById('hoTenNguoiNhan').textContent = "Receiver: " + order.receiver;
-                    document.getElementById('sdtNhanHang').textContent = "Phone num.: " + order.receivedPhone;
-                    document.getElementById('diaChiNhan').textContent = "Adress: " + order.receiveAddress;
-                    document.getElementById('trangThaiDonHang').textContent = "Status: " + order.orderStatus;
-                    document.getElementById('ngayDatHang').textContent = "Ordering date: " + order.orderDate;
-
-                    if (order.deliveryDate !== null) {
-                        document.getElementById('ngayShipHang').textContent = "Delivery date: " + order.deliveryDate;
-                    }
-
-                    if (order.receivedDate !== null) {
-                        document.getElementById('ngayNhanHang').textContent = "Receiving date: " + order.receivedDate;
-                    }
-
-                    if (order.note !== null) {
-                        document.getElementById('ghiChu').innerHTML = "<strong>Note</strong>:<br> " + order.note;
-                    }
-
-                    if (order.orderer !== null) {
-                        document.getElementById('nguoiDat').innerHTML = "<strong>Purchaser</strong>:  " + order.orderer.fullName;
-                    }
-
-                    if (order.shipper !== null) {
-                        document.getElementById('shipper').innerHTML = "<strong>Shipper</strong>: " + order.shipper.fullName;
-                    }
-
-                    let check = order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval";
-                    if (check) {
-                        document.querySelector('.chiTietTable thead tr').innerHTML += '<th id="soLuongNhanTag" class="border-0 text-uppercase small font-weight-bold"> SỐ LƯỢNG NHẬN </th>';
-                    }
-
-                    let sum = 0; // order gross value
-                    let no = 1;
-                    order.orderDetailsList.forEach(function (detail) {
-                        let rowDetail = '<tr>' +
-                            '<td>' + no + '</td>' +
-                            '<td>' + detail.product.productName + '</td>' +
-                            '<td>' + detail.cost + '</td>' +
-                            '<td>' + detail.orderQuantity + '</td>';
-
-                        if (check) {
-                            rowDetail += '<td>' + detail.orderQuantity + '</td>';
-                            sum += detail.cost * detail.receivedQuantity;
-                        } else {
-                            sum += detail.donGia * detail.orderQuantity;
-                        }
-
-                        document.querySelector('.chiTietTable tbody').innerHTML += rowDetail;
-                        no++;
-                    });
-
-                    document.getElementById('tongTien').textContent = "Tổng : " + sum;
-                })
-                .catch(function (error) {
-                    console.error('Error:', error);
-                });
-
-            const modal = document.getElementById('chiTietModal');
-            if (typeof modal !== 'undefined' && modal !== null) {
-                new bootstrap.Modal(modal).show();
+    // post request cancelling order
+    function postCancellingOrder(donHangId) {
+        $.ajax({
+            async: false,
+            type: "POST",
+            contentType: "application/json",
+            url: "http://localhost:8080/api/order/cancel?orderID=" + donHangId,
+            success: function (response) {
+                alert("Cancelling successfully");
+            },
+            error: function (e) {
+                alert("Error when cancelling order!")
+                console.log("ERROR: ", e);
             }
-        }
-    });
+        });
+    }
 
-    // on clicking to search by id
-    document.addEventListener('keyup', function (event) {
-        if (event.target.matches('#searchById')) {
-            event.preventDefault();
-            var orderID = document.getElementById('searchById').value;
-            console.log(orderID);
-            if (orderID !== '') {
-                document.querySelectorAll('.donHangTable tbody tr').forEach(function (row) {
-                    row.remove();
-                });
-                document.querySelectorAll('.pagination li').forEach(function (li) {
-                    li.remove();
-                });
-                var href = "http://localhost:8080/laptopshop/api/order/" + orderID;
-                fetch(href)
-                    .then(response => response.json())
-                    .then(function (order) {
-                        var sum = 0;
-                        var check = order.orderStatus === "Completed" || order.trangThaiDonHang === "Waiting for approval";
-
-                        if (check) {
-                            order.orderDetailsList.forEach(function (detail) {
-                                sum += detail.cost * detail.receivedQuantity;
-                            });
-                        } else {
-                            order.orderDetailsList.forEach(function (detail) {
-                                sum += detail.cost * detail.orderQuantity;
-                            });
-                        }
-
-                        var donHangRow = '<tr>' +
-                            '<td>' + order.id + '</td>' +
-                            '<td>' + order.receiver + '</td>' +
-                            '<td>' + order.orderStatus + '</td>' +
-                            '<td>' + sum + '</td>' +
-                            '<td>' + order.orderDate + '</td>' +
-                            '<td>' + order.deliveryDate + '</td>' +
-                            '<td>' + order.receivedDate + '</td>' +
-                            '<td width="0%">' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
-                            '<td><button class="btn btn-primary btnChiTiet" >Detail</button>';
-
-                        if (order.orderStatus === "Waiting for delivery" || order.orderStatus === "Delivering") {
-                            donHangRow += ' &nbsp;<button class="btn btn-danger btnPhanCong">Assign</button>';
-                        } else if (order.orderStatus === "Waiting for approval") {
-                            donHangRow += ' &nbsp;<button class="btn btn-warning btnCapNhat" >Update</button> </td>';
-                        }
-
-                        document.querySelector('.donHangTable tbody').insertAdjacentHTML('beforeend', donHangRow);
-                        document.querySelectorAll('td').forEach(function (td) {
-                            if (td.innerHTML === 'null') {
-                                td.innerHTML = '';
-                            }
-                        });
-                    });
-            } else {
-                resetData();
-            }
-        }
-    });
-
-    // on clicking on update order button
-    document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('btnCapNhat')) {
-            event.preventDefault();
-            const orderID = event.target.parentElement.previousElementSibling.querySelector('input').value;
-            document.getElementById('idDonHangXacNhan').value = orderID;
-            fetch(`http://localhost:8080/laptopshop/api/order/${orderID}`)
-                .then(response => response.json())
-                .then(function (donHang) {
-                    let no = 1;
-                    order.orderDetailsList.forEach(function (orderDetails) {
-                        const rowDetails = '<tr>' +
-                            '<td>' + no + '</td>' +
-                            '<td>' + orderDetails.product.productName + '</td>' +
-                            '<td>' + orderDetails.cost + '</td>' +
-                            '<td>' + orderDetails.orderQuantity + '</td>' +
-                            '<td>' + orderDetails.receivedQuantity + '</td>' +
-                            '<td><input type="hidden" value="' + orderDetails.id + '" ></td>';
-                        document.querySelector('.chiTietTable tbody').insertAdjacentHTML('beforeend', rowDetails);
-                        no++;
-                    });
-                    var sum = 0;
-                    order.orderDetailsList.forEach(function (orderDetails) {
-                        sum += orderDetails.cost * orderDetails.receivedQuantity;
-                    });
-                    document.getElementById('tongTienXacNhan').textContent = "Total : " + sum;
-                });
-            document.getElementById('capNhatTrangThaiModal').style.display = 'block';
-        }
-    });
-
-    // on clicking on confirming completing order
-    document.addEventListener('click', async function (event) {
-        if (event.target.matches('#btnXacNhan')) {
-            event.preventDefault();
-            try {
-                const response = await
-                    fetch(`http://localhost:8080/laptopshop/api/order/update` +
-                        `?orderID=${document.getElementById('idDonHangXacNhan').value}` +
-                        `&adminNote=${document.getElementById('ghiChuAdmin').value}`,
-                        {
-                            method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
-                        });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const modal = document.getElementById('capNhatTrangThaiModal');
-                const modalBackdrop = document.getElementsByClassName('modal-backdrop')[0];
-                modal.style.display = 'none';       // Hide modal
-                modalBackdrop.remove();             // TODO: Remove backdrop, might be redundant
-
-                alert("Order completed successfully");
-                resetData();
-            } catch (error) {
-                console.error('Error at confirming order button:', error);
-                alert("Error!");
-            }
-        }
-    });
-
-    document.addEventListener('click', async function (event) {
-        if (event.target.matches('.btnHuy')) {
-            event.preventDefault();
-            const orderID = event.target.parentElement.previousElementSibling.querySelector('input').value;
-            const confirmation = confirm("Do you want to cancel this order?");
-            if (confirmation) {
-                try {
-                    const response = await fetch(`http://localhost:8080/laptopshop/api/order/cancel?orderID=${orderID}`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'}
-                    });
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    alert("Order Cancelled successfully");
-                    resetData();
-                } catch (error) {
-                    console.error('Error at order cancel button:', error);
-                    alert("Error!");
-                }
-            }
-        }
-    });
-
-    document.getElementById('chiTietModal').addEventListener('hidden.bs.modal', function (e) {
+    // event when hiding detail modal
+    $('#chiTietModal,#capNhatTrangThaiModal').on('hidden.bs.modal', function (e) {
         e.preventDefault();
-        document.querySelectorAll("#chiTietForm p").forEach(function(element) {
-            element.innerHTML = "";
-        });
-        document.querySelectorAll("#chiTietForm h4").forEach(function(element) {
-            element.textContent = "";
-        });
-        document.getElementById("ghiChuAdmin").textContent = "";
-        document.querySelectorAll('.chiTietTable #soLuongNhanTag').forEach(function(element) {
-            element.remove();
-        });
-        document.querySelectorAll('.chiTietTable tbody tr').forEach(function(row) {
-            row.remove();
-        });
+        $("#chiTietForm p").html(""); // reset p tags
+        $("#capNhatTrangThaiForm h4").text("");
+        $("#ghiChuAdmin").text("");
+        $('.chiTietTable #soLuongNhanTag').remove();
+        $('.chiTietTable tbody tr').remove();
+        $('.chiTietCapNhatTable tbody tr').remove();
     });
-
-    document.getElementById('capNhatTrangThaiModal').addEventListener('hidden.bs.modal', function (e) {
-        e.preventDefault();
-        document.querySelectorAll("#capNhatTrangThaiForm h4").forEach(function(element) {
-            element.textContent = "";
-        });
-        document.getElementById("ghiChuAdmin").textContent = "";
-        document.querySelectorAll('.chiTietCapNhatTable tbody tr').forEach(function(row) {
-            row.remove();
-        });
-    });
-
-
-})
+});
