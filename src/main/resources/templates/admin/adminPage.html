@@ -6,31 +6,33 @@
 </head>
 <body>
 <div th:insert="~{/admin/include/header}"></div>
-<div th:insert="~{/admin/include/sidebar}"></div>
+<div class="container-fluid">
+	<div th:insert="~{/admin/include/sidebar}"></div>
 
 
-<div class="col-md-9 animated bounce">
-	<h3 class="page-header">Assignment</h3>
+	<div class="col-md-9 animated bounce">
+		<h3 class="page-header">Assignment</h3>
 
-	<div th:if="${listAssignment.newOrderQuantity > 0}">
-		<a th:href="@{/admin/order}"> You have:
-			<span th:text="${listAssignment.newOrderQuantity}"></span>
-			new orders</a>
+		<div th:if="${listAssignment.newOrderQuantity > 0}">
+			<a th:href="@{/admin/order}"> You have:
+				<span th:text="${listAssignment.newOrderQuantity}"></span>
+				new orders</a>
+		</div>
+
+		<div th:if="${listAssignment.orderPendingApprovalQuantity > 0}">
+			<a th:href="@{/admin/order}">You have:
+				<span th:text="${listAssignment.orderPendingApprovalQuantity}"></span>
+				orders pending for approval</a>
+		</div>
+
+		<div th:if="${listAssignment.newContactQuantity > 0}">
+			<a th:href="@{/admin/contact}">You have:
+				<span th:text="${listAssignment.newContactQuantity}"></span>
+				new contacts</a>
+			<p>
+		</div>
+
 	</div>
-
-	<div th:if="${listAssignment.orderPendingApprovalQuantity > 0}">
-		<a th:href="@{/admin/order}">You have:
-			<span th:text="${listAssignment.orderPendingApprovalQuantity}"></span>
-			orders pending for approval</a>
-	</div>
-
-	<div th:if="${listAssignment.newContactQuantity > 0}">
-		<a th:href="@{/admin/contact}">You have:
-			<span th:text="${listAssignment.newContactQuantity}"></span>
-			new contacts</a>
-		<p>
-	</div>
-
 </div>
 
 </body>

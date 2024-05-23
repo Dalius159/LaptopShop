@@ -28,8 +28,10 @@ public class OrderAPI {
 
     //Get orderList by search object
     @GetMapping("/all")
-    public Page<Orders> getOrderByFilter(@RequestParam(defaultValue = "1") int page, @RequestParam String status,
-                                         @RequestParam String fromDate, @RequestParam String toDate) throws ParseException {
+    public Page<Orders> getOrderByFilter(@RequestParam(defaultValue = "1") int page,
+                                         @RequestParam String status,
+                                         @RequestParam String fromDate,
+                                         @RequestParam String toDate) throws ParseException {
 
         SearchOrderObject object = new SearchOrderObject();
         object.setToDate(toDate);
@@ -53,7 +55,6 @@ public class OrderAPI {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-
             String dateStr = format.format(new Date());
             Date date = format.parse(dateStr);
             dh.setDeliveryDate(date);
