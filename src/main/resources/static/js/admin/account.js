@@ -9,7 +9,7 @@ $(document).ready(function() {
             type: "GET",
             data: data,
             contentType : "application/json",
-            url: "http://localhost:8080/laptopshop/api/account/all" + '?page=' + page,
+            url: "http://localhost:8080/laptopshop/api//all" + '?page=' + page,
             success: function(result){
                 $.each(result.content, function(i, account){
                     var accountRow = '<tr>' +
@@ -26,7 +26,7 @@ $(document).ready(function() {
 
                     accountRow +='</td>' +
                         '<td width="0%">'+'<input type="hidden" id="idAccount" value=' + account.id + '>'+ '</td>'+
-                        //					                  '<td><button class="btn btn-primary btnCapNhat" >Cập nhật</button></td>' +
+                        //					                  '<td><button class="btn btn-primary btnUpdate" >Update</button></td>' +
                         '<td><button class="btn btn-danger btnDelete" >Delete</button></td>';			;
                     $('.accountTable tbody').append(accountRow);
 
@@ -53,8 +53,7 @@ $(document).ready(function() {
         });
     };
 
-    // event khi click vào dropdown chọn danh mục thêm sản phẩm
-    // event when click dropdown and chose add new product
+    // event when click dropdown button and choose add new product
     $('#role').mouseup(function() {
         var open = $(this).data("isopen");
         if (open) {
@@ -66,10 +65,10 @@ $(document).ready(function() {
     // click add new account
     $(document).on('click', '.btnNewAccount', function (event) {
         event.preventDefault();
-        $("#taiKhoanModal").modal();
+        $("#accountModal").modal();
     });
 
-    // Confirm add new account
+    // confirm add new account
     $(document).on('click', '#btnSubmit', function (event) {
         event.preventDefault();
         ajaxPostAccount();
@@ -89,15 +88,15 @@ $(document).ready(function() {
             enctype: 'multipart/form-data',
             data : data,
             success : function(response) {
-                if(response.status === "success"){
+                if(response.status == "success"){
                     $('#accountModal').modal('hide');
-                    alert("Successful to add new account");
+                    alert("Add Successful!");
                 } else {
                     $('input').next().remove();
                     $.each(response.errorMessages, function(key,value){
-                        if(key !== "id"){
+                        if(key != "id"){
                             $('input[name='+ key +']').after('<span class="error">'+value+'</span>');
-                        }
+                        };
                     });
                 }
 
@@ -112,12 +111,12 @@ $(document).ready(function() {
     // delete request
     $(document).on("click",".btnDelete", function() {
 
-        var accountId = $(this).parent().prev().children().val();
+        var accountID = $(this).parent().prev().children().val();
         var confirmation = confirm("Are you sure to delete this account?");
         if(confirmation){
             $.ajax({
                 type : "DELETE",
-                url : "http://localhost:8080/laptopshop/api/account/delete/" + accountId,
+                url : "http://localhost:8080/laptopshop/api/account/delete/" + accountID,
                 success: function(resultMsg){
                     resetData();
                 },
@@ -128,8 +127,7 @@ $(document).ready(function() {
         }
     });
 
-    // event khi ẩn modal form
-    // event hide modal form
+    // event when hide modal form
     $('#accountModal').on('hidden.bs.modal', function(e) {
         e.preventDefault();
         $('.accountForm input').next().remove();
@@ -141,7 +139,7 @@ $(document).ready(function() {
         $('.accountTable tbody tr').remove();
         $('.pagination li').remove();
         ajaxGet(page);
-    }
+    };
 
     (function ($) {
         $.fn.serializeFormJSON = function () {

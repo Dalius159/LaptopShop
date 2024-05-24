@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Personal Information</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <style>
+        .form-profile input {
+            border: 0;
+        }
+    </style>
+
+</head>
+<body>
+    <div th:insert="template/header :: header"></div>
+    <div th:insert="template/sidebar :: sidebar"></div>
+
+    <div class="col-md-9 animated bounce">
+        <h3 class="page-header">Personal Information</h3>
+
+        <button class="btn btn-success btnUpdateInfor">Update Information</button>
+        &nbsp;&nbsp;&nbsp;
+        <button class="btn btn-primary btnChangePassword">Change Password</button>
+        <hr />
+
+        <form class="form-profile">
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input type="hidden" class="form-control-plaintext userId"
+                           th:value="${user.id}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fullName" class="col-sm-2 col-form-label">Fullname</label>
+                <div class="col-sm-10">
+                    <input type="text" id="fullName" readonly class="form-control-plaintext" th:value="${user.fullName}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">Email register</label>
+                <div class="col-sm-10">
+                    <input type="text" id="email" readonly class="form-control-plaintext"
+                           th:value="${user.email}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="phoneNumber" class="col-sm-2 col-form-label">Phone number</label>
+                <div class="col-sm-10">
+                    <input id="phoneNumber" type="text" readonly class="form-control-plaintext"
+                           th:value="${user.phoneNumber}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="address" class="col-sm-2 col-form-label">Address</label>
+                <div class="col-sm-10">
+                    <input id="address" type="text" readonly class="form-control-plaintext"
+                           th:value="${user.address}">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row col-md-6">
+        <form class="formUpdate" th:action="@{/deliver/profile/update}" method="post">
+            <div>
+                <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
+                     data-keyboard="false">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Update Personal Information</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" name="id" th:value="${user.id}" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Fullname</label>
+                                    <input id="name" type="text" class="form-control" name="fullName" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone number</label>
+                                    <input id="phone" type="text" class="form-control" name="phoneNumber" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="addre">Address</label>
+                                    <input id="addre" type="text" class="form-control" name="address" required="required" />
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <input class="btn btn-primary" id="btnSubmit" type="submit" value="Confirm" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <form class="formChangePassword">
+        <div>
+            <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true"
+                 data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampModalLabel">Change Password</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="oldPassword">Old Password</label>
+                                <input id="oldPassword" type="password" class="form-control" name="oldPassword" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input id="newPassword" type="password" class="form-control" name="newPassword" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmNewPassword">Confirm New Password</label>
+                                <input id="confirmNewPassword" type="password" class="form-control" name="confirmNewPassword" required="required" />
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <input class="btn btn-primary" type="button" id="btnConfirmChangePassword" value="Confirm" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>
