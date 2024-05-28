@@ -11,8 +11,7 @@
   </style>
 </head>
 <body>
-<div th:replace="template/header :: header"></div>
-<div th:replace="template/sidebar :: sidebar"></div>
+<div th:insert="~{/admin/include/sidebar}"></div>
 
 <div class="col-md-9 animated bounce">
   <h3 class="page-header">Product Management</h3>

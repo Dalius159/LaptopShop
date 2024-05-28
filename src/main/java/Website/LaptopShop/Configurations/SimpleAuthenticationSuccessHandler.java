@@ -54,7 +54,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
         if (flag == 1 || flag == 3 || flag == 5 || flag == 7) {return "/admin";} else {
-            if (flag == 2 || flag == 6) {return "/shipper";} else {return "/";}
+            if (flag == 2 || flag == 6) {return "/deliver";} else {return "/";}
         }
 	}
 }
