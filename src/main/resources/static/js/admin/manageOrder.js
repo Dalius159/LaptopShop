@@ -226,7 +226,7 @@ $(document).ready(function () {
                     });
                 }
 
-                let rowOrder = '<tr>' +
+                let orderEntry = '<tr>' +
                     '<td>' + order.id + '</td>' +
                     '<td>' + order.receiver + '</td>' +
                     '<td>' + order.orderStatus + '</td>' +
@@ -234,16 +234,16 @@ $(document).ready(function () {
                     '<td>' + order.orderDate + '</td>' +
                     '<td>' + order.deliveryDate + '</td>' +
                     '<td>' + order.receivedDate + '</td>' +
-                    '<td width="0%">' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
+                    '<td>' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
                     '<td><button class="btn btn-primary btnOrderDetail" >Detail</button>';
 
                 if (order.orderStatus == "Waiting for Delivery" || order.orderStatus == "Delivering") {
-                    rowOrder += ' &nbsp;<button class="btn btn-danger btnAssignDeliverer">Assign</button>';
+                    orderEntry += ' &nbsp;<button class="btn btn-danger btnAssignDeliverer">Assign</button>';
                 } else if (order.orderStatus == "Waiting for approval") {
-                    rowOrder += ' &nbsp;<button class="btn btn-warning btnUpdateOrder" >Update</button> </td>';
+                    orderEntry += ' &nbsp;<button class="btn btn-warning btnUpdateOrder" >Update</button> </td>';
                 }
 
-                $('.donHangTable tbody').append(rowOrder);
+                $('.donHangTable tbody').append(orderEntry);
                 $('td').each(function (i) {
                     if ($(this).html() === 'null') {
                         $(this).html('');
