@@ -12,8 +12,8 @@
     </style>
 </head>
 <body>
-    <div th:replace="template/header :: header"></div>
-    <div th:replace="template/sidebar :: sidebar"></div>
+    <div th:insert="~{/deliver/include/header}"></div>
+    <div th:insert="~{/deliver/include/sidebar}"></div>
 
     <div class="col-md-9 animated bounce">
         <h3 class="page-header form-inline">Manage Order - Deliver</h3>
