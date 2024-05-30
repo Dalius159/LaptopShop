@@ -36,12 +36,12 @@
 
 </head>
 <body>
-<!-- all jquery scripts must be imported after header -->
+
 <div th:insert="~{/admin/include/sidebar}"></div>
 
 <script th:src="@{/js/admin/manageOrder.js}"></script>
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 75px;">
 
 	<div class="col-md-9 animated bounce">
 		<h3 class="page-header form-inline">Order management</h3>
@@ -53,7 +53,7 @@
 				<option value="Delivering">Delivering</option>
 				<option value="Waiting for approval">Waiting for approval</option>
 				<option value="Completed">Completed</option>
-				<option value="Cancelled">Cancelled</option>
+				<option value="Canceled">Canceled</option>
 			</select>
 
 			<div class="form-group">
