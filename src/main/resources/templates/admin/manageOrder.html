@@ -36,14 +36,12 @@
 
 </head>
 <body>
-<div th:insert="~{/admin/include/header}"></div>
-
 <!-- all jquery scripts must be imported after header -->
+<div th:insert="~{/admin/include/sidebar}"></div>
+
 <script th:src="@{/js/admin/manageOrder.js}"></script>
 
 <div class="container-fluid">
-
-	<div th:insert="~{/admin/include/sidebar}"></div>
 
 	<div class="col-md-9 animated bounce">
 		<h3 class="page-header form-inline">Order management</h3>
