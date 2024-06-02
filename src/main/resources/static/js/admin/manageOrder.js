@@ -1,9 +1,9 @@
 $(document).ready(function () {
 
     // load first page on the first time opening page
-    ajaxGet(1);
+    getAllOrdersByPage(1);
 
-    function ajaxGet(page) {
+    function getAllOrdersByPage(page) {
         const data = {status: $('#status').val(), fromDate: $('#fromDate').val(), toDate: $('#toDate').val()};
         $.ajax({
             type: "GET",
@@ -14,7 +14,7 @@ $(document).ready(function () {
                 $.each(result.content, function (i, order) {
                     // calculate order gross value
                     let sum = 0;
-                    const check = order.orderStatus == "Completed" || order.orderStatus == "Waiting for approval";
+                    const check = order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval";
                     if (check) {
                         $.each(order.orderDetailsList, function (i, details) {
                             sum += details.cost * details.receivedQuantity;
@@ -33,12 +33,12 @@ $(document).ready(function () {
                         '<td>' + order.orderDate + '</td>' +
                         '<td>' + order.deliveryDate + '</td>' +
                         '<td>' + order.receivedDate + '</td>' +
-                        '<td width="0%">' + '<input type="hidden" class="donHangId" value=' + order.id + '>' + '</td>' +
+                        '<td>' + '<input type="hidden" class="donHangId" value=' + order.id + '>' + '</td>' +
                         '<td><button class="btn btn-warning btnOrderDetail" >Details</button>';
-                    if (order.orderStatus == "Waiting for Delivery" || order.orderStatus == "Delivering") {
+                    if (order.orderStatus === "Waiting for Delivery" || order.orderStatus === "Delivering") {
                         orderEntry += ' &nbsp;<button class="btn btn-primary btnAssignDeliverer">Assign</button>' +
                             ' &nbsp;<button class="btn btn-danger btnCancelOrder">Cancel order</button>';
-                    } else if (order.orderStatus == "Waiting for approval") {
+                    } else if (order.orderStatus === "Waiting for approval") {
                         orderEntry += ' &nbsp;<button class="btn btn-primary btnUpdateOrder" >Update</button> </td>';
                     }
 
@@ -56,7 +56,7 @@ $(document).ready(function () {
                         const li = '<li class="page-item "><a class="pageNumber">' + numberPage + '</a></li>';
                         $('.pagination').append(li);
                     }
-                    ;
+
 
                     // active page pagination
                     $(".pageNumber").each(function (index) {
@@ -71,7 +71,7 @@ $(document).ready(function () {
                 console.log("Error", e);
             }
         });
-    };
+    }
 
 
     // event - clicking on order assigning button
@@ -124,7 +124,7 @@ $(document).ready(function () {
         $('.donHangTable tbody tr').remove();
         $('.pagination li').remove();
         // ajaxGet(page);
-        ajaxGet(1);
+        getAllOrdersByPage(1);
     }
 
     // event - clicking on order paging
@@ -133,7 +133,7 @@ $(document).ready(function () {
         const page = $(this).text();
         $('.donHangTable tbody tr').remove();
         $('.pagination li').remove();
-        ajaxGet(page);
+        getAllOrdersByPage(page);
     });
 
     // event - clicking on order detail button
@@ -171,7 +171,7 @@ $(document).ready(function () {
                 $("#shipper").html("<strong>Shipper</strong>: " + order.shipper.hoTen);
             }
 
-            const check = order.orderStatus == "Completed" || order.orderStatus == "Waiting for approval";
+            const check = order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval";
             if (check) {
                 $('.chiTietTable').find('thead tr').append('<th id="soLuongNhanTag" class="border-0 text-uppercase small font-weight-bold">Receiving quantity</th>');
             }
@@ -214,7 +214,7 @@ $(document).ready(function () {
             $.get(href, function (order) {
                 // order gross
                 let sum = 0;
-                const check = order.orderStatus == "Completed" || order.orderStatus == "Waiting for approval";
+                const check = order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval";
 
                 if (check) {
                     $.each(order.orderDetailsList, function (i, details) {
@@ -226,7 +226,7 @@ $(document).ready(function () {
                     });
                 }
 
-                let rowOrder = '<tr>' +
+                let orderEntry = '<tr>' +
                     '<td>' + order.id + '</td>' +
                     '<td>' + order.receiver + '</td>' +
                     '<td>' + order.orderStatus + '</td>' +
@@ -234,16 +234,16 @@ $(document).ready(function () {
                     '<td>' + order.orderDate + '</td>' +
                     '<td>' + order.deliveryDate + '</td>' +
                     '<td>' + order.receivedDate + '</td>' +
-                    '<td width="0%">' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
+                    '<td>' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
                     '<td><button class="btn btn-primary btnOrderDetail" >Detail</button>';
 
-                if (order.orderStatus == "Waiting for Delivery" || order.orderStatus == "Delivering") {
-                    rowOrder += ' &nbsp;<button class="btn btn-danger btnAssignDeliverer">Assign</button>';
-                } else if (order.orderStatus == "Waiting for approval") {
-                    rowOrder += ' &nbsp;<button class="btn btn-warning btnUpdateOrder" >Update</button> </td>';
+                if (order.orderStatus === "Waiting for Delivery" || order.orderStatus === "Delivering") {
+                    orderEntry += ' &nbsp;<button class="btn btn-danger btnAssignDeliverer">Assign</button>';
+                } else if (order.orderStatus === "Waiting for approval") {
+                    orderEntry += ' &nbsp;<button class="btn btn-warning btnUpdateOrder" >Update</button> </td>';
                 }
 
-                $('.donHangTable tbody').append(rowOrder);
+                $('.donHangTable tbody').append(orderEntry);
                 $('td').each(function (i) {
                     if ($(this).html() === 'null') {
                         $(this).html('');

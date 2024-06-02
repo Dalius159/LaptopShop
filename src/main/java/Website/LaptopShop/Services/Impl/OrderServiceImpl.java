@@ -34,8 +34,8 @@ public class OrderServiceImpl implements OrderService {
             builder.and(QOrders.orders.orderStatus.eq(orderStatus));
         }
 
-        if (!fromDate.equals("") && fromDate != null) {
-            if (orderStatus.equals("") || orderStatus.equals("Waiting for Delivery") || orderStatus.equals("Cancelled")) {
+        if (!fromDate.equals("")) {
+            if (orderStatus.equals("") || orderStatus.equals("Waiting for Delivery") || orderStatus.equals("Canceled")) {
                 builder.and(QOrders.orders.orderDate.goe(formatDate.parse(fromDate)));
             } else if (orderStatus.equals("Delivering")) {
                 builder.and(QOrders.orders.deliveryDate.goe(formatDate.parse(fromDate)));
@@ -44,12 +44,12 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        if (!toDate.equals("") && toDate != null) {
-            if (orderStatus.equals("") || orderStatus.equals("Waiting for Delivery") || orderStatus.equals("Cancelled")) {
+        if (!toDate.equals("")) {
+            if (orderStatus.equals("") || orderStatus.equals("Waiting for Delivery") || orderStatus.equals("Canceled")) {
                 builder.and(QOrders.orders.orderDate.loe(formatDate.parse(toDate)));
             } else if (orderStatus.equals("Delivering")) {
                 builder.and(QOrders.orders.deliveryDate.loe(formatDate.parse(toDate)));
-            } else { // hoàn thành
+            } else {
                 builder.and(QOrders.orders.receivedDate.loe(formatDate.parse(toDate)));
             }
         }

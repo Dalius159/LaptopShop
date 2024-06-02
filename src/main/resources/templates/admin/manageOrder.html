@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<!--	TODO: change elements id into english, in this and corresponding js file-->
 	<meta charset="UTF-8">
-	<title>Order</title>
+	<title>Order Manager</title>
 
 	<script type="text/javascript">
         /*<![CDATA[*/
@@ -37,12 +36,12 @@
 
 </head>
 <body>
-<div th:insert="~{/admin/include/header}"></div>
 
-<!-- all jquery scripts must be imported after header -->
-<script th:src="@{/js/admin/manageOrder.js}"></script>
 <div th:insert="~{/admin/include/sidebar}"></div>
-<div class="container-fluid">
+
+<script th:src="@{/js/admin/manageOrder.js}"></script>
+
+<div class="container-fluid" style="padding-left: 75px;">
 
 	<div class="col-md-9 animated bounce">
 		<h3 class="page-header form-inline">Order management</h3>
@@ -54,7 +53,7 @@
 				<option value="Delivering">Delivering</option>
 				<option value="Waiting for approval">Waiting for approval</option>
 				<option value="Completed">Completed</option>
-				<option value="Cancelled">Cancelled</option>
+				<option value="Canceled">Canceled</option>
 			</select>
 
 			<div class="form-group">
@@ -77,7 +76,7 @@
 		</form>
 
 		<hr/>
-		<table class="table table-hover orderTable"
+		<table class="table table-hover donHangTable"
 			   style="text-align: center">
 			<thead>
 			<tr>
@@ -101,13 +100,13 @@
 	</div>
 
 	<div class="row col-md-6">
-		<form class="detailForm">    <!--TODO: might be redundant-->
-			<div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
+		<form class="chiTietForm">    <!--TODO: might be redundant-->
+			<div class="modal fade" id="chiTietModal" tabindex="-1" role="dialog"
 				 aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document" style="width: 700px;">
 					<div class="modal-content">
 						<div class="modal-header">
-							<p class="h4 modal-title" id="orderCode"></p>
+							<p class="h4 modal-title" id="maDonHang"></p>
 							<button type="button" class="close" data-dismiss="modal"
 									aria-label="Close">
 								<span aria-hidden="true">&times;</span>
@@ -123,9 +122,9 @@
 												<h5 class="font-weight-bold mb-4">
 													<strong>Customer info</strong>
 												</h5>
-												<p class="mb-1" id="receiver"></p>
-												<p class="mb-1" id="receiveAddress"></p>
-												<p class="mb-1" id="receivedPhone"></p>
+												<p class="mb-1" id="hoTenNguoiNhan"></p>
+												<p class="mb-1" id="diaChiNhan"></p>
+												<p class="mb-1" id="sdtNhanHang"></p>
 											</div>
 
 											<div class="col-md-6 text-right"
@@ -133,16 +132,16 @@
 												<h5 class="font-weight-bold mb-4">
 													<strong>Order info</strong>
 												</h5>
-												<p class="mb-1" id="orderStatus"></p>
-												<p class="mb-1" id="orderDate"></p>
-												<p class="mb-1" id="deliveryDate"></p>
-												<p class="mb-1" id="receivedDate"></p>
+												<p class="mb-1" id="trangThaiDonHang"></p>
+												<p class="mb-1" id="ngayDatHang"></p>
+												<p class="mb-1" id="ngayShipHang"></p>
+												<p class="mb-1" id="ngayNhanHang"></p>
 											</div>
 										</div>
 										<hr/>
 										<div class="row p-5">
 											<div class="col-md-12">
-												<table class="table detailTable"
+												<table class="table chiTietTable"
 													   style="text-align: center;">
 													<thead>
 													<tr>
@@ -153,7 +152,7 @@
 															Product name
 														</th>
 														<th class="border-0 text-uppercase small font-weight-bold">
-															Price
+															Đơn giá
 														</th>
 														<th class="border-0 text-uppercase small font-weight-bold">
 															Quantity
