@@ -152,7 +152,7 @@
 															Product name
 														</th>
 														<th class="border-0 text-uppercase small font-weight-bold">
-															Đơn giá
+															Price
 														</th>
 														<th class="border-0 text-uppercase small font-weight-bold">
 															Quantity
@@ -215,15 +215,15 @@
 								<div class="form-group">
 									Choose a shipper for this order: <select class="form-control"
 																			 name="shipper">
-									<option th:each="shipper : ${allShipper}"
+									<option th:each="shipper : ${allDeliver}"
 											th:value="${shipper.email}"
-											th:text="${shipper.hoTen} + '(' + ${#lists.size(shipper.listDonHang)} + ')'">
+											th:text="${shipper.fullName} + '(' + ${#lists.size(shipper.listOrders)} + ')'">
 									</option>
 								</select>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">Hủy
+											data-dismiss="modal">Cancel
 									</button>
 									<input class="btn btn-primary" id="btnAssignDelivererSubmit"
 										   type="button" value="Xác nhận"/>
