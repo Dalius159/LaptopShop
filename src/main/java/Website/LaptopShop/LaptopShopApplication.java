@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //	TODO: add customer info edit
 //	TODO: db scheme and MVC models need enum, error prone
 //	TODO: jquery 3.2.1 to latest
+//	TODO: contact features not added
 
 @SpringBootApplication
 @EnableJpaRepositories("Website.LaptopShop.Repositories")

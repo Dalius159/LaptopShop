@@ -6,17 +6,15 @@
 </head>
 <body>
 
-<div th:insert="~{/admin/include/header}"></div>
 
+<div th:insert="~{/admin/include/sidebar}"></div>
 <script th:src="@{/js/admin/manageCategory.js}"></script>
 
 <div class="container-fluid">
 
-	<div th:insert="~{/admin/include/sidebar}"></div>
 
 	<div class="col-md-9 animated bounce">
 		<h3 class="page-header">Category Management</h3>
-
 
 		<button class="btn btn-success btnThemDanhMuc">Add category</button>
 
@@ -82,4 +80,5 @@
 
 </div>
 </body>
+
 </html>
