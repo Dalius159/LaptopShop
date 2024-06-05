@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<link rel="stylesheet" th:href="@{/css/sidebar.css}">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE-edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>Admin Page</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" th:href="@{/bootstrap/bootstrap.min.css}">
+
+	<!-- Other CSS libraries -->
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-	<link rel="stylesheet" th:href="@{/bootstrap/bootstrap.min.css}">
+	<!-- Custom CSS -->
 	<link rel="stylesheet" th:href="@{/css/admin.css}">
+	<link rel="stylesheet" th:href="@{/css/sidebar.css}">
 
-	<link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-	<!--	bootstrap must load after jquery-->
+	<!-- Scripts -->
 	<script th:src="@{/jquery/jquery.min.js}"></script>
 	<script th:src="@{/bootstrap/bootstrap.min.js}"></script>
-
 </head>
 <body>
 <nav class="sidebar">

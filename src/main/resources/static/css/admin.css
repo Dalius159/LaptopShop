@@ -1,22 +1,22 @@
-#sidebar {
-    position: fixed;
-    top: 50px;
-    left: 220px;
-    width: 220px;
-    margin-left: -220px;
-    border: none;
-    border-radius: 0;
-    overflow-y: auto;
-    background-color: #222;
-    bottom: 0;
-    overflow-x: hidden;
-    padding-bottom: 45px;
-}
+/*#sidebar {*/
+/*    position: fixed;*/
+/*    top: 50px;*/
+/*    left: 220px;*/
+/*    width: 220px;*/
+/*    margin-left: -220px;*/
+/*    border: none;*/
+/*    border-radius: 0;*/
+/*    overflow-y: auto;*/
+/*    background-color: #222;*/
+/*    bottom: 0;*/
+/*    overflow-x: hidden;*/
+/*    padding-bottom: 45px;*/
+/*}*/
 
-.side-bar > li > a{
-    color: #eee;
-    width: 220px;
-}
+/*.side-bar > li > a{*/
+/*    color: #eee;*/
+/*    width: 220px;*/
+/*}*/
 
 th {text-align:center}
 
@@ -25,10 +25,10 @@ th {text-align:center}
     width: 220px;
 
 }
-.side-bar li a:hover,
-.side-bar li a:focus {
-    background-color: #333;
-}
+/*.side-bar li a:hover,*/
+/*.side-bar li a:focus {*/
+/*    background-color: #333;*/
+/*}*/
 
 .top-margin {
     margin-top: 15px;

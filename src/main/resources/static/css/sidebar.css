@@ -20,12 +20,13 @@ body {
     left: 0;
     width: 60px;
     height: 100%;
-    background: #081b29;
+    background: transparent;
     backdrop-filter: blur(40px);
     border-right: 2px solid #0ef;
     box-shadow: 0 0 10px #0ef;
     padding: 5px 6px;
     transition: .5s;
+    z-index: 1000;
 }
 
 .sidebar.active {
