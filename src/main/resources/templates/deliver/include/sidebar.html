@@ -3,40 +3,66 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Shipper Page</title>
-</head>
+    <title>Deliver Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap.min.css}">
+
+    <!-- Other CSS libraries -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+
+    <!-- Scripts -->
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap/bootstrap.min.js}"></script>
 
 <body>
-<div class="container-fluid">
-    <div class="col-md-3">
-        <div id="sidebar">
-            <div class="container-fluid tmargin">
-                <div class="input-group">
-                    <!-- Commented out search input -->
-                    <!-- <input type="text" class="form-control" placeholder="Search..." />
-                    <span class="input-group-btn">
-                      <button class="btn btn-default">
-                        <span class="glyphicon glyphicon-search"></span>
-                      </button>
-                    </span> -->
-                </div>
-            </div>
 
-            <ul class="nav navbar-nav side-bar">
-                <li class="side-bar tmargin">
-                    <a th:href="@{/deliver/order}">
-                        <span class="glyphicon glyphicon-shopping-cart">&nbsp;</span>Manage Order</a>
-                </li>
-
-                <li class="side-bar">
-                    <a th:href="@{/deliver/profile}">
-                        <span class="glyphicon glyphicon-user">&nbsp;</span>Personal Information</a>
-                </li>
-            </ul>
-        </div>
+<nav class="sidebar">
+    <div class="logo-menu">
+        <a th:href="@{/deliver}"><h2 class="logo">Home</h2></a>
+        <i class="bx bx-menu toggle-btn"></i>
     </div>
-</div>
+    <ul class="list">
+        <li class="list-item active">
+            <a th:href="@{/deliver/profile}">
+                <i class="bx bx-grid-alt"></i>
+                <span class="link-name" style="--i:1;" th:text="${loggedInUser.fullName}"></span>
+            </a>
+        </li>
+        <li class="list-item">
+            <a th:href="@{/deliver/order}">
+                <i class="bx bx-cart-alt"></i>
+                <span class="link-name" style="--i:2;">Order</span>
+            </a>
+        </li>
+        <li class="list-item">
+            <a th:href="@{/logout}">
+                <i class="bx bx-log-out"></i>
+                <span class="link-name" style="--i:3;">Logout</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
-<script th:src="@{/js/admin.js}"></script>
+<script>
+    const sidebar = document.querySelector('.sidebar');
+    const toggleBtn = document.querySelector('.toggle-btn');
+
+    toggleBtn.addEventListener('click', () =>{
+        sidebar.classList.toggle('active');
+    })
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>

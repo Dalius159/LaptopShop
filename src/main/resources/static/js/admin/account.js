@@ -9,7 +9,7 @@ $(document).ready(function() {
             type: "GET",
             data: data,
             contentType : "application/json",
-            url: "http://localhost:8080/laptopshop/api//all" + '?page=' + page,
+            url: "http://localhost:8080/api//all" + '?page=' + page,
             success: function(result){
                 $.each(result.content, function(i, account){
                     var accountRow = '<tr>' +
@@ -84,17 +84,17 @@ $(document).ready(function() {
             async:false,
             type : "POST",
             contentType : "application/json",
-            url : "http://localhost:8080/laptopshop/api/account/save",
+            url : "http://localhost:8080/api/account/save",
             enctype: 'multipart/form-data',
             data : data,
             success : function(response) {
-                if(response.status == "success"){
+                if(response.status === "success"){
                     $('#accountModal').modal('hide');
                     alert("Add Successful!");
                 } else {
                     $('input').next().remove();
                     $.each(response.errorMessages, function(key,value){
-                        if(key != "id"){
+                        if(key !== "id"){
                             $('input[name='+ key +']').after('<span class="error">'+value+'</span>');
                         };
                     });
@@ -116,7 +116,7 @@ $(document).ready(function() {
         if(confirmation){
             $.ajax({
                 type : "DELETE",
-                url : "http://localhost:8080/laptopshop/api/account/delete/" + accountID,
+                url : "http://localhost:8080/api/account/delete/" + accountID,
                 success: function(resultMsg){
                     resetData();
                 },

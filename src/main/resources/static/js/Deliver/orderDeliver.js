@@ -9,7 +9,7 @@ $(document).ready(function() {
             type: "GET",
             data: data,
             contentType : "application/json",
-            url: "http://localhost:8080/laptopshop/api/deliver/order/all" + '?page=' + page,
+            url: "http://localhost:8080/api/deliver/order/all" + '?page=' + page,
             success: function(result){
                 $.each(result.content, function(i, order){
                     // Compute order price
@@ -91,7 +91,7 @@ $(document).ready(function() {
         if(orderID !== ''){
             $('.orderTable tbody tr').remove();
             $('.pagination li').remove();
-            var href = "http://localhost:8080/laptopshop/api/deliver/order/"+orderID;
+            var href = "http://localhost:8080/api/deliver/order/"+orderID;
             $.get(href, function(order) {
                 // compute order price
                 var sum = 0;
@@ -132,7 +132,7 @@ $(document).ready(function() {
 
         var orderID = $(this).parent().prev().children().val();
 //		console.log(orderId);
-        var href = "http://localhost:8080/laptopshop/api/deliver/order/"+orderID;
+        var href = "http://localhost:8080/api/deliver/order/"+orderID;
         $.get(href, function(order) {
             $('#orderCode').text("Order ID: "+ order.id);
             $('#receiver').text("Receiver: "+ order.receiver);
@@ -206,7 +206,7 @@ $(document).ready(function() {
         event.preventDefault();
         var orderID = $(this).parent().prev().children().val();
         $("#orderID").val(orderID);
-        var href = "http://localhost:8080/laptopshop/api/deliver/order/"+orderID;
+        var href = "http://localhost:8080/api/deliver/order/"+orderID;
         $.get(href, function(order) {
             // add table:
             var stt = 1;
@@ -269,7 +269,7 @@ $(document).ready(function() {
             async:false,
             type : "POST",
             contentType : "application/json",
-            url : "http://localhost:8080/laptopshop/api/deliver/order/update",
+            url : "http://localhost:8080/api/deliver/order/update",
             enctype: 'multipart/form-data',
 
             data : JSON.stringify(data),
