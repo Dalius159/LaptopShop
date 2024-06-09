@@ -12,11 +12,10 @@
     </style>
 </head>
 <body>
-    <div th:insert="~{/deliver/include/header}"></div>
     <div th:insert="~{/deliver/include/sidebar}"></div>
-
-    <div class="col-md-9 animated bounce">
-        <h3 class="page-header form-inline">Manage Order - Deliver</h3>
+    <script th:src="@{/js/Deliver/orderDeliver.js}"></script>
+    <div class="col-md-9 animated bounce" style="padding-left: 75px;">
+        <h3 class="page-header form-inline text-white">Manage Order - Deliver</h3>
 
         <form class="form-inline" id="searchForm" name="searchObject">
             <input id="idShipper" type="hidden" th:value="${loggedInUser.id}">
@@ -36,13 +35,13 @@
             &nbsp;&nbsp; &nbsp;&nbsp;
             <button type="button" class="btn btn-primary" id="btnBrowseOrder">Browse Order</button>
             <div class="form-group" style="float: right; margin-right: 20px">
-                <input class="form-control" type="number" id="searchById" placeholder="Enter ID for quick search">
+                <input class="form-control" type="number" id="searchById" placeholder="Search by ID">
                 <span class="glyphicon glyphicon-search" aria-hidden="true" style="left: -30px; top: 4px"></span>
             </div>
         </form>
 
         <hr />
-        <table class="table table-hover orderTable" style="text-align: center">
+        <table class="table table-hover orderTable text-white" style="text-align: center">
             <thead>
             <tr>
                 <th>ID</th>
@@ -115,7 +114,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-flex flex-row-reverse bg-dark text-white p-4">
+                                        <div class="d-flex flex-row-reverse bg-dark p-4">
                                             <div class="py-3 px-5 text-right">
                                                 <div class="mb-2">
                                                     <p id="totalCost"></p>
@@ -161,7 +160,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="hidden" id="orderID" th:value="">
+                                    <input type="hidden" id="orderID" value="">
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12">

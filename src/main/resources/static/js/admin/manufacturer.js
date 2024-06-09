@@ -28,11 +28,11 @@ $(document).ready(function(){
     function ajaxGet(page){
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/laptopshop/api/manufacturer/all?page=" + page,
+            url: "http://localhost:8080/api/manufacturer/all?page=" + page,
             success: function(result){
                 $.each(result.content, function(i, manufacturer){
                     var manufacturerRow = '<tr style="text-align: center;">' +
-                        '<td width="20%"">' + manufacturer.id + '</td>' +
+                        '<td>' + manufacturer.id + '</td>' +
                         '<td>' + manufacturer.manufacturerName + '</td>' +
                         '<td>'+'<input type="hidden" value=' + manufacturer.id + '>'
                         + '<button class="btn btn-primary btnUpdateManufacturer">Update</button>' +
@@ -78,7 +78,7 @@ $(document).ready(function(){
             async:false,
             type : "POST",
             contentType : "application/json",
-            url : "http://localhost:8080/laptopshop/api/manufacturer/save",
+            url : "http://localhost:8080/api/manufacturer/save",
             data : JSON.stringify(formData),
             // dataType : 'json',
             success : function(response) {
@@ -108,7 +108,7 @@ $(document).ready(function(){
 
         $('#form').removeClass().addClass("updateForm");
         $('#form #btnSubmit').removeClass().addClass("btn btn-primary btnUpdateForm");
-        var href = "http://localhost:8080/laptopshop/api/manufacturer/" + manufacturerID;
+        var href = "http://localhost:8080/api/manufacturer/" + manufacturerID;
         $.get(href, function(manufacturer, status) {
             $('.updateForm #id').val(manufacturer.id);
             $('.updateForm #manufacturerName').val(manufacturer.manufacturerName);
@@ -139,7 +139,7 @@ $(document).ready(function(){
             async:false,
             type : "PUT",
             contentType : "application/json",
-            url : "http://localhost:8080/laptopshop/api/manufacturer/update",
+            url : "http://localhost:8080/api/manufacturer/update",
             data : JSON.stringify(formData),
             // dataType : 'json',
             success : function(response) {
@@ -170,7 +170,7 @@ $(document).ready(function(){
         if(confirmation){
             $.ajax({
                 type : "DELETE",
-                url : "http://localhost:8080/laptopshop/api/manufacturer/delete/" + manufacturerID,
+                url : "http://localhost:8080/api/manufacturer/delete/" + manufacturerID,
                 success: function(resultMsg){
                     resetDataForDelete();
                     alert("Delete successful");

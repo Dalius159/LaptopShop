@@ -7,7 +7,7 @@ $(document).ready(function(){
 
         console.log(userId);
 
-        var href = "http://localhost:8080/laptopshop/api/profile/"+userId;
+        var href = "http://localhost:8080/api/profile/"+userId;
         $.get(href, function(user, status) {
             populate('.formUpdate', user);
         });
@@ -44,13 +44,13 @@ $(document).ready(function(){
             async:false,
             type : "POST",
             contentType : "application/json",
-            url : "http://localhost:8080/laptopshop/api/profile/changePassword",
+            url : "http://localhost:8080/api/profile/changePassword",
             data : JSON.stringify(data),
             success : function(response) {
                 if(response.status === "success"){
                     $('#doiMKModal').modal('hide');
                     alert("Change Password successful. You have to login again!");
-                    location.href = "http://localhost:8080/laptopshop/logout";
+                    location.href = "http://localhost:8080/logout";
                 } else {
                     $('input').next().remove();
                     $.each(response.errorMessages, function(key,value){

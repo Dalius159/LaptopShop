@@ -32,10 +32,6 @@ public class DeliverController {
         return userService.findByEmail(auth.getName());
     }
 
-    public Users getSessionUser(HttpServletRequest request) {
-        return (Users) request.getSession().getAttribute("loggedInUser");
-    }
-
     @GetMapping(value= {"", "/order"})
     public String deliverPage(Model model) {
         return "deliver/manageOrder";
@@ -56,5 +52,9 @@ public class DeliverController {
         currentUser.setPhoneNumber(user.getPhoneNumber());
         userService.updateUser(currentUser);
         return "redirect:/deliver/profile";
+    }
+
+    public Users getSessionUser(HttpServletRequest request) {
+        return (Users) request.getSession().getAttribute("loggedInUser");
     }
 }

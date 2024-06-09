@@ -13,10 +13,9 @@
 
 </head>
 <body>
-    <div th:insert="template/header :: header"></div>
-    <div th:insert="template/sidebar :: sidebar"></div>
-
-    <div class="col-md-9 animated bounce">
+    <div th:insert="~{/deliver/include/sidebar}"></div>
+    <script th:src="@{/js/Deliver/profileDeliver.js}"></script>
+    <div class="col-md-9 animated bounce text-white" style="padding-left: 75px;">
         <h3 class="page-header">Personal Information</h3>
 
         <button class="btn btn-success btnUpdateInfor">Update Information</button>
@@ -24,7 +23,7 @@
         <button class="btn btn-primary btnChangePassword">Change Password</button>
         <hr />
 
-        <form class="form-profile">
+        <form class="form-profile text-white">
 
             <div class="form-group row">
                 <div class="col-sm-10">
@@ -32,17 +31,17 @@
                            th:value="${user.id}">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row ">
                 <label for="fullName" class="col-sm-2 col-form-label">Fullname</label>
                 <div class="col-sm-10">
-                    <input type="text" id="fullName" readonly class="form-control-plaintext" th:value="${user.fullName}">
+                    <input type="text" id="fullName" readonly class="form-control-plaintext text-white" th:value="${user.fullName}">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="email" class="col-sm-2 col-form-label">Email register</label>
                 <div class="col-sm-10">
-                    <input type="text" id="email" readonly class="form-control-plaintext"
+                    <input type="text" id="email" readonly class="form-control-plaintext text-white"
                            th:value="${user.email}">
                 </div>
             </div>
@@ -50,7 +49,7 @@
             <div class="form-group row">
                 <label for="phoneNumber" class="col-sm-2 col-form-label">Phone number</label>
                 <div class="col-sm-10">
-                    <input id="phoneNumber" type="text" readonly class="form-control-plaintext"
+                    <input id="phoneNumber" type="text" readonly class="form-control-plaintext text-white"
                            th:value="${user.phoneNumber}">
                 </div>
             </div>
@@ -58,7 +57,7 @@
             <div class="form-group row">
                 <label for="address" class="col-sm-2 col-form-label">Address</label>
                 <div class="col-sm-10">
-                    <input id="address" type="text" readonly class="form-control-plaintext"
+                    <input id="address" type="text" readonly class="form-control-plaintext text-white"
                            th:value="${user.address}">
                 </div>
             </div>
@@ -80,8 +79,6 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-
-                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                 <div class="form-group">
                                     <input type="hidden" class="form-control" name="id" th:value="${user.id}" />
                                 </div>
@@ -124,10 +121,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div>
-                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                            </div>
-
                             <div class="form-group">
                                 <label for="oldPassword">Old Password</label>
                                 <input id="oldPassword" type="password" class="form-control" name="oldPassword" required="required" />
@@ -143,7 +136,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <input class="btn btn-primary" type="button" id="btnConfirmChangePassword" value="Confirm" />
+                                <input class="btn btn-primary" type="button" id="btnConfirmChangePassword" value="Confirm"/>
                             </div>
                         </div>
                     </div>

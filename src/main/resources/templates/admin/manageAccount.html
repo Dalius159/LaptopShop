@@ -5,23 +5,22 @@
     <title>Account Management</title>
 </head>
 <body>
-<div th:replace="template/header :: header"></div>
-<div th:replace="template/sidebar :: sidebar"></div>
+<div th:insert="~{/admin/include/sidebar}"></div>
 
-<div class="col-md-9 animated bounce">
-    <h3 class="page-header">Account Management</h3>
+<div class="col-md-9 animated bounce" style="padding-left: 75px;">
+    <h3 class="page-header text-white">Account Management</h3>
 
     <button class="btn btn-success btnNewAccount">New</button>
     <hr>
-    <div class="form-group form-inline">
-        <label for="role"><strong>Account Filter:</strong> </label>
+    <div class="form-group form-inline text-white">
+        <label for="role"><strong>Role Filter </strong> </label>
         <select id="role" class="form-control">
             <option th:each="role : ${roleList}" th:value="${role.roleName}" th:text="${role.roleName}"></option>
         </select>
     </div>
     <hr>
 
-    <table class="table table-hover accountTable" style="text-align: center;">
+    <table class="table table-hover accountTable text-white" style="text-align: center;">
         <thead>
         <tr>
             <th>Identify Code</th>
