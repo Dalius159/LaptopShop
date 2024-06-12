@@ -2,18 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Category Manager</title>
+	<link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
+	<title>LeoLap - Category</title>
 </head>
 <body>
 
-<div th:insert="~{/admin/include/header}"></div>
+<div th:insert="~{/admin/include/sidebar}"></div>
 
 <script th:src="@{/js/admin/manageCategory.js}"></script>
 
 <div class="container-fluid">
-
-	<div th:insert="~{/admin/include/sidebar}"></div>
-
 	<div class="col-md-9 animated bounce">
 		<h3 class="page-header">Category Management</h3>
 

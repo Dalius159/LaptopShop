@@ -75,9 +75,9 @@ public class ClientController {
 
 	@PostMapping("/createContact")
 	@ResponseBody
-	public ResponseObject createContact(@RequestBody Contact lh) {
-		lh.setContactDate(new Date());
-		contactService.save(lh);
+	public ResponseObject createContact(@RequestBody Contact ct) {
+		ct.setContactDate(new Date());
+		contactService.save(ct);
 		return new ResponseObject();
 	}
 

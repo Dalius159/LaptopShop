@@ -3,7 +3,8 @@
 
 <head>
 	<script th:src="@{js/accounting.min.js}"></script>
-	<title>Checkout</title>
+	<link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
+	<title>LeoLap - Checkout</title>
 
 	<script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
@@ -18,8 +19,6 @@
 </head>
 <body>
 <div th:insert="~{/client/include/homeHeader}"></div>
-
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-1"></div>
@@ -74,5 +73,6 @@
 		</div>
 	</div>
 </div>
+<div th:insert="~{client/include/homeFooter}"></div>
 </body>
 </html>
