@@ -9,7 +9,7 @@ $(document).ready(function() {
             type: "GET",
             data: data,
             contentType : "application/json",
-            url: "http://localhost:8080/api//all" + '?page=' + page,
+            url: "http://localhost:8080/api/all" + '?page=' + page,
             success: function(result){
                 $.each(result.content, function(i, account){
                     var accountRow = '<tr>' +

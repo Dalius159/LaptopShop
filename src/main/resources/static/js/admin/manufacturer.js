@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    // click event button add new category
+    // click event button add new manufacturer
     $('.btnAddManufacturer').on("click", function(event) {
         event.preventDefault();
         $('.manufacturerForm #manufacturerModal').modal();
@@ -21,7 +21,6 @@ $(document).ready(function(){
         $("#manufacturerName").val("");
     }
 
-
     ajaxGet(1);
 
     // do get
@@ -30,78 +29,94 @@ $(document).ready(function(){
             type: "GET",
             url: "http://localhost:8080/api/manufacturer/all?page=" + page,
             success: function(result){
+                $('.manufacturerTable tbody').empty(); // Clear table before appending new data
+
                 $.each(result.content, function(i, manufacturer){
                     var manufacturerRow = '<tr style="text-align: center;">' +
                         '<td>' + manufacturer.id + '</td>' +
                         '<td>' + manufacturer.manufacturerName + '</td>' +
-                        '<td>'+'<input type="hidden" value=' + manufacturer.id + '>'
-                        + '<button class="btn btn-primary btnUpdateManufacturer">Update</button>' +
-                        '   <button class="btn btn-danger btnDeleteManufacturer">Delete</button></td>'
-                    '</tr>';
+                        '<td>' +
+                        '<input type="hidden" value=' + manufacturer.id + '>' +
+                        '<button class="btn btn-primary btnUpdateManufacturer">Update</button>' +
+                        '<button class="btn btn-danger btnDeleteManufacturer">Delete</button>' +
+                        '</td>' +
+                        '</tr>';
                     $('.manufacturerTable tbody').append(manufacturerRow);
                 });
 
-                if(result.totalPages > 1 ){
-                    for(var numberPage = 1; numberPage <= result.totalPages; numberPage++) {
-                        var li = '<li class="page-item "><a class="pageNumber">'+numberPage+'</a></li>';
-                        $('.pagination').append(li);
-                    }
-
-                    // active page pagination
-                    $(".pageNumber").each(function(index){
-                        if($(this).text() === page){
-                            $(this).parent().removeClass().addClass("page-item active");
-                        }
-                    });
-                }
+                // Pagination
+                renderPagination(page, result.totalPages);
             },
             error : function(e){
-                alert("Error: ",e);
-                console.log("Error" , e );
+                alert("Error fetching manufacturers!");
+                console.log("Error", e);
             }
         });
     }
 
+    // Function to render pagination
+    function renderPagination(currentPage, totalPages) {
+        $('.pagination').empty(); // Clear pagination before rendering
+
+        var prevDisabled = (currentPage === 1) ? 'disabled' : '';
+        var nextDisabled = (currentPage === totalPages) ? 'disabled' : '';
+
+        var prevArrow = '<li class="page-item ' + prevDisabled + '"><a class="page-link" href="#" data-page="' + (currentPage - 1) + '">&laquo;</a></li>';
+        $('.pagination').append(prevArrow);
+
+        for(var numberPage = 1; numberPage <= totalPages; numberPage++) {
+            var liClass = (numberPage === currentPage) ? 'page-item active' : 'page-item';
+            var li = '<li class="' + liClass + '"><a class="page-link pageNumber" href="#" data-page="' + numberPage + '">' + numberPage + '</a></li>';
+            $('.pagination').append(li);
+        }
+
+        var nextArrow = '<li class="page-item ' + nextDisabled + '"><a class="page-link" href="#" data-page="' + (currentPage + 1) + '">&raquo;</a></li>';
+        $('.pagination').append(nextArrow);
+    }
+
+    $(document).on('click', '.pageNumber', function (event){
+        event.preventDefault();
+        var page = $(this).data('page');
+        ajaxGet(page);
+    });
 
     $(document).on('click', '.btnSaveForm', function (event) {
         event.preventDefault();
         ajaxPost();
-        resetData();
     });
 
     function ajaxPost(){
-        // PREPARE FORM DATA
-        var formData = { manufacturerName : $("#manufactureName").val() } ;
+        var formData = { manufacturerName : $("#manufacturerName").val() };
 
-        // DO POST
         $.ajax({
-            async:false,
             type : "POST",
             contentType : "application/json",
             url : "http://localhost:8080/api/manufacturer/save",
             data : JSON.stringify(formData),
-            // dataType : 'json',
             success : function(response) {
                 if(response.status === "success"){
                     $('#manufacturerModal').modal('hide');
-                    alert("Add successful!");
+                    alert("Added successfully!");
+                    ajaxGet(1); // Reload data after successful addition
                 } else {
                     $('input').next().remove();
-                    $.each(response.errorMessages, function(key,value){
+                    $.each(response.errorMessages, function(key, value){
                         $('input[id='+ key +']').after('<span class="error">'+value+'</span>');
                     });
                 }
-
             },
-            error : function(e) {
-                alert("Error!")
-                console.log("ERROR: ", e);
+            error : function(xhr, textStatus, errorThrown) {
+                if (xhr.status === 400) {
+                    alert("Manufacturer name already exists!");
+                } else {
+                    alert("Error adding manufacturer!");
+                    console.log("ERROR: ", errorThrown);
+                }
             }
         });
     }
 
-    // click edit button
-    $(document).on("click",".btnUpdateManufacturer",function(){
+    $(document).on("click",".btnUpdateManufacturer",function(event){
         event.preventDefault();
         $('.manufacturerForm #id').prop("disabled", true);
         var manufacturerID = $(this).parent().find('input').val();
@@ -119,100 +134,73 @@ $(document).ready(function(){
         $('.updateForm #manufacturerModal').modal();
     });
 
-    // put request
-
     $(document).on('click', '.btnUpdateForm', function (event) {
         event.preventDefault();
         ajaxPut();
-        resetData();
     });
 
-
     function ajaxPut(){
-        // PREPARE FORM DATA
         var formData = {
             id : $('#id').val(),
-            tenHangSanXuat : $("#manufacturerName").val(),
+            manufacturerName : $("#manufacturerName").val(),
         }
-        // DO PUT
+
         $.ajax({
-            async:false,
             type : "PUT",
             contentType : "application/json",
             url : "http://localhost:8080/api/manufacturer/update",
             data : JSON.stringify(formData),
-            // dataType : 'json',
             success : function(response) {
-
                 if(response.status === "success"){
                     $('#manufacturerModal').modal('hide');
-                    alert("Update Successful");
+                    alert("Update successful!");
+                    resetData();
                 } else {
                     $('input').next().remove();
-                    $.each(response.errorMessages, function(key,value){
+                    $.each(response.errorMessages, function(key, value){
                         $('input[id='+ key +']').after('<span class="error">'+value+'</span>');
                     });
                 }
             },
             error : function(e) {
-                alert("Error!")
+                alert("Error updating manufacturer!");
                 console.log("ERROR: ", e);
             }
         });
     }
 
-    // delete request
     $(document).on("click",".btnDeleteManufacturer", function() {
-
         var manufacturerID = $(this).parent().find('input').val();
 
-        var confirmation = confirm("Are you sure to delete this manufacturer?");
+        var confirmation = confirm("Are you sure you want to delete this manufacturer?");
         if(confirmation){
             $.ajax({
                 type : "DELETE",
                 url : "http://localhost:8080/api/manufacturer/delete/" + manufacturerID,
                 success: function(resultMsg){
                     resetDataForDelete();
-                    alert("Delete successful");
+                    alert("Delete successful!");
                 },
                 error : function(e) {
-                    alert("Can not delete, check again!");
+                    alert("Cannot delete, please check again!");
                     console.log("ERROR: ", e);
                 }
             });
         }
     });
 
-    // reset table after post, put
     function resetData(){
-        $('.manufacturerTable tbody tr').remove();
-        var page = $('li.active').children().text();
-        $('.pagination li').remove();
+        $('.manufacturerTable tbody').empty();
+        var page = $('.pagination .active .pageNumber').data('page');
         ajaxGet(page);
     }
 
-    // reset table after post, put
     function resetDataForDelete(){
         var count = $('.manufacturerTable tbody').children().length;
-        $('.manufacturerTable tbody tr').remove();
-        var page = $('li.active').children().text();
-        $('.pagination li').remove();
-        if(count === 1){
-            ajaxGet(page -1 );
-        } else {
-            ajaxGet(page);
-        }
-
-    }
-
-    // event when click manufacturer pagination
-    $(document).on('click', '.pageNumber', function (event){
-//		event.preventDefault();
-        var page = $(this).text();
-        $('.manufacturerTable tbody tr').remove();
-        $('.pagination li').remove();
+        $('.manufacturerTable tbody').empty();
+        var page = $('.pagination .active .pageNumber').data('page');
         ajaxGet(page);
-    });
+    }
 
 
     function removeElementsByClass(className){
@@ -221,4 +209,5 @@ $(document).ready(function(){
             elements[0].parentNode.removeChild(elements[0]);
         }
     }
+
 });

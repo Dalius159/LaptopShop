@@ -11,10 +11,11 @@ import java.util.List;
 @Data
 public class Manufacturer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty(message="Manufacturer can't be empty")
+    @NotEmpty(message="Manufacturer name can't be empty")
+    @Column(unique = true)
     private String manufacturerName;
 
     @JsonIgnore

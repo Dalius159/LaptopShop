@@ -1,11 +1,15 @@
 package Website.LaptopShop.Controller;
 
 import Website.LaptopShop.DTO.ListAssignmentDTO;
+import Website.LaptopShop.Entities.Manufacturer;
 import Website.LaptopShop.Entities.Roles;
 import Website.LaptopShop.Entities.Users;
 import Website.LaptopShop.Services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -110,4 +114,16 @@ public class AdminController {
 
     @GetMapping("/statistics")
     public String statisticalPage(Model model) { return "admin/statistics";}
+
+    @PostMapping("/save")
+    public ResponseEntity<?> saveManufacturer(@RequestBody Manufacturer manufacturer) {
+        try {
+            Manufacturer savedManufacturer = manufacturerService.save(manufacturer);
+            return ResponseEntity.ok(savedManufacturer);
+        } catch (DataIntegrityViolationException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Manufacturer name already exists.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
