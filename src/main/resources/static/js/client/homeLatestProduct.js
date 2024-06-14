@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	ajaxGet();
 
 	function ajaxGet() {
-		fetch('http://localhost:8080/api/san-pham/latest', {
+		fetch('http://localhost:8080/api/product/latest', {
 			method: 'GET',
 			headers: {'Content-Type': 'application/json'}
 		})

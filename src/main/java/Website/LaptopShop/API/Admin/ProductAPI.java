@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/san-pham")
+@RequestMapping("api/product")
 public class ProductAPI {
 
 	@Autowired
@@ -33,7 +33,7 @@ public class ProductAPI {
 	@Autowired
 	private ProductService productService;
 
-	@InitBinder("sanPhamDto")
+	@InitBinder("productDTO")
 	protected void initialiseBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
