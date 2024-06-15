@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
     <title>LeoLap - Contact</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet"  href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style type="text/css">
         td, #contactMessage, .contactMessage, #respondMessage {
             word-wrap: break-word;
         }
     </style>
+
 </head>
 <body>
 <div th:insert="~{/admin/include/sidebar}"></div>
@@ -18,8 +20,8 @@
     <div class="form-group form-inline">
         <div class="form-group">
             <select class="form-control status">
-                <option value="'Waiting for respond'">Waiting for respond</option>
-                <option value="'Reponded'">Reponded</option>
+                <option value="Waiting for respond">Waiting for respond</option>
+                <option value="Reponded">Reponded</option>
                 <option value="">All</option>
             </select>
         </div>
@@ -29,7 +31,7 @@
         </div>
 
         <div class="form-group">
-            <input class="form-control" type="text" id="toDate" placeholder="To data">
+            <input class="form-control" type="text" id="toDate" placeholder="To date">
         </div>
         &nbsp;&nbsp; &nbsp;&nbsp;
         <button type="button" class="btn btn-primary" id="btnBrowseContact">Browse Contact</button>
@@ -92,36 +94,38 @@
     </form>
 </div>
 <div class="row col-md-6">
-    <form class="contactForm" id="form">
+    <form class="contactForm" id="contactForm">
         <div>
             <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Respond</h5>
+                            <h5 class="modal-title">Respond</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input type="hidden" name="contactId" class="form-control"/>
+                                <input type="hidden" name="contactId" id="contactId" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label for="contactEmail">Contact Email:</label>
                                 <input type="text" name="contactEmail" id="contactEmail" class="form-control" style="border: 0" readonly="readonly"/>
                             </div>
-
+                            <div class="form-group">
+                                <label for="title">Title:</label>
+                                <input type="text" name="title" id="title" class="form-control"/>
+                            </div>
                             <div class="form-group">
                                 <label for="contactMes">Contact Message:</label>
-                                <textarea class="form-control" name="contactMessage" id="contactMes" style="border: 0; background-color: #fff" rows="3" readonly="readonly" ></textarea>
+                                <textarea class="form-control" name="contactMessage" id="contactMes" style="border: 0; background-color: #fff" rows="3" readonly="readonly"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="respondMes">Respond Message</label>
                                 <textarea class="form-control" name="respondMessage" id="respondMes" rows="5"></textarea>
                             </div>
                         </div>
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <input type="button" class="btn btn-primary btnSubmitRespond" value="Confirm">
@@ -132,6 +136,10 @@
         </div>
     </form>
 </div>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.js"></script>
+<script th:src="@{/js/admin/manageContact.js}"></script>
+
 <script type="text/javascript">
     $(function() {
         var from = $("#fromDate").datepicker({
@@ -159,8 +167,5 @@
         }
     });
 </script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.js"></script>
-<script th:src="@{/js/admin/contact.js}"></script>
 </body>
 </html>

@@ -5,7 +5,6 @@ import Website.LaptopShop.DTO.ResponseObject;
 import Website.LaptopShop.DTO.SearchContactObject;
 import Website.LaptopShop.Entities.Contact;
 import Website.LaptopShop.Services.ContactService;
-import Website.LaptopShop.Services.UserService;
 import Website.LaptopShop.Ultilities.EmailUlti;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,11 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/api/lien-he")
+@RequestMapping("/api/contact")
 public class ContactAPI {
 
 	@Autowired
 	private ContactService contactService;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private EmailUlti emailUlti;
@@ -37,7 +33,6 @@ public class ContactAPI {
 	public Page<Contact> getContactByFilter(@RequestParam(defaultValue = "1") int page,
 											@RequestParam String contactStatus, @RequestParam String fromDate, @RequestParam String toDate)
 			throws ParseException {
-
 		SearchContactObject object = new SearchContactObject();
 		object.setToDate(toDate);
 		object.setContactStatus(contactStatus);
@@ -53,24 +48,27 @@ public class ContactAPI {
 
 	@PostMapping("/reply")
 	public ResponseObject respondContactProcess(@RequestBody @Valid ContactDTO dto, BindingResult result) {
-
 		ResponseObject ro = new ResponseObject();
 
 		if (result.hasErrors()) {
-
 			Map<String, String> errors = result.getFieldErrors().stream()
 					.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
 			ro.setErrorMessages(errors);
-
 			ro.setStatus("fail");
 		} else {
 			System.out.println(dto.toString());
 
+			// Kiểm tra email không được null hoặc rỗng
+			if (dto.getToEmail() == null || dto.getToEmail().isEmpty()) {
+				ro.setStatus("fail");
+				ro.setErrorMessages(Map.of("toEmail", "Email address must not be null or empty"));
+				return ro;
+			}
 
 			emailUlti.sendEmail(dto.getToEmail(), dto.getTitle(), dto.getRespondMessage());
-			
+
 			Contact contact = contactService.findById(dto.getId());
-			contact.setStatus("Reponded");
+			contact.setStatus("Responded");
 			contact.setRespondDate(new Date());
 			contact.setRespondMessage(dto.getRespondMessage());
 

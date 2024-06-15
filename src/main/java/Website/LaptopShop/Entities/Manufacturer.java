@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class Manufacturer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NotEmpty(message="Manufacturer name can't be empty")
