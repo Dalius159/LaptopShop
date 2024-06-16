@@ -1,7 +1,7 @@
 package Website.LaptopShop.API.Admin;
 
 import Website.LaptopShop.DTO.ResponseObject;
-import Website.LaptopShop.DTO.AcountDTO;
+import Website.LaptopShop.DTO.AccountDTO;
 import Website.LaptopShop.Entities.Users;
 import Website.LaptopShop.Entities.Roles;
 import Website.LaptopShop.Services.UserService;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 @RestController
 @RequestMapping("/api/account")
 public class AccountAPI {
@@ -30,51 +29,46 @@ public class AccountAPI {
 
 	@GetMapping("/all")
 	public Page<Users> getUserByRole(@RequestParam("roleName") String roleName,
-                                            @RequestParam(defaultValue = "1") int page) {
+									 @RequestParam(defaultValue = "1") int page) {
 		Set<Roles> roles = new HashSet<>();
 		roles.add(roleService.findByRoleName(roleName));
-
 		return userService.getUserByRole(roles, page);
 	}
 
-
 	@PostMapping("/save")
-	public ResponseObject saveAcount(@RequestBody @Valid AcountDTO dto, BindingResult result, Model model) {
-		
-		ResponseObject ro = new ResponseObject();
+	public ResponseObject saveAccount(@RequestBody @Valid AccountDTO dto, BindingResult result, Model model) {
+		ResponseObject responseObject = new ResponseObject();
 
-		if(userService.findByEmail(dto.getEmail()) != null) {
-			result.rejectValue("email", "error.email","Email already used!");
-		}
-		if(!dto.getConfirmPassword().equals(dto.getPassword())) {
-			result.rejectValue("confirmPassword", "error.confirmPassword","wrong confirm password!");
-		}
+		validateAccount(dto, result);
 
 		if (result.hasErrors()) {
-			setErrorsForResponseObject(result, ro);
+			setErrorsForResponseObject(result, responseObject);
 		} else {
-			ro.setStatus("success");
+			responseObject.setStatus("success");
 			userService.saveUserForAdmin(dto);
-		}	
-		return ro;
+		}
+
+		return responseObject;
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public void deleteAcount(@PathVariable long id) {
+	public void deleteAccount(@PathVariable long id) {
 		userService.deleteById(id);
 	}
-	public void setErrorsForResponseObject(BindingResult result, ResponseObject object) {
 
+	private void validateAccount(AccountDTO dto, BindingResult result) {
+		if (userService.findByEmail(dto.getEmail()) != null) {
+			result.rejectValue("email", "error.email", "Email already used!");
+		}
+		if (dto.getConfirmPassword() == null || dto.getPassword() == null || !dto.getConfirmPassword().equals(dto.getPassword())) {
+			result.rejectValue("confirmPassword", "error.confirmPassword", "Wrong confirm password!");
+		}
+	}
+
+	private void setErrorsForResponseObject(BindingResult result, ResponseObject object) {
 		Map<String, String> errors = result.getFieldErrors().stream()
 				.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
 		object.setErrorMessages(errors);
 		object.setStatus("fail");
-		
-		List<String> keys = new ArrayList<String>(errors.keySet());			
-		for (String key: keys) {
-		    System.out.println(key + ": " + errors.get(key));
-		}
-		
-		errors = null;
 	}
 }

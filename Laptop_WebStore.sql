@@ -143,7 +143,7 @@ DROP TABLE IF EXISTS contact;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE contact (
   id bigint NOT NULL AUTO_INCREMENT,
-  email varchar(25),
+  contact_email varchar(25),
   contact_date datetime,
   respond_date datetime,
   contact_message varchar(255),
@@ -196,7 +196,7 @@ CREATE TABLE user_role (
 --
 LOCK TABLES user_role WRITE;
 /*!40000 ALTER TABLE user_role DISABLE KEYS */;
-INSERT INTO user_role VALUES (1,1),(1,2),(2,2),(4,2),(3,3);
+INSERT INTO user_role VALUES (1,1),(1,2),(2,2),(4,2),(3,3),(5,2);
 /*!40000 ALTER TABLE user_role ENABLE KEYS */;
 UNLOCK TABLES;
 

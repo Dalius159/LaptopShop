@@ -35,19 +35,14 @@ public class ProfileAPI {
 	@PostMapping("/changePassword")
 	public ResponseObject changePass(@RequestBody @Valid PasswordDTO dto, BindingResult result,
 									 HttpServletRequest request) {
-		System.out.println(dto.toString());
 		Users currentUser = getSessionUser(request);
-
 		ResponseObject ro = new ResponseObject();
-		
 		if (!passwordEncoder.matches( dto.getOldPassword(), currentUser.getPassword())) {
 			result.rejectValue("oldPassword", "error.oldPassword", "Wrong old password!");
 		}
-
 		if (!dto.getNewPassword().equals(dto.getConfirmNewPassword())) {
 			result.rejectValue("confirmNewPassword", "error.confirmNewPassword", "Wrong confirm password!");
 		}
-
 		if (result.hasErrors()) {
 			Map<String, String> errors = new HashMap<>();
 		    List<FieldError> errorsList = result.getFieldErrors();

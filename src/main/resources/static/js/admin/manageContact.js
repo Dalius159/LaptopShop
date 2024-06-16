@@ -9,9 +9,6 @@ $(document).ready(function() {
             fromDate: $('#fromDate').val(),
             toDate: $('#toDate').val()
         };
-
-        console.log("Request Data: ", data);  // Log request data
-
         $.ajax({
             type: "GET",
             data: data,

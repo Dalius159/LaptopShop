@@ -25,13 +25,13 @@
 <body>
 <nav class="sidebar">
 	<div class="logo-menu">
-		<a th:href="@{/admin}"><h2 class="logo">Home</h2></a>
+		<a th:href="@{/admin}"><h2 class="logo"><img src="/images/Lion2.png" alt="LeoLap"></h2></a>
 		<i class="bx bx-menu toggle-btn"></i>
 	</div>
 	<ul class="list">
 		<li class="list-item active">
 			<a th:href="@{/admin/profile}">
-				<i class="bx bx-grid-alt"></i>
+				<i class="bx bx-grid-alt" ></i>
 				<span class="link-name" style="--i:1;" th:text="${loggedInUser.fullName}"></span>
 			</a>
 		</li>
@@ -85,6 +85,8 @@
 		</li>
 	</ul>
 </nav>
+
+<img src="/images/LeoLap2.png" alt="Right Image" class="right-image">
 
 <script>
 	const sidebar = document.querySelector('.sidebar');

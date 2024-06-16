@@ -56,8 +56,6 @@ public class ContactAPI {
 			ro.setErrorMessages(errors);
 			ro.setStatus("fail");
 		} else {
-			System.out.println(dto.toString());
-
 			// Kiểm tra email không được null hoặc rỗng
 			if (dto.getToEmail() == null || dto.getToEmail().isEmpty()) {
 				ro.setStatus("fail");

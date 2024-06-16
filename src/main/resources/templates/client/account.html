@@ -17,7 +17,6 @@
     $(document).ready(function() {
         $(".mytable .tongGiaTri ").each(function() {
             var value = accounting.formatMoney($(this).text());
-            console.log(value)
             $(this).html(value);
         });
     });

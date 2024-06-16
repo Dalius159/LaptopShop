@@ -4,9 +4,6 @@ $(document).ready(function(){
     $('.btnUpdateInfor').on("click", function(event) {
         event.preventDefault();
         var userId = $(".userId").val();
-
-        console.log(userId);
-
         var href = "http://localhost:8080/api/profile/"+userId;
         $.get(href, function(user, status) {
             populate('.formUpdate', user);

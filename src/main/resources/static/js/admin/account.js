@@ -3,55 +3,62 @@ $(document).ready(function() {
     // load first when coming page
     ajaxGet(1);
 
-    function ajaxGet(page){
-        var data = { roleName:$("#role").val()};
+    function ajaxGet(page) {
+        if (isNaN(page) || page < 1) {
+            page = 1;
+        }
+        var data = { roleName: $("#role").val() };
         $.ajax({
             type: "GET",
             data: data,
-            contentType : "application/json",
-            url: "http://localhost:8080/api/all" + '?page=' + page,
-            success: function(result){
-                $.each(result.content, function(i, account){
+            url: "http://localhost:8080/api/account/all?page=" + page,
+            success: function(result) {
+                $('.accountTable tbody').empty();
+
+                $.each(result.content, function(i, account) {
                     var accountRow = '<tr>' +
-                        '<td>' + account.id+ '</td>' +
+                        '<td>' + account.id + '</td>' +
                         '<td>' + account.fullName + '</td>' +
                         '<td>' + account.email + '</td>' +
                         '<td>' + account.phoneNumber + '</td>' +
-                        '<td>' + account.address + '</td>'+ '<td>';
+                        '<td>' + account.address + '</td>' +
+                        '<td>';
 
-                    $.each(account.role, function(i, role){
+                    $.each(account.role, function(i, role) {
                         accountRow += role.roleName;
                         accountRow += "<br>";
                     });
 
-                    accountRow +='</td>' +
-                        '<td width="0%">'+'<input type="hidden" id="idAccount" value=' + account.id + '>'+ '</td>'+
-                        //					                  '<td><button class="btn btn-primary btnUpdate" >Update</button></td>' +
-                        '<td><button class="btn btn-danger btnDelete" >Delete</button></td>';			;
-                    $('.accountTable tbody').append(accountRow);
+                    // Pagination
+                    renderPagination(page, result.totalPages);
 
+                    accountRow += '</td>' +
+                        '<td width="0%">' + '<input type="hidden" id="idAccount" value=' + account.id + '>' + '</td>' +
+                        '<td><button class="btn btn-danger btnDelete">Delete</button></td>' +
+                        '</tr>';
+                    $('.accountTable tbody').append(accountRow);
                 });
 
-                if(result.totalPages > 1 ){
-                    for(var numberPage = 1; numberPage <= result.totalPages; numberPage++) {
-                        var li = '<li class="page-item "><a class="pageNumber">'+numberPage+'</a></li>';
-                        $('.pagination').append(li);
-                    };
-
-                    // active page pagination
-                    $(".pageNumber").each(function(index){
-                        if($(this).text() == page){
-                            $(this).parent().removeClass().addClass("page-item active");
-                        }
-                    });
-                };
             },
-            error : function(e){
-                alert("Error: ",e);
-                console.log("Error" , e );
+            error: function(e) {
+                alert("Error: " + e);
+                console.log("Error", e);
             }
         });
-    };
+    }
+
+    function renderPagination(currentPage, totalPages) {
+        $('.pagination').empty(); // Clear pagination before rendering
+
+        var prevDisabled = (currentPage === 1) ? 'disabled' : '';
+        var nextDisabled = (currentPage === totalPages) ? 'disabled' : '';
+
+        for(var numberPage = 1; numberPage <= totalPages; numberPage++) {
+            var liClass = (numberPage === currentPage) ? 'page-item active' : 'page-item';
+            var li = '<li class="' + liClass + '"><a class="page-link pageNumber" href="#" data-page="' + numberPage + '">' + numberPage + '</a></li>';
+            $('.pagination').append(li);
+        }
+    }
 
     // event when click dropdown button and choose add new product
     $('#role').mouseup(function() {
@@ -65,43 +72,57 @@ $(document).ready(function() {
     // click add new account
     $(document).on('click', '.btnNewAccount', function (event) {
         event.preventDefault();
-        $("#accountModal").modal();
+        console.log("Opening modal");
+        $("#accountModal").modal('show'); // 'show' để hiển thị modal
     });
 
     // confirm add new account
     $(document).on('click', '#btnSubmit', function (event) {
         event.preventDefault();
+
+        var confirmPassword = $('#confirmPassword').val();
+        var password = $('#password').val();
+
+        if (!confirmPassword || !password) {
+            alert("Password and Confirm Password fields are required");
+            return;
+        }
+
+        if (confirmPassword !== password) {
+            alert("Passwords do not match");
+            return;
+        }
+
         ajaxPostAccount();
         resetData();
     });
 
     function ajaxPostAccount() {
-        var data = JSON.stringify($('.accountForm').serializeJSON());
+        var data = JSON.stringify($('#accountForm').serializeJSON());
         console.log(data);
 
         // do post
         $.ajax({
-            async:false,
-            type : "POST",
-            contentType : "application/json",
-            url : "http://localhost:8080/api/account/save",
+            async: false,
+            type: "POST",
+            contentType: "application/json",
+            url: "http://localhost:8080/api/account/save",
             enctype: 'multipart/form-data',
-            data : data,
-            success : function(response) {
+            data: data,
+            success: function(response) {
                 if(response.status === "success"){
                     $('#accountModal').modal('hide');
                     alert("Add Successful!");
                 } else {
                     $('input').next().remove();
-                    $.each(response.errorMessages, function(key,value){
-                        if(key !== "id"){
-                            $('input[name='+ key +']').after('<span class="error">'+value+'</span>');
-                        };
+                    $.each(response.errorMessages, function(key, value) {
+                        if(key !== "id") {
+                            $('input[name=' + key + ']').after('<span class="error">' + value + '</span>');
+                        }
                     });
                 }
-
             },
-            error : function(e) {
+            error: function(e) {
                 alert("Error!")
                 console.log("ERROR: ", e);
             }
@@ -134,12 +155,18 @@ $(document).ready(function() {
     });
 
     // reset table after post, put, filter
-    function resetData(){
-        var page = $('li.active').children().text();
-        $('.accountTable tbody tr').remove();
-        $('.pagination li').remove();
+    $('#role').change(function() {
+        resetData(1);
+    });
+
+    function resetData(page) {
+        if (isNaN(page) || page < 1) {
+            page = 1;
+        }
+        $('.accountTable tbody').empty();
+        $('.pagination').empty();
         ajaxGet(page);
-    };
+    }
 
     (function ($) {
         $.fn.serializeFormJSON = function () {
@@ -159,12 +186,4 @@ $(document).ready(function() {
             return o;
         };
     })(jQuery);
-
-    // remove element by class name
-    function removeElementsByClass(className){
-        var elements = document.getElementsByClassName(className);
-        while(elements.length > 0){
-            elements[0].parentNode.removeChild(elements[0]);
-        }
-    }
 });
