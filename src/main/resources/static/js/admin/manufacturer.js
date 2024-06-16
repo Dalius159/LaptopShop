@@ -61,17 +61,11 @@ $(document).ready(function(){
         var prevDisabled = (currentPage === 1) ? 'disabled' : '';
         var nextDisabled = (currentPage === totalPages) ? 'disabled' : '';
 
-        var prevArrow = '<li class="page-item ' + prevDisabled + '"><a class="page-link" href="#" data-page="' + (currentPage - 1) + '">&laquo;</a></li>';
-        $('.pagination').append(prevArrow);
-
         for(var numberPage = 1; numberPage <= totalPages; numberPage++) {
             var liClass = (numberPage === currentPage) ? 'page-item active' : 'page-item';
             var li = '<li class="' + liClass + '"><a class="page-link pageNumber" href="#" data-page="' + numberPage + '">' + numberPage + '</a></li>';
             $('.pagination').append(li);
         }
-
-        var nextArrow = '<li class="page-item ' + nextDisabled + '"><a class="page-link" href="#" data-page="' + (currentPage + 1) + '">&raquo;</a></li>';
-        $('.pagination').append(nextArrow);
     }
 
     $(document).on('click', '.pageNumber', function (event){

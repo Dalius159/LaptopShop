@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<Users> getUserByRole(Set<Roles> roles, int page) {
-        return userRepo.findByRoleIn(roles, PageRequest.of(page - 1, 6));
+        return userRepo.findByRoleIn(roles, PageRequest.of(page - 1, 9));
     }
 
     @Override

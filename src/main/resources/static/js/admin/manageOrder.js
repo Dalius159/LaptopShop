@@ -84,7 +84,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#btnAssignDelivererSubmit', function (event) {
-        const email = $("select[name=shipper]").val();
+        const email = $("select[name=deliver]").val();
         const orderID = $("#donHangId").val();
         console.log(orderID);
         ajaxPostPhanCongDonHang(email, orderID)
@@ -97,7 +97,7 @@ $(document).ready(function () {
             async: false,
             type: "POST",
             contentType: "application/json",
-            url: "http://localhost:8080/api/order/assign?shipper=" + email + "&orderID=" + orderID,
+            url: "http://localhost:8080/api/order/assign?deliver=" + email + "&orderID=" + orderID,
             enctype: 'multipart/form-data',
 
             success: function (response) {
@@ -167,8 +167,8 @@ $(document).ready(function () {
                 $("#nguoiDat").html("<strong>Ordering party</strong>:  " + order.orderer.fullName);
             }
 
-            if (order.shipper != null) {
-                $("#shipper").html("<strong>Shipper</strong>: " + order.shipper.hoTen);
+            if (order.deliver != null) {
+                $("#deliver").html("<strong>Deliver</strong>: " + order.deliver.fullName);
             }
 
             const check = order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval";

@@ -178,7 +178,7 @@
 											<h5 class="font-weight-bold mb-4">
 												<strong>Additional info</strong>
 											</h5>
-											<p class="mb-1" id="shipper"></p>
+											<p class="mb-1" id="deliver"></p>
 											<p class="mb-1" id="nguoiDat"></p>
 											<p id="ghiChu"></p>
 										</div>
@@ -214,11 +214,11 @@
 									<input type="hidden" id="donHangId" value=""/>
 								</div>
 								<div class="form-group">
-									Choose a shipper for this order: <select class="form-control"
-																			 name="shipper">
-									<option th:each="shipper : ${allShipper}"
-											th:value="${shipper.email}"
-											th:text="${shipper.hoTen} + '(' + ${#lists.size(shipper.listDonHang)} + ')'">
+									Choose a deliver for this order: <select class="form-control"
+																			 name="deliver">
+									<option th:each="deliver : ${allDeliver}"
+											th:value="${deliver.email}"
+											th:text="${deliver.fullName} + '(' + ${#lists.size(deliver.listOrders)} + ')'">
 									</option>
 								</select>
 								</div>

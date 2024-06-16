@@ -36,19 +36,8 @@ $(document).ready(function() {
                         $('.contactTable tbody').append(contactRow);
                     });
 
-                    // Handle pagination
-                    $('.pagination').empty();
-                    for(var numberPage = 1; numberPage <= result.totalPages; numberPage++) {
-                        var li = '<li class="page-item"><a class="pageNumber">' + numberPage + '</a></li>';
-                        $('.pagination').append(li);
-                    }
-
-                    // Activate current page
-                    $(".pageNumber").each(function(){
-                        if($(this).text() === page.toString()){
-                            $(this).parent().addClass("active");
-                        }
-                    });
+                    // Pagination
+                    renderPagination(page, result.totalPages);
                 } else {
                     alert("No contacts found.");
                 }
@@ -58,6 +47,19 @@ $(document).ready(function() {
                 console.log("Error", e);
             }
         });
+    }
+
+    function renderPagination(currentPage, totalPages) {
+        $('.pagination').empty(); // Clear pagination before rendering
+
+        var prevDisabled = (currentPage === 1) ? 'disabled' : '';
+        var nextDisabled = (currentPage === totalPages) ? 'disabled' : '';
+
+        for(var numberPage = 1; numberPage <= totalPages; numberPage++) {
+            var liClass = (numberPage === currentPage) ? 'page-item active' : 'page-item';
+            var li = '<li class="' + liClass + '"><a class="page-link pageNumber" href="#" data-page="' + numberPage + '">' + numberPage + '</a></li>';
+            $('.pagination').append(li);
+        }
     }
 
     // Event when clicking the browse contact button

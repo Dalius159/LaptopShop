@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/api/tai-khoan")
+@RequestMapping("/api/account")
 public class AccountAPI {
 
 	@Autowired

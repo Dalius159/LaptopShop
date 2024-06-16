@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/san-pham")
+@RequestMapping("api/product")
 public class ProductAPI {
 
 	@Autowired
@@ -48,7 +48,7 @@ public class ProductAPI {
 		searchObject.setPrice(price);
 		searchObject.setSortByPrice(sortByPrice);
 
-		return productService.getAllProductByFilter(searchObject, page-1, 10);
+		return productService.getAllProductByFilter(searchObject, page-1, 9);
 	}
 
 	@GetMapping("/latest")

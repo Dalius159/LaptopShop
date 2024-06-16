@@ -25,7 +25,7 @@ public class ManufacturerAPI {
 
 	@GetMapping("/all")
 	public Page<Manufacturer> getAllManufacturer(@RequestParam(defaultValue = "1") int page) {
-		return service.getALlManufacturer(page-1,6);
+		return service.getALlManufacturer(page-1,9);
 	}
 
 	@GetMapping("/{id}")

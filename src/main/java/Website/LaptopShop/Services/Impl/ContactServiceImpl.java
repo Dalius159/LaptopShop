@@ -40,7 +40,7 @@ public class ContactServiceImpl implements ContactService {
             builder.and(QContact.contact.contactDate.loe(formatDate.parse(toDate)));
         }
 
-        return Rep.findAll(builder, PageRequest.of(page - 1, 8));
+        return Rep.findAll(builder, PageRequest.of(page - 1, 9));
     }
 
     @Override

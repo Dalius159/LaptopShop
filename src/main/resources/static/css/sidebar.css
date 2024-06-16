@@ -117,3 +117,38 @@ body {
     pointer-events: auto;
     transition-delay: calc(.1s * var(--i));
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    background-color: #081b29;
+}
+
+.pagination .page-item {
+    margin: 0 0.25rem;
+}
+
+.pagination .page-item .page-link {
+    color: #fff;
+    background-color: #081b29;
+    border: 1px solid #fff;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+}
+
+.pagination .page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #0062cc;
+    border-color: #005cbf;
+}
+
+.pagination .page-item .page-link:hover {
+    color: #fff;
+    background-color: #0056b3;
+    border-color: #005cbf;
+}

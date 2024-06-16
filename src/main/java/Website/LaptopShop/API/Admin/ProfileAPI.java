@@ -32,7 +32,7 @@ public class ProfileAPI {
 		return userService.findById(id);
 	}
 
-	@PostMapping("/doiMatKhau")
+	@PostMapping("/changePassword")
 	public ResponseObject changePass(@RequestBody @Valid PasswordDTO dto, BindingResult result,
 									 HttpServletRequest request) {
 		System.out.println(dto.toString());
