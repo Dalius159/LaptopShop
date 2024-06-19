@@ -28,7 +28,7 @@
 	<form class="form-inline" id="searchForm" name="searchObject">
 		<div class="form-group">
 			<label for="category">Category:</label>
-			<select class="form-control" name="categoryId" id="category">
+			<select class="form-control" name="categoryID" id="category">
 				<option th:each="category : ${categoryList}" th:value="${category.id}"
 						th:text="${category.categoryName}"></option>
 			</select>
@@ -92,114 +92,257 @@
 
 	<ul class="pagination">
 	</ul>
-</div>
 
-<div class="row col-md-6" style="padding-left: 75px;">
-	<form id="lapTopForm" class="lapTopForm">
-		<div class="modal fade lapTopModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog modal-lg" role="document" style="width: 60%;">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Add/Update Laptop</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<input type="hidden" class="form-control" th:name="categoryID" id="idLaptopCategory">
-							<input type="hidden" class="form-control" th:name="id" id="idProduct" readonly>
-							<div class="form-group col-md-7">
-								<label for="productName">Product Name</label>
-								<input type="text" class="form-control" id="productName" th:name="productName">
+	<div class="row col-md-6" style="padding-left: 75px;">
+		<form id="lapTopForm" class="lapTopForm">
+			<div class="modal fade lapTopModal" tabindex="-1" role="dialog" data-keyboard="false"
+				 data-backdrop="static">
+				<div class="modal-dialog modal-lg" role="document" style="width: 60%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Add/Update Laptop</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<input type="hidden" class="form-control" th:name="categoryID" id="idLaptopCategory">
+								<input type="hidden" class="form-control" th:name="id" id="idProduct" readonly>
+								<div class="form-group col-md-7">
+									<label for="productName">Product Name</label>
+									<input type="text" class="form-control" id="productName" th:name="productName">
+								</div>
+								<div class="form-group col-md-5">
+									<label for="test">Price</label>
+									<input type="number" class="form-control" th:name="price" min="0" value="0"
+										   id="test">
+								</div>
 							</div>
-							<div class="form-group col-md-5">
-								<label for="test">Price</label>
-								<input type="number" class="form-control" th:name="price" min="0" value="0" id="test">
+
+							<div class="row">
+								<div class="form-group col-md-4">
+									<label for="manufacturerID">Manufacturer</label>
+									<select name="manufacturerID" class="form-control" id="manufacturerID">
+										<option th:each="manufacturer : ${manufacturerList}"
+												th:value="${manufacturer.id}"
+												th:text="${manufacturer.manufacturerName}"></option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="operatingSystem">Operating System</label>
+									<input type="text" class="form-control" th:name="operatingSystem"
+										   id="operatingSystem">
+								</div>
+
+								<div class="form-group col-md-4">
+									<label for="ram">Ram</label>
+									<input type="text" class="form-control" th:name="ram" required id="ram">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-4">
+									<label for="screen">Screen</label>
+									<input type="text" class="form-control" id="screen" th:name="screen" required>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="cpu">CPU</label>
+									<input type="text" class="form-control" th:name="cpu" id="cpu">
+								</div>
+								<div class="form-group col-md-4">
+									<label for="design">Design</label>
+									<input type="text" class="form-control" th:name="design" id="design" required>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label for="generalInfor">General Description</label>
+									<textarea class="form-control" th:name="generalInfor" id="generalInfor" rows="2"
+											  required></textarea>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-4">
+									<label for="batteryCapacity_mAh">Battery Capacity</label>
+									<input type="text" class="form-control" th:name="batteryCapacity_mAh"
+										   id="batteryCapacity_mAh" required>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="warrantyInfor">Warranty Information</label>
+									<input type="text" class="form-control" th:name="warrantyInfor" id="warrantyInfor"
+										   required>
+								</div>
+
+								<div class="form-group col-md-4">
+									<label for="warehouseUnit">Quantity</label>
+									<input type="number" class="form-control" th:name="warehouseUnit" min="0" required
+										   value="0" id="warehouseUnit">
+								</div>
+							</div>
+							<div>
+								<label for="image">Image</label>
+								<input type="file" class="form-control" id="image" th:name="image">
 							</div>
 						</div>
 
-						<div class="row">
-							<div class="form-group col-md-4">
-								<label for="manufacturerID">Manufacturer</label>
-								<select name="manufacturerID" class="form-control" id="manufacturerID">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<input class="btn btn-primary" id="btnSubmit" type="button" value="Confirm"/>
+						</div>
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+		</form>
+	</div>
+
+	<div class="row col-md-6">
+		<form class="otherForm" id="otherForm">
+			<div class="modal fade otherModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-lg" role="document"
+					 style="width: 60%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div>
+									<input type="hidden" class="form-control" name='categoryID' id="idOtherCategory">
+								</div>
+								<div>
+									<input type="hidden" class="form-control" name="id"
+										   id="idOtherProduct" readonly="true">
+								</div>
+								<div class="form-group col-md-12">
+									<label for="inputPassword4">Product Name</label> <input
+										type="text" class="form-control" name="productName">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="inputState">Manufacturer</label> <select
+										name="nhaSXId" id="nhaSXIdKhac" class="form-control">
 									<option th:each="manufacturer : ${manufacturerList}" th:value="${manufacturer.id}"
 											th:text="${manufacturer.manufacturerName}"></option>
+
 								</select>
-							</div>
-							<div class="form-group col-md-4">
-								<label for="operatingSystem">Operating System</label>
-								<input type="text" class="form-control" th:name="operatingSystem" id="operatingSystem">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputPassword4">Price</label> <input
+										type="number" class="form-control" name="price" min="0"
+										value="0" id="otherPrice">
+								</div>
 							</div>
 
-							<div class="form-group col-md-4">
-								<label for="ram">Ram</label>
-								<input type="text" class="form-control" th:name="ram" required id="ram">
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label for="inputPassword4">General Desc</label>
+									<textarea class="form-control" id="inputPassword4"
+											  placeholder="" rows="2" name="generalInfor"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="inputEmail4">Warranty</label> <input
+										type="text" class="form-control" id="inputEmail4"
+										name="thongTinBaoHanh">
+								</div>
+
+								<div class="form-group col-md-6">
+									<label for="inputPassword4">Quantity</label>
+									<input type="number" class="form-control" name="warehouseUnit" min="0" value="0">
+								</div>
+							</div>
+							<div>
+								<label for="inputEmail4">Image</label>
+								<input type="file" class="form-control" name="image">
 							</div>
 						</div>
 
-						<div class="row">
-							<div class="form-group col-md-4">
-								<label for="screen">Screen</label>
-								<input type="text" class="form-control" id="screen" th:name="screen" required>
-							</div>
-							<div class="form-group col-md-4">
-								<label for="cpu">CPU</label>
-								<input type="text" class="form-control" th:name="cpu" id="cpu">
-							</div>
-							<div class="form-group col-md-4">
-								<label for="design">Design</label>
-								<input type="text" class="form-control" th:name="design" id="design" required>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="form-group col-md-12">
-								<label for="generalInfor">General Description</label>
-								<textarea class="form-control" th:name="generalInfor" id="generalInfor" rows="2"
-										  required></textarea>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="form-group col-md-4">
-								<label for="batteryCapacity_mAh">Battery Capacity</label>
-								<input type="text" class="form-control" th:name="batteryCapacity_mAh"
-									   id="batteryCapacity_mAh" required>
-							</div>
-							<div class="form-group col-md-4">
-								<label for="warrantyInfor">Warranty Information</label>
-								<input type="text" class="form-control" th:name="warrantyInfor" id="warrantyInfor"
-									   required>
-							</div>
-
-							<div class="form-group col-md-4">
-								<label for="warehouseUnit">Quantity</label>
-								<input type="number" class="form-control" th:name="warehouseUnit" min="0" required
-									   value="0" id="warehouseUnit">
-							</div>
-						</div>
-						<div>
-							<label for="image">Image</label>
-							<input type="file" class="form-control" id="image" th:name="image">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Cancel
+							</button>
+							<button class="btn btn-primary" id="btnSubmit" type="submit">
+								Confirm
+							</button>
 						</div>
 					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<input class="btn btn-primary" id="btnSubmit" type="button" value="Confirm"/>
-					</div>
-
+					<!-- /.modal-content -->
 				</div>
-				<!-- /.modal-content -->
+				<!-- /.modal-dialog -->
 			</div>
-			<!-- /.modal-dialog -->
-		</div>
-	</form>
+		</form>
+	</div>
+
+	<div class="row col-md-10">
+		<form class="chiTietForm">
+			<div class="modal fade" id="chiTietModal" tabindex="-1" role="dialog"
+				 aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog " role="document" style="width: 60%">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h3 class="title" style="text-align: center; font-weight: bolder;">Product Detail</h3>
+							<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="card">
+								<div class="container-fliud">
+									<div class="wrapper row">
+										<div class="preview col-md-6">
+
+											<div class="preview-pic tab-content">
+												<div class="tab-pane active" id="pic-1">
+													<img style="width: 350px; height: 350px" class="hinhAnh"/>
+												</div>
+											</div>
+										</div>
+										<div class="details col-md-6" style="font-size: 16px">
+											<p class="productId"></p>
+											<p class="productName"></p>
+											<p class="manufacturer"></p>
+											<p class="cpu"></p>
+											<p class="ram"></p>
+											<p class="design"></p>
+											<p class="operatingSystem"></p>
+											<p class="screen"></p>
+											<p class="batteryCapacity_mAh"></p>
+											<p class="generalInforthongTinChung"></p>
+											<p class="warrantyInfor"></p>
+											<p class="price"></p>
+											<p class="warehouseUnit"></p>
+											<p class="salesUnit"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.js"></script>
-<script th:src="@{/js/admin/product.js}"></script>
+<script th:src="@{/js/admin/manageProduct.js}"></script>
 </body>
 </html>

@@ -339,7 +339,7 @@ $(document).ready(function () {
     // event when hiding detail modal
     $('#chiTietModal,#capNhatTrangThaiModal').on('hidden.bs.modal', function (e) {
         e.preventDefault();
-        $("#chiTietForm p").html(""); // reset p tags
+        $("#formDetail p").html(""); // reset p tags
         $("#capNhatTrangThaiForm h4").text("");
         $("#ghiChuAdmin").text("");
         $('.chiTietTable #soLuongNhanTag').remove();
