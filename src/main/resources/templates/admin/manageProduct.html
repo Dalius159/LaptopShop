@@ -231,12 +231,12 @@
 
 						<div class="row">
 							<div class="form-group col-md-6">
-								<label for="inputState">Manufacturer</label> <select
-									name="nhaSXId" id="nhaSXIdKhac" class="form-control">
-								<option th:each="manufacturer : ${manufacturerList}" th:value="${manufacturer.id}"
-										th:text="${manufacturer.manufacturerName}"></option>
+								<label for="manufacturerIdOther">Manufacturer</label>
+								<select name="manufacturerID" id="manufacturerIdOther" class="form-control">
+									<option th:each="manufacturer : ${manufacturerList}" th:value="${manufacturer.id}"
+											th:text="${manufacturer.manufacturerName}"></option>
 
-							</select>
+								</select>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="inputPassword4">Price</label> <input
@@ -286,32 +286,30 @@
 	</form>
 </div>
 
-<div class="row col-md-10">
+<div class="row justify-content-center">
 	<form class="chiTietForm">
-		<div class="modal fade" id="chiTietModal" tabindex="-1" role="dialog"
-			 aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog " role="document" style="width: 60%">
+		<div class="modal fade" id="chiTietModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			 aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h3 class="title" style="text-align: center; font-weight: bolder;">Product Detail</h3>
-						<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
 						<div class="card">
 							<div class="container-fluid">
-								<div class="wrapper row">
+								<div class="row">
 									<div class="preview col-md-6">
-
 										<div class="preview-pic tab-content">
 											<div class="tab-pane active" id="pic-1">
-												<img style="width: 350px; height: 350px" class="image"/>
+												<img style="width: 100%; height: auto;" class="image"/>
 											</div>
 										</div>
 									</div>
-									<div class="details col-md-6" style="font-size: 16px">
+									<div class="details col-md-6" style="font-size: 16px;">
 										<p class="productId"></p>
 										<p class="productName"></p>
 										<p class="manufacturer"></p>
@@ -332,15 +330,14 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">
-							Close
-						</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.js"></script>
 <script th:src="@{/js/admin/manageProduct.js}"></script>
