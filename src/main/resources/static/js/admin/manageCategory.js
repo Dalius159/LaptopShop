@@ -33,7 +33,7 @@ $(document).ready(function () {
             success: function (result) {
                 $.each(result.content, function (i, category) {
                     const rowCategory = '<tr style="text-align: center;">' +
-                        '<td width="20%">' + category.id + '</td>' +
+                        '<td>' + category.id + '</td>' +
                         '<td>' + category.categoryName + '</td>' +
                         '<td>' + '<input type="hidden" value=' + category.id + '>'
                         + '<button class="btn btn-primary btnUpdateCategory" >Update</button>' +
@@ -49,7 +49,7 @@ $(document).ready(function () {
                     }
 
                     // active page pagination
-                    $(".pageNumber").each(function (index) {
+                    $(".pageNumber").each(function () {
                         if ($(this).text() === page) {
                             $(this).parent().removeClass().addClass("page-item active");
                         }
@@ -207,7 +207,7 @@ $(document).ready(function () {
     // event - clicking on category pagination
     $(document).on('click', '.pageNumber', function (event) {
 //		event.preventDefault();
-        var page = $(this).text();
+        const page = $(this).text();
         $('.categoryTable tbody tr').remove();
         $('.pagination li').remove();
         ajaxGet(page);
