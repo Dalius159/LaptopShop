@@ -45,7 +45,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			if (grantedAuthorities.get(i).getAuthority().equals("ROLE_ADMIN")) {
 				flag = flag | 1; // XOR bit
 			}
-			if (grantedAuthorities.get(i).getAuthority().equals("ROLE_SHIPPER")) {
+			if (grantedAuthorities.get(i).getAuthority().equals("ROLE_DELIVER")) {
 				flag = flag | 2;
 			}
 			if (grantedAuthorities.get(i).getAuthority().equals("ROLE_MEMBER")) {

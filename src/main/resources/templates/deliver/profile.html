@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html   . lang="en">
+<html lang="en">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Personal Information</title>
+    <link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
+    <title>LeoLap - Personal Information</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <style>
@@ -14,7 +15,6 @@
 </head>
 <body>
     <div th:insert="~{/deliver/include/sidebar}"></div>
-    <script th:src="@{/js/Deliver/profileDeliver.js}"></script>
     <div class="col-md-9 animated bounce text-white" style="padding-left: 75px;">
         <h3 class="page-header">Personal Information</h3>
 
@@ -144,6 +144,6 @@
             </div>
         </div>
     </form>
-
+    <script th:src="@{/js/Deliver/profileDeliver.js}"></script>
 </body>
 </html>

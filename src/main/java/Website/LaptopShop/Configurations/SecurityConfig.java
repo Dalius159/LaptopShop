@@ -50,7 +50,7 @@ public class SecurityConfig {
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests((requests) -> requests
 						.requestMatchers("/admin/**").hasRole("ADMIN")
-						.requestMatchers("/deliver/**").hasRole("SHIPPER")
+						.requestMatchers("/deliver/**").hasRole("DELIVER")
 						.requestMatchers("/checkout", "/thankyou").hasRole("MEMBER")
 						.requestMatchers("/**").permitAll())
 				.formLogin((form) -> form.loginPage("/login")

@@ -1,17 +1,17 @@
 $(document).ready(function () {
 
     // clicking on add category button 
-    $('.btnThemDanhMuc').on("click", function (event) {
+    $('.btnAddCategory').on("click", function (event) {
         event.preventDefault();
-        $('.danhMucForm #danhMucModal').modal();
-        $('.danhMucForm #id').prop("disabled", true);
+        $('.categoryForm #categoryModal').modal();
+        $('.categoryForm #id').prop("disabled", true);
         $('#form').removeClass().addClass("addForm");
         $('#form #btnSubmit').removeClass().addClass("btn btn-primary btnSaveForm");
     });
 
     // event khi hide modal
-    $('#danhMucModal').on('hidden.bs.modal', function () {
-        $('#form').removeClass().addClass("danhMucForm");
+    $('#categoryModal').on('hidden.bs.modal', function () {
+        $('#form').removeClass().addClass("categoryForm");
         $('#form #btnSubmit').removeClass().addClass("btn btn-primary");
         resetText();
     });
@@ -20,7 +20,7 @@ $(document).ready(function () {
     function resetText() {
         $("#id").val("");
         $("#categoryName").val("");
-    };
+    }
 
 
     ajaxGet(1);
@@ -36,18 +36,17 @@ $(document).ready(function () {
                         '<td width="20%">' + category.id + '</td>' +
                         '<td>' + category.categoryName + '</td>' +
                         '<td>' + '<input type="hidden" value=' + category.id + '>'
-                        + '<button class="btn btn-primary btnCapNhatDanhMuc" >Update</button>' +
-                        '   <button class="btn btn-danger btnXoaDanhMuc">Delete</button></td>' +
+                        + '<button class="btn btn-primary btnUpdateCategory" >Update</button>' +
+                        '   <button class="btn btn-danger btnDeleteCategory">Delete</button></td>' +
                         '</tr>';
-                    $('.danhMucTable tbody').append(rowCategory);
+                    $('.categoryTable tbody').append(rowCategory);
                 });
 
                 if (result.totalPages > 1) {
                     for (let numberPage = 1; numberPage <= result.totalPages; numberPage++) {
-                        const li = '<li class="page-item "><a class="pageNumber">' + numberPage + '</a></li>';
+                        const li = '<li class="page-item "><a class="pageNumber text-white">More</a></li>';
                         $('.pagination').append(li);
                     }
-                    ;
 
                     // active page pagination
                     $(".pageNumber").each(function (index) {
@@ -56,14 +55,13 @@ $(document).ready(function () {
                         }
                     });
                 }
-                ;
             },
             error: function (e) {
                 alert("Error fetching category table!");
                 console.log("Error", e);
             }
         });
-    };
+    }
 
 
     $(document).on('click', '.btnSaveForm', function (event) {
@@ -85,7 +83,7 @@ $(document).ready(function () {
             // dataType : 'json',
             success: function (response) {
                 if (response.status === "success") {
-                    $('#danhMucModal').modal('hide');
+                    $('#categoryModal').modal('hide');
                     alert("Added successfully");
                 } else {
                     $('input').next().remove();
@@ -100,12 +98,12 @@ $(document).ready(function () {
                 console.log("ERROR: ", e);
             }
         });
-    };
+    }
 
     // click edit button
-    $(document).on("click", ".btnCapNhatDanhMuc", function () {
+    $(document).on("click", ".btnUpdateCategory", function () {
         event.preventDefault();
-        $('.danhMucForm #id').prop("disabled", true);
+        $('.categoryForm #id').prop("disabled", true);
         const categoryID = $(this).parent().find('input').val();
         $('#form').removeClass().addClass("updateForm");
         $('#form #btnSubmit').removeClass().addClass("btn btn-primary btnUpdateForm");
@@ -117,7 +115,7 @@ $(document).ready(function () {
 
         removeElementsByClass("error");
 
-        $('.updateForm #danhMucModal').modal();
+        $('.updateForm #categoryModal').modal();
     });
 
     $(document).on('click', '.btnUpdateForm', function (event) {
@@ -143,7 +141,7 @@ $(document).ready(function () {
             success: function (response) {
 
                 if (response.status === "success") {
-                    $('#danhMucModal').modal('hide');
+                    $('#categoryModal').modal('hide');
                     alert("Update successfully");
                 } else {
                     $('input').next().remove();
@@ -157,10 +155,10 @@ $(document).ready(function () {
                 console.log("ERROR: ", e);
             }
         });
-    };
+    }
 
     // delete request
-    $(document).on("click", ".btnXoaDanhMuc", function () {
+    $(document).on("click", ".btnDeleteCategory", function () {
 
         const categoryID = $(this).parent().find('input').val();
         const workingObject = $(this);
@@ -184,17 +182,17 @@ $(document).ready(function () {
 
     // reset table after post, put
     function resetData() {
-        $('.danhMucTable tbody tr').remove();
+        $('.categoryTable tbody tr').remove();
         const page = $('li.active').children().text();
         $('.pagination li').remove();
         ajaxGet(page);
-    };
+    }
 
     // reset table after delete
     function resetDataForDelete() {
-        const count = $('.danhMucTable tbody').children().length;
-        console.log("số cột " + count);
-        $('.danhMucTable tbody tr').remove();
+        const count = $('.categoryTable tbody').children().length;
+        console.log("columns " + count);
+        $('.categoryTable tbody tr').remove();
         const page = $('li.active').children().text();
         $('.pagination li').remove();
         console.log(page);
@@ -204,13 +202,13 @@ $(document).ready(function () {
             ajaxGet(page);
         }
 
-    };
+    }
 
     // event - clicking on category pagination
     $(document).on('click', '.pageNumber', function (event) {
 //		event.preventDefault();
         var page = $(this).text();
-        $('.danhMucTable tbody tr').remove();
+        $('.categoryTable tbody tr').remove();
         $('.pagination li').remove();
         ajaxGet(page);
     });

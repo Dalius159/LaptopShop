@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Manufacturer Management</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
+    <title>LeoLap - Manufacture</title>
 </head>
 <body>
 
@@ -46,11 +46,11 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="id">ID:</label>
-                                <input type="text" class="form-control" id="id"/>
+                                <input type="text" class="form-control" id="id" name="id"/>
                             </div>
                             <div class="form-group">
                                 <label for="manufacturerName">Manufacturer Name:</label>
-                                <input type="text" class="form-control" id="manufacturerName" placeholder="Enter manufacturer name" required/>
+                                <input type="text" class="form-control" id="manufacturerName" name="manufacturerName" placeholder="Enter manufacturer name" required/>
                             </div>
 
                             <div class="modal-footer">
@@ -64,7 +64,6 @@
         </div>
     </form>
 </div>
-
 <script th:src="@{/js/admin/manufacturer.js}"></script>
 </body>
 </html>

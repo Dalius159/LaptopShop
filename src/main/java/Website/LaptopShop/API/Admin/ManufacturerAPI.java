@@ -6,6 +6,8 @@ import Website.LaptopShop.Services.ManufacturerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +25,7 @@ public class ManufacturerAPI {
 
 	@GetMapping("/all")
 	public Page<Manufacturer> getAllManufacturer(@RequestParam(defaultValue = "1") int page) {
-		return service.getALlManufacturer(page-1,6);
+		return service.getALlManufacturer(page-1,9);
 	}
 
 	@GetMapping("/{id}")

@@ -5,8 +5,8 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import jakarta.validation.constraints.NotEmpty;
 @Data
-public class AcountDTO {
-    private String id;
+public class AccountDTO {
+    private long id;
 
     @NotEmpty(message="Enter an email address!")
     @Email(message= "Wrong email!")

@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        return Rep.findAll(builder, PageRequest.of(page - 1, 6));
+        return Rep.findAll(builder, PageRequest.of(page - 1, 9));
     }
 
     @Override

@@ -26,7 +26,7 @@ public class CategoryAPI {
 
 	@GetMapping("/all")
 	public Page<Category> getAllCategory(@RequestParam(defaultValue = "1") int page) {
-		return categoryService.getAllCategoryForPageable(page - 1, 6);
+		return categoryService.getAllCategoryForPageable(page - 1, 9);
 	}
 
 	@GetMapping("/allForReal")

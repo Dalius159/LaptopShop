@@ -28,19 +28,19 @@ public class ContactServiceImpl implements ContactService {
         String toDate = object.getToDate();
         SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
 
-        if (!status.equals("")) {
+        if (!status.isEmpty()) {
             builder.and(QContact.contact.status.eq(status));
         }
 
-        if (!fromDate.equals("") && fromDate != null) {
+        if (!fromDate.isEmpty()) {
             builder.and(QContact.contact.contactDate.goe(formatDate.parse(fromDate)));
         }
 
-        if (!toDate.equals("") && toDate != null) {
+        if (!toDate.isEmpty()) {
             builder.and(QContact.contact.contactDate.loe(formatDate.parse(toDate)));
         }
 
-        return Rep.findAll(builder, PageRequest.of(page - 1, 2));
+        return Rep.findAll(builder, PageRequest.of(page - 1, 9));
     }
 
     @Override

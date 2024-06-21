@@ -1,6 +1,6 @@
 package Website.LaptopShop.Services;
 
-import Website.LaptopShop.DTO.AcountDTO;
+import Website.LaptopShop.DTO.AccountDTO;
 import Website.LaptopShop.Entities.Users;
 import Website.LaptopShop.Entities.Roles;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public interface UserService {
 
     List<Users> getUserByRole(Set<Roles> role);
 
-    Users saveUserForAdmin(AcountDTO dto);
+    Users saveUserForAdmin(AccountDTO dto);
 
     void deleteById(long id);
 }

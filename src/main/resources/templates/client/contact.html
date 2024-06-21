@@ -2,11 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"/>
-	<title>Contact</title>
+	<link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
+	<title>LeoLap - Contact</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div th:replace="include/homeHeader.html"></div>
-<div th:replace="include/contactContent.html"></div>
-<div th:replace="include/homeFooter.html"></div>
+<div th:insert="~{/client/include/homeHeader}"></div>
+<div class="container">
+	<br>
+	<p style="'font-size: 30px'">Contact Us</p>
+	<hr>
+	<form>
+		<div class="form-group">
+			<label for="email">Your email:</label>
+			<p id="emailWarning" style="color: red"></p>
+			<input type="email" class="form-control" id="email">
+		</div>
+		<div class="form-group">
+			<label for="content">Contact Information:</label>
+			<p id="contentWarning" style="color: red"></p>
+			<textarea class="form-control" id="content"></textarea>
+		</div>
+	</form>
+	<button onClick="sendContact()" class="btn btn-primary">Send</button>
+</div>
+<script th:src="@{/js/client/contact.js}" ></script>
+
+<div th:insert="~{client/include/homeFooter}"></div>
 </body>
 </html>

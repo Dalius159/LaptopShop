@@ -1,11 +1,18 @@
 package Website.LaptopShop.Controller;
 
 import Website.LaptopShop.DTO.ListAssignmentDTO;
+import Website.LaptopShop.DTO.SearchContactObject;
+import Website.LaptopShop.Entities.Contact;
+import Website.LaptopShop.Entities.Manufacturer;
 import Website.LaptopShop.Entities.Roles;
 import Website.LaptopShop.Entities.Users;
 import Website.LaptopShop.Services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -62,7 +69,7 @@ public class AdminController {
     public String manageCategoryPage() { return "admin/manageCategory";}
 
     @GetMapping("/manufacturer")
-    public String manageManufacturerPage() { return "admin/manageManufacturer";}
+    public String manageManufacturerPage() {return "admin/manageManufacturer";}
 
     @GetMapping("/contact")
     public String manageContactPage() { return "admin/manageContact";}
@@ -110,4 +117,15 @@ public class AdminController {
 
     @GetMapping("/statistics")
     public String statisticalPage(Model model) { return "admin/statistics";}
+
+
+    @PostMapping("/save")
+    public ResponseEntity<?> saveManufacturer(@RequestBody Manufacturer manufacturer) {
+        try {
+            Manufacturer savedManufacturer = manufacturerService.save(manufacturer);
+            return ResponseEntity.ok(savedManufacturer);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

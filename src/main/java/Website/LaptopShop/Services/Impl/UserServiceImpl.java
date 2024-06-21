@@ -9,7 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import Website.LaptopShop.DTO.AcountDTO;
+import Website.LaptopShop.DTO.AccountDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,14 +61,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<Users> getUserByRole(Set<Roles> roles, int page) {
-        return userRepo.findByRoleIn(roles, PageRequest.of(page - 1, 6));
+        return userRepo.findByRoleIn(roles, PageRequest.of(page - 1, 9));
     }
 
     @Override
     public List<Users> getUserByRole(Set<Roles> role) {return userRepo.findByRoleIn(role);}
 
     @Override
-    public Users saveUserForAdmin(AcountDTO dto) {
+    public Users saveUserForAdmin(AccountDTO dto) {
         Users nd = new Users();
         nd.setFullName(dto.getFullName());
         nd.setAddress(dto.getAddress());
