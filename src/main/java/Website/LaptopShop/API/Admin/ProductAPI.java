@@ -33,7 +33,7 @@ public class ProductAPI {
 	@Autowired
 	private ProductService productService;
 
-	@InitBinder("sanPhamDto")
+	@InitBinder("productDTO")
 	protected void initialiseBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}

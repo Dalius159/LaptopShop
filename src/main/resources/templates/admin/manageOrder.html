@@ -2,8 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
-	<title>LeoLap - Order</title>
+	<title>Order Manager</title>
 
 	<script type="text/javascript">
         /*<![CDATA[*/
@@ -44,7 +43,7 @@
 
 <div class="container-fluid" style="padding-left: 75px;">
 
-	<div class="col-md-9 animated bounce">
+	<div class="col-md-11 animated bounce">
 		<h3 class="page-header form-inline text-white">Order management</h3>
 
 		<form class="form-inline" id="searchForm" name="searchObject">
@@ -101,7 +100,7 @@
 	</div>
 
 	<div class="row col-md-6">
-		<form class="chiTietForm">    <!--TODO: might be redundant-->
+		<form class="formDetail">    <!--TODO: might be redundant-->
 			<div class="modal fade" id="chiTietModal" tabindex="-1" role="dialog"
 				 aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document" style="width: 700px;">
@@ -153,7 +152,7 @@
 															Product name
 														</th>
 														<th class="border-0 text-uppercase small font-weight-bold">
-															Đơn giá
+															Price
 														</th>
 														<th class="border-0 text-uppercase small font-weight-bold">
 															Quantity
@@ -178,7 +177,7 @@
 											<h5 class="font-weight-bold mb-4">
 												<strong>Additional info</strong>
 											</h5>
-											<p class="mb-1" id="deliver"></p>
+											<p class="mb-1" id="shipper"></p>
 											<p class="mb-1" id="nguoiDat"></p>
 											<p id="ghiChu"></p>
 										</div>
@@ -214,17 +213,17 @@
 									<input type="hidden" id="donHangId" value=""/>
 								</div>
 								<div class="form-group">
-									Choose a deliver for this order: <select class="form-control"
-																			 name="deliver">
-									<option th:each="deliver : ${allDeliver}"
-											th:value="${deliver.email}"
-											th:text="${deliver.fullName} + '(' + ${#lists.size(deliver.listOrders)} + ')'">
+									Choose a shipper for this order: <select class="form-control"
+																			 name="shipper">
+									<option th:each="shipper : ${allDeliver}"
+											th:value="${shipper.email}"
+											th:text="${shipper.fullName} + '(' + ${#lists.size(shipper.listOrders)} + ')'">
 									</option>
 								</select>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">Hủy
+											data-dismiss="modal">Cancel
 									</button>
 									<input class="btn btn-primary" id="btnAssignDelivererSubmit"
 										   type="button" value="Xác nhận"/>
@@ -291,7 +290,7 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 									<input class="btn btn-primary" id="btnXacNhan" type="button"
-										   value="Xác nhận"/>
+										   value="Confirm"/>
 								</div>
 							</div>
 						</div>

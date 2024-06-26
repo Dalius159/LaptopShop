@@ -1,198 +1,345 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
-  <title>LeoLap - Product</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <style>
-    .modal-open {
-      overflow: scroll;
-    }
-  </style>
+	<meta charset="UTF-8">
+	<title>Product Management</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+        .modal-open {
+            overflow: scroll;
+        }
+	</style>
 </head>
 <body>
 <div th:insert="~{/admin/include/sidebar}"></div>
 
-<div class="col-md-9 animated bounce" style="padding-left: 75px;">
-  <h3 class="page-header">Product Management</h3>
+<div class="col-md-11 animated bounce" style="padding-left: 75px;">
+	<h3 class="page-header">Product Management</h3>
 
-  <div class="form-group form-inline">
-    <label for="categoryDropdown">New</label>
-    <select id="categoryDropdown" class="form-control">
-      <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.categoryName}"></option>
-    </select>
-  </div>
-  <hr>
+	<div class="form-group form-inline">
+		<label for="categoryDropdown">New</label>
+		<select id="categoryDropdown" class="form-control">
+			<option th:each="category : ${categoryList}" th:value="${category.id}"
+					th:text="${category.categoryName}"></option>
+		</select>
+	</div>
+	<hr>
 
-  <form class="form-inline" id="searchForm" name="searchObject">
-    <div class="form-group">
-      <label for="category">Category:</label>
-      <select class="form-control" name="categoryId" id="category">
-        <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.categoryName}"></option>
-      </select>
-    </div>
+	<form class="form-inline" id="searchForm" name="searchObject">
+		<div class="form-group">
+			<label for="category">Category:</label>
+			<select class="form-control" name="categoryID" id="category">
+				<option th:each="category : ${categoryList}" th:value="${category.id}"
+						th:text="${category.categoryName}"></option>
+			</select>
+		</div>
 
-    <div class="form-group">
-      <label for="manufacturer">Manufacturer:</label>
-      <select class="form-control" name="manufacturerID" id="manufacturer">
-        <option value="">All Manufacturers</option>
-        <option th:each="manufacturer : ${manufacturerList}" th:value="${manufacturer.id}" th:text="${manufacturer.manufacturerName}"></option>
-      </select>
-    </div>
+		<div class="form-group">
+			<label for="manufacturer">Manufacturer:</label>
+			<select class="form-control" name="manufacturerID" id="manufacturer">
+				<option value="">All Manufacturers</option>
+				<option th:each="manufacturer : ${manufacturerList}" th:value="${manufacturer.id}"
+						th:text="${manufacturer.manufacturerName}"></option>
+			</select>
+		</div>
 
-    <div class="form-group">
-      <label for="price">Price:</label>
-      <select class="form-control" name="price" id="price">
-        <option value="">All prices</option>
-        <option value="Under 400">Under 400</option>
-        <option value="400 - 800">400 - 800</option>
-        <option value="800 - 1200">800 - 1200</option>
-        <option value="1200 - 1600">1200 - 1600</option>
-        <option value="Above 1600">Above 1600</option>
-      </select>
-    </div>
+		<div class="form-group">
+			<label for="price">Price:</label>
+			<select class="form-control" name="price" id="price">
+				<option value="">All prices</option>
+				<option value="Under 400">Under 400</option>
+				<option value="400 - 800">400 - 800</option>
+				<option value="800 - 1200">800 - 1200</option>
+				<option value="1200 - 1600">1200 - 1600</option>
+				<option value="Above 1600">Above 1600</option>
+			</select>
+		</div>
 
-    <div class="form-group">
-      <label for="sortByPrice">Sort by Price:</label>
-      <select class="form-control" name="sortByPrice" id="sortByPrice">
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-      </select>
-    </div>
+		<div class="form-group">
+			<label for="sortByPrice">Sort by Price:</label>
+			<select class="form-control" name="sortByPrice" id="sortByPrice">
+				<option value="asc">Ascending</option>
+				<option value="desc">Descending</option>
+			</select>
+		</div>
 
-    &nbsp;&nbsp;
-    <button type="button" class="btn btn-primary" id="btnBrowseProduct">Browse Product</button>
-  </form>
+		&nbsp;&nbsp;
+		<button type="button" class="btn btn-primary" id="btnBrowseProduct">Browse Product</button>
+	</form>
 
-  <div class="form-group form-inline" style="float: right; margin-right: 10px; top: -33px; position: relative;">
-    <input class="form-control" type="text" id="searchById" placeholder="Enter code to search">
-    <span class="glyphicon glyphicon-search" aria-hidden="true" style="left: -30px; top: 4px;"></span>
-  </div>
+	<div class="form-group form-inline" style="float: right; margin-right: 10px; top: -33px; position: relative;">
+		<input class="form-control" type="text" id="searchById" placeholder="Enter code for quick search">
+		<span class="glyphicon glyphicon-search" aria-hidden="true" style="left: -30px; top: 4px;"></span>
+	</div>
 
-  <hr />
-  <table class="table table-hover productTable " style="text-align: center;">
-    <thead>
-    <tr>
-      <th>Image</th>
-      <th>Product name</th>
-      <th>Category</th>
-      <th>Manufacturer</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Populate table rows here -->
-    </tbody>
-  </table>
+	<hr/>
+	<table class="table table-hover productTable " style="text-align: center;">
+		<thead>
+		<tr>
+			<th>Image</th>
+			<th>Product name</th>
+			<th>Category</th>
+			<th>Manufacturer</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- Populated after js request -->
+		</tbody>
+	</table>
 
-  <ul class="pagination">
-  </ul>
+	<ul class="pagination">
+	</ul>
 </div>
 
 <div class="row col-md-6" style="padding-left: 75px;">
-  <form id="lapTopForm" class="lapTopForm">
-    <div class="modal fade lapTopModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
-      <div class="modal-dialog modal-lg" role="document" style="width: 60%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add/Update Laptop</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <input type="hidden" class="form-control" th:name="categoryID" id="idLaptopCategory">
-              <input type="hidden" class="form-control" th:name="id" id="idProduct" readonly>
-              <div class="form-group col-md-7">
-                <label for="productName">Product Name</label>
-                <input type="text" class="form-control" id="productName" th:name="productName">
-              </div>
-              <div class="form-group col-md-5">
-                <label for="test">Price</label>
-                <input type="number" class="form-control" th:name="price" min="0" value="0" id="test">
-              </div>
-            </div>
+	<form id="lapTopForm" class="lapTopForm">
+		<div class="modal fade lapTopModal" tabindex="-1" role="dialog" data-keyboard="false"
+			 data-backdrop="static">
+			<div class="modal-dialog modal-lg" role="document" style="width: 60%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Add/Update Laptop</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<input type="hidden" class="form-control" th:name="categoryID" id="idLaptopCategory">
+							<input type="hidden" class="form-control" th:name="id" id="idProduct" readonly>
+							<div class="form-group col-md-7">
+								<label for="productName">Product Name</label>
+								<input type="text" class="form-control" id="productName" th:name="productName">
+							</div>
+							<div class="form-group col-md-5">
+								<label for="test">Price</label>
+								<input type="number" class="form-control" th:name="price" min="0" value="0"
+									   id="test">
+							</div>
+						</div>
 
-            <div class="row">
-              <div class="form-group col-md-4">
-                <label for="manufacturerID">Manufacturer</label>
-                <select name="manufacturerID" class="form-control" id="manufacturerID">
-                  <option th:each="manufacturer : ${manufacturerList}" th:value="${manufacturer.id}" th:text="${manufacturer.manufacturerName}"></option>
-                </select>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="operatingSystem">Operating System</label>
-                <input type="text" class="form-control" th:name="operatingSystem" id="operatingSystem">
-              </div>
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label for="manufacturerID">Manufacturer</label>
+								<select name="manufacturerID" class="form-control" id="manufacturerID">
+									<option th:each="manufacturer : ${manufacturerList}"
+											th:value="${manufacturer.id}"
+											th:text="${manufacturer.manufacturerName}"></option>
+								</select>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="operatingSystem">Operating System</label>
+								<input type="text" class="form-control" th:name="operatingSystem"
+									   id="operatingSystem">
+							</div>
 
-              <div class="form-group col-md-4">
-                <label for="ram">Ram</label>
-                <input type="text" class="form-control" th:name="ram" required id="ram">
-              </div>
-            </div>
+							<div class="form-group col-md-4">
+								<label for="ram">Ram</label>
+								<input type="text" class="form-control" th:name="ram" required id="ram">
+							</div>
+						</div>
 
-            <div class="row">
-              <div class="form-group col-md-4">
-                <label for="screen">Screen</label>
-                <input type="text" class="form-control" id="screen" th:name="screen" required>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="cpu">CPU</label>
-                <input type="text" class="form-control" th:name="cpu" id="cpu">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="design">Design</label>
-                <input type="text" class="form-control" th:name="design" id="design" required>
-              </div>
-            </div>
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label for="screen">Screen</label>
+								<input type="text" class="form-control" id="screen" th:name="screen" required>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="cpu">CPU</label>
+								<input type="text" class="form-control" th:name="cpu" id="cpu">
+							</div>
+							<div class="form-group col-md-4">
+								<label for="design">Design</label>
+								<input type="text" class="form-control" th:name="design" id="design" required>
+							</div>
+						</div>
 
-            <div class="row">
-              <div class="form-group col-md-12">
-                <label for="generalInfor">General Description</label>
-                <textarea class="form-control" th:name="generalInfor" id="generalInfor" rows="2" required></textarea>
-              </div>
-            </div>
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label for="generalInfor">General Description</label>
+								<textarea class="form-control" th:name="generalInfor" id="generalInfor" rows="2"
+										  required></textarea>
+							</div>
+						</div>
 
-            <div class="row">
-              <div class="form-group col-md-4">
-                <label for="batteryCapacity_mAh">Battery Capacity</label>
-                <input type="text" class="form-control" th:name="batteryCapacity_mAh" id="batteryCapacity_mAh" required>
-              </div>
-              <div class="form-group col-md-4">
-                <label for="warrantyInfor">Warranty Information</label>
-                <input type="text" class="form-control" th:name="warrantyInfor" id="warrantyInfor" required>
-              </div>
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label for="batteryCapacity_mAh">Battery Capacity</label>
+								<input type="text" class="form-control" th:name="batteryCapacity_mAh"
+									   id="batteryCapacity_mAh" required>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="warrantyInfor">Warranty Information</label>
+								<input type="text" class="form-control" th:name="warrantyInfor" id="warrantyInfor"
+									   required>
+							</div>
 
-              <div class="form-group col-md-4">
-                <label for="warehouseUnit">Quantity</label>
-                <input type="number" class="form-control" th:name="warehouseUnit" min="0" required value="0" id="warehouseUnit">
-              </div>
-            </div>
-            <div>
-              <label for="image">Image</label>
-              <input type="file" class="form-control" id="image" th:name="image">
-            </div>
-          </div>
+							<div class="form-group col-md-4">
+								<label for="warehouseUnit">Quantity</label>
+								<input type="number" class="form-control" th:name="warehouseUnit" min="0" required
+									   value="0" id="warehouseUnit">
+							</div>
+						</div>
+						<div>
+							<label for="image">Image</label>
+							<input type="file" class="form-control" id="image" th:name="image">
+						</div>
+					</div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <input class="btn btn-primary" id="btnSubmit" type="button" value="Confirm" />
-          </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<input class="btn btn-primary" id="btnSubmit" type="button" value="Confirm"/>
+					</div>
 
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
-  </form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	</form>
+</div>
+
+<div class="row col-md-6">
+	<form class="otherForm" id="otherForm">
+		<div class="modal fade otherModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document"
+				 style="width: 60%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel"></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div>
+								<input type="hidden" class="form-control" name='categoryID' id="idOtherCategory">
+							</div>
+							<div>
+								<input type="hidden" class="form-control" name="id"
+									   id="idOtherProduct" readonly="true">
+							</div>
+							<div class="form-group col-md-12">
+								<label for="inputPassword4">Product Name</label> <input
+									type="text" class="form-control" name="productName">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-md-6">
+								<label for="manufacturerIdOther">Manufacturer</label>
+								<select name="manufacturerID" id="manufacturerIdOther" class="form-control">
+									<option th:each="manufacturer : ${manufacturerList}" th:value="${manufacturer.id}"
+											th:text="${manufacturer.manufacturerName}"></option>
+
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="inputPassword4">Price</label> <input
+									type="number" class="form-control" name="price" min="0"
+									value="0" id="otherPrice">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label for="inputPassword4">General Desc</label>
+								<textarea class="form-control" id="inputPassword4"
+										  placeholder="" rows="2" name="generalInfor"></textarea>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-md-6">
+								<label for="inputEmail4">Warranty</label> <input
+									type="text" class="form-control" id="inputEmail4"
+									name="thongTinBaoHanh">
+							</div>
+
+							<div class="form-group col-md-6">
+								<label for="inputPassword4">Quantity</label>
+								<input type="number" class="form-control" name="warehouseUnit" min="0" value="0">
+							</div>
+						</div>
+						<div>
+							<label for="inputEmail4">Image</label>
+							<input type="file" class="form-control" name="image">
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Cancel
+						</button>
+						<button class="btn btn-primary" id=" " type="submit">
+							Confirm
+						</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	</form>
+</div>
+
+<div class="row justify-content-center">
+	<form class="chiTietForm">
+		<div class="modal fade" id="chiTietModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			 aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="title" style="text-align: center; font-weight: bolder;">Product Detail</h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="preview col-md-6">
+										<div class="preview-pic tab-content">
+											<div class="tab-pane active" id="pic-1">
+												<img style="width: 100%; height: auto;" class="image"/>
+											</div>
+										</div>
+									</div>
+									<div class="details col-md-6" style="font-size: 16px;">
+										<p class="productId"></p>
+										<p class="productName"></p>
+										<p class="manufacturer"></p>
+										<p class="cpu"></p>
+										<p class="ram"></p>
+										<p class="design"></p>
+										<p class="operatingSystem"></p>
+										<p class="screen"></p>
+										<p class="batteryCapacity_mAh"></p>
+										<p class="generalInfor"></p>
+										<p class="warrantyInfor"></p>
+										<p class="price"></p>
+										<p class="warehouseUnit"></p>
+										<p class="salesUnit"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.js"></script>
-<script th:src="@{/js/admin/product.js}"></script>
+<script th:src="@{/js/admin/manageProduct.js}"></script>
 </body>
 </html>
