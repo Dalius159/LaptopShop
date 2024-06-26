@@ -4,10 +4,21 @@
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/png" th:href="@{/images/Lion.png}">
 	<title>LeoLap - Statistic</title>
-	<script th:src="@{/js/admin/statistics.js}"></script>
-
 </head>
+
 <body>
+
+<div th:insert="~{/admin/include/sidebar}"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
+<script th:src="@{/js/admin/statistics.js}"></script>
+
+<div class="col-md-9 animated bounce">
+	<h3 class="page-header">Statistics</h3>
+
+	<canvas id="myChart" width="600px" height="400px"></canvas>
+	<h4 style="text-align: center; padding-right: 10%">Gross completed order value by month</h4>
+</div>
 
 </body>
 </html>

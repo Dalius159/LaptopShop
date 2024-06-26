@@ -1,10 +1,13 @@
 $(document).ready(function() {
-
-    // load first when coming page
     ajaxGet(1);
 
     function ajaxGet(page){
-        var data = { orderStatus : $('#orderStatus').val(), fromDate: $('#fromDate').val(), toDate: $('#toDate').val(), idDeliver: $('#idDeliver').val()  }
+        const data = {
+            trangThai: $('#trangThai').val(),
+            tuNgay: $('#fromDate').val(),
+            denNgay: $('#toDate').val(),
+            idShipper: $('#idShipper').val()
+        };
         $.ajax({
             type: "GET",
             data: data,
@@ -12,33 +15,32 @@ $(document).ready(function() {
             url: "http://localhost:8080/api/deliver/order/all" + '?page=' + page,
             success: function(result){
                 $.each(result.content, function(i, order){
-                    // Compute order price
-                    var sum = 0;
+                    let orderGrossValue = 0;
                     if(order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval" ){
-                        $.each(order.orderDetailsList, function(i, detail){
-                            sum += detail.cost * detail.receivedQuantity;
+                        $.each(order.orderDetailsList, function(i, orderDetails){
+                            orderGrossValue += orderDetails.cost * orderDetails.receivedQuantity;
                         });
                     } else {
-                        $.each(order.orderDetailsList, function(i, detail){
-                            sum += detail.cost * detail.orderQuantity;
+                        $.each(order.orderDetailsList, function(i, orderDetails){
+                            orderGrossValue += orderDetails.cost * orderDetails.orderQuantity;
                         });
                     }
-                    var ordersRow = '<tr>' +
+                    var orderRow = '<tr>' +
                         '<td>' + order.id+ '</td>' +
                         '<td>' + order.receiver + '</td>' +
                         '<td>' + order.orderStatus + '</td>' +
-                        '<td>' + sum + '</td>' +
+                        '<td>' + orderGrossValue + '</td>' +
                         '<td>' + order.orderDate + '</td>' +
                         '<td>' + order.deliveryDate + '</td>' +
                         '<td>' + order.receivedDate + '</td>' +
-                        '<td width="0%">'+'<input type="hidden" class="orderID" value=' + order.id + '>'+ '</td>'+
-                        '<td><button class="btn btn-primary btnDetail" >Detail</button>';
-                    if(order.orderStatus === "Delivering"){
-                        ordersRow += ' &nbsp;<button class="btn btn-warning btnUpdate">Update</button> </td>';
+                        '<td>'+'<input type="hidden" class="donHangId" value=' + order.id + '>'+ '</td>'+
+                        '<td><button class="btn btn-primary btnChiTiet" >Detail</button>';
+                    if(order.orderStatus == "Delivering"){
+                        orderRow += ' &nbsp;<button class="btn btn-warning btnCapNhat" >Update</button> </td>';
                     }
 
 
-                    $('.orderTable tbody').append(ordersRow);
+                    $('.donHangTable tbody').append(orderRow);
 
                     $('td').each( function(i){
                         if ($(this).html() === 'null'){
@@ -48,10 +50,10 @@ $(document).ready(function() {
                 });
 
                 if(result.totalPages > 1 ){
-                    for(var numberPage = 1; numberPage <= result.totalPages; numberPage++) {
-                        var li = '<li class="page-item "><a class="pageNumber">'+numberPage+'</a></li>';
+                    for(let numberPage = 1; numberPage <= result.totalPages; numberPage++) {
+                        const li = '<li class="page-item "><a class="pageNumber">' + numberPage + '</a></li>';
                         $('.pagination').append(li);
-                    }
+                    };
 
                     // active page pagination
                     $(".pageNumber").each(function(index){
@@ -59,62 +61,61 @@ $(document).ready(function() {
                             $(this).parent().removeClass().addClass("page-item active");
                         }
                     });
-                }
+                };
             },
             error : function(e){
                 alert("Error: ",e);
                 console.log("Error" , e );
             }
         });
-    }
+    };
 
-    $(document).on('click', '#btnBrowseOrder', function (event) {
+    $(document).on('click', '#btnDuyetDonHang', function (event) {
         event.preventDefault();
         resetData();
     });
 
 
-    // event when click order pagination
+    // clicking on pagination
     $(document).on('click', '.pageNumber', function (event){
 //		event.preventDefault();
-        var page = $(this).text();
-        $('.orderTable tbody tr').remove();
+        const page = $(this).text();
+        $('.donHangTable tbody tr').remove();
         $('.pagination li').remove();
         ajaxGet(page);
     });
 
-    // event when click field find order by id
+    // clicking on search for order by id
     $(document).on('keyup', '#searchById', function (event){
         event.preventDefault();
-        var orderID = $('#searchById').val();
+        const orderID = $('#searchById').val();
         console.log(orderID);
         if(orderID !== ''){
-            $('.orderTable tbody tr').remove();
+            $('.donHangTable tbody tr').remove();
             $('.pagination li').remove();
-            var href = "http://localhost:8080/api/deliver/order/"+orderID;
+            const href = "http://localhost:8080/api/deliver/order/" + orderID;
             $.get(href, function(order) {
-                // compute order price
-                var sum = 0;
-                $.each(order.orderDetailsList, function(i, detail){
-                    sum += detail.cost * detail.orderQuantity;
+                let orderGrossValue = 0;
+                $.each(order.orderDetailsList, function(i, orderDetail){
+                    orderGrossValue += orderDetail.cost * orderDetail.orderQuantity;
                 });
 
-                var donHangRow = '<tr>' +
-                    '<td>' + order.id+ '</td>' +
+                let orderRow = '<tr>' +
+                    '<td>' + order.id + '</td>' +
                     '<td>' + order.receiver + '</td>' +
                     '<td>' + order.orderStatus + '</td>' +
-                    '<td>' + sum + '</td>' +
+                    '<td>' + orderGrossValue + '</td>' +
                     '<td>' + order.orderDate + '</td>' +
                     '<td>' + order.deliveryDate + '</td>' +
                     '<td>' + order.receivedDate + '</td>' +
-                    '<td width="0%">'+'<input type="hidden" id="orderID" value=' + order.id + '>'+ '</td>'+
-                    '<td><button class="btn btn-primary btnDetail" >Detail</button>';
+                    '<td>' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
+                    '<td><button class="btn btn-primary btnChiTiet" >Detail</button>';
 
                 if(order.orderStatus === "Delivering"){
-                    donHangRow += ' &nbsp;<button class="btn btn-warning btnUpdate" >Update</button> </td>';
+                    orderRow += ' &nbsp;<button class="btn btn-warning btnCapNhat" >Update</button> </td>';
                 }
 
-                $('.orderTable tbody').append(donHangRow);
+                $('.donHangTable tbody').append(orderRow);
                 $('td').each( function(i){
                     if ($(this).html() === 'null'){
                         $(this).html('');
@@ -126,144 +127,142 @@ $(document).ready(function() {
         }
     });
 
-    // event when click button order detail
-    $(document).on('click', '.btnDetail', function (event){
+    // clicking on order detail
+    $(document).on('click', '.btnChiTiet', function (event){
         event.preventDefault();
-
-        var orderID = $(this).parent().prev().children().val();
-//		console.log(orderId);
-        var href = "http://localhost:8080/api/deliver/order/"+orderID;
+        const orderID = $(this).parent().prev().children().val();
+        const href = "http://localhost:8080/api/deliver/order/" + orderID;
         $.get(href, function(order) {
-            $('#orderCode').text("Order ID: "+ order.id);
-            $('#receiver').text("Receiver: "+ order.receiver);
-            $('#receivedPhone').text("Phone: "+ order.receivedPhone);
-            $('#receiveAddress').text("Address: "+ order.receiveAddress);
-            $('#orderStatus').text("Order Status: "+ order.orderStatus);
-            $("#orderDate").text("Order Date: "+ order.orderDate);
+            $('#maDonHang').text("Order ID: "+ order.id);
+            $('#hoTenNguoiNhan').text("Receiver: "+ order.receiver);
+            $('#sdtNhanHang').text("Phone number: "+ order.receivedPhone);
+            $('#diaChiNhan').text("Address: "+ order.receiveAddress);
+            $('#trangThaiDonHang').text("Order status: "+ order.orderStatus);
+            $("#ngayDatHang").text("Order date: "+ order.orderDate);
 
             if(order.deliveryDate != null){
-                $("#deliveryDate").text("Delivery date: "+ order.deliveryDate);
+                $("#ngayShipHang").text("Delivery date: "+ order.deliveryDate);
             }
 
             if(order.receivedDate != null){
-                $("#receivedDate").text("Received date: "+ order.receivedDate);
+                $("#ngayNhanHang").text("Retrieval date: "+ order.receivedDate);
             }
 
             if(order.note != null){
-                $("#note").text("Note: "+ order.note);
+                $("#ghiChu").text("Ghi chú: "+ order.note);
             }
 
             if(order.orderer != null){
-                $("#orderer").text("Orderer: "+ order.orderer.fullName);
+                $("#nguoiDat").text("Người đặt: "+ order.orderer.hoTen);
             }
 
-            if(order.deliver != null){
-                $("#deliver").text("Deliver: "+ order.deliver.fullName);
+            if(order.shipper != null){
+                $("#shipper").text("Shipper: "+ order.shipper.fullName);
             }
 
-            var check = order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval" ;
+            const check = order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval";
             if(check){
-                $('.detailTable').find('thead tr').append('<th id="receivedQuantityTag" class="border-0 text-uppercase small font-weight-bold"> Received Quantity </th>');
+                $('.chiTietTable').find('thead tr').append('<th id="soLuongNhanTag" class="border-0 text-uppercase small font-weight-bold"> SỐ LƯỢNG NHẬN </th>');
             }
-            // add table:
-            var sum = 0;
-            var stt = 1;
-            $.each(order.orderDetailsList, function(i, detail){
-                console.log(detail.orderQuantity);
-                var detailsRow = '<tr>' +
-                    '<td>' + stt + '</td>' +
-                    '<td>' + detail.product.productName + '</td>' +
-                    '<td>' + detail.cost + '</td>'+
-                    '<td>' + detail.orderQuantity+ '</td>';
+            let sum = 0;
+            let no = 1;
+            $.each(order.orderDetailsList, function(i, oderDetails){
+                console.log(oderDetails.orderQuantity);
+                let detailRow = '<tr>' +
+                    '<td>' + no + '</td>' +
+                    '<td>' + oderDetails.sanPham.tenSanPham + '</td>' +
+                    '<td>' + oderDetails.cost + '</td>' +
+                    '<td>' + oderDetails.orderQuantity + '</td>';
 
                 if(check){
-                    detailsRow += '<td>' + detail.receivedQuantity + '</td>';
-                    sum += detail.cost * detail.receivedQuantity;
+                    detailRow += '<td>' + oderDetails.receivedQuantity + '</td>';
+                    sum += oderDetails.cost * oderDetails.receivedQuantity;
                 } else {
-                    sum += detail.cost * detail.orderQuantity;
+                    sum += oderDetails.cost * oderDetails.orderQuantity;
                 }
 
-                $('.detailTable tbody').append(detailsRow);
-                stt++;
+                $('.chiTietTable tbody').append(detailRow);
+                no++;
             });
-            $("#totalCostUpdate").text("Total: "+ sum);
+            $("#tongTienCapNhat").text("Total : "+ sum);
         });
-        $("#detailModal").modal();
+        $("#chiTietModal").modal();
     });
 
-    // event when hide modal detail
-    $('#detailModal, #updateStatusModal').on('hidden.bs.modal', function(e) {
+    // event khi ẩn modal chi tiết
+    $('#chiTietModal, #capNhatTrangThaiModal').on('hidden.bs.modal', function(e) {
         e.preventDefault();
-        $("#detailForm p").text(""); // reset text tag p
-        $("#updateStatusForm h4").text(""); // reset text tag p
-        $('.detailTable tbody tr').remove();
-        $('.detailTable #receivedQuantityTag').remove();
-        $('.detailUpdateTable tbody tr').remove();
+        $("#chiTietForm p").text(""); // reset text thẻ p
+        $("#capNhatTrangThaiForm h4").text(""); // reset text thẻ p
+        $('.chiTietTable tbody tr').remove();
+        $('.chiTietTable #soLuongNhanTag').remove();
+        $('.chiTietCapNhatTable tbody tr').remove();
     });
 
-    // event when click button order update
-    $(document).on('click', '.btnUpdate', function (event){
+    // clicking on update order
+    $(document).on('click', '.btnCapNhat', function (event){
         event.preventDefault();
-        var orderID = $(this).parent().prev().children().val();
-        $("#orderID").val(orderID);
-        var href = "http://localhost:8080/api/deliver/order/"+orderID;
+        const orderID = $(this).parent().prev().children().val();
+        $("#donHangId").val(orderID);
+        const href = "http://localhost:8080/api/deliver/order/" + orderID;
         $.get(href, function(order) {
-            // add table:
-            var stt = 1;
-            $.each(order.orderDetailsList, function(i, detail){
-                var detailsRow = '<tr>' +
-                    '<td>' + stt + '</td>' +
-                    '<td>' + detail.product.productName + '</td>' +
-                    '<td>' + detail.cost + '</td>'+
-                    '<td>' + detail.orderQuantity + '</td>'+
-                    '<td><input type="number" class="receivedQuantity" style="width: 40px; text-align: center;" value ="'+detail.orderQuantity +'" min="0" max="'+detail.orderQuantity +'" ></td>'+
-                    '<td><input type="hidden" value="'+detail.id+'" ></td>'
-                $('.detailUpdateTable tbody').append(detailsRow);
-                stt++;
+            let no = 1;
+            $.each(order.orderDetailsList, function(i, orderDetails){
+                const detailRow = '<tr>' +
+                    '<td>' + no + '</td>' +
+                    '<td>' + orderDetails.sanPham.tenSanPham + '</td>' +
+                    '<td>' + orderDetails.cost + '</td>' +
+                    '<td>' + orderDetails.orderQuantity + '</td>' +
+                    '<td><input type="number" class="soLuongNhan" style="width: 40px; text-align: center;" value ="' + orderDetails.orderQuantity + '" min="0" max="' + orderDetails.orderQuantity + '" ></td>' +
+                    '<td><input type="hidden" value="' + orderDetails.id + '" ></td>';
+                $('.chiTietCapNhatTable tbody').append(detailRow);
+                no++;
             });
             var sum = 0;
-            $.each(order.orderDetailsList, function(i, detail){
-                sum += detail.cost * detail.orderQuantity;
+            $.each(order.orderDetailsList, function(i, orderDetails){
+                sum += orderDetails.cost * orderDetails.orderQuantity;
             });
-            $("#totalCostUpdate").text("Total : "+ sum);
+            $("#tongTienCapNhat").text("Total : "+ sum);
         });
-        $("#updateStatusModal").modal();
+        $("#capNhatTrangThaiModal").modal();
     });
 
     //
-    $(document).on('change', '.receivedQuantity', function (event) {
-        var table = $(".detailUpdateTable tbody");
+    $(document).on('change', '.soLuongNhan', function (event) {
+        var table = $(".chiTietCapNhatTable tbody");
         sum  = 0;
         table.find('tr').each(function (i) {
-            cost = $(this).find("td:eq(2)").text();
-            quantityUpdate = $(this).find("td:eq(4) input[type='number']").val();
-            sum += cost * quantityUpdate;
+            donGia = $(this).find("td:eq(2)").text();
+            soLuongCapNhat = $(this).find("td:eq(4) input[type='number']").val();
+            sum += donGia * soLuongCapNhat;
         });
-        $("#totalCostUpdate").text("Total: "+ sum);
+        $("#tongTienCapNhat").text("Total : "+ sum);
 
     });
 
-    $(document).on('click', '#btnConfirm', function (event) {
+    $(document).on('click', '#btnXacNhan', function (event) {
         event.preventDefault();
-        ajaxPostUpdateOrderStatus();
+        postUpdateOrder();
         resetData();
     });
 
-    // post request UpdateOrderStatus deliver
-    function ajaxPostUpdateOrderStatus() {
+    // post request update order
+    function postUpdateOrder() {
 
-        var listDetailUpdate = [] ;
-        var table = $(".detailUpdateTable tbody");
+        const detailsList = [];
+        const table = $(".chiTietCapNhatTable tbody");
         table.find('tr').each(function (i) {
-            var detailUpdate = { idDetail : $(this).find("td:eq(5) input[type='hidden']").val(),
-                receivedQuantity: $(this).find("td:eq(4) input[type='number']").val() };
-            listDetailUpdate.push(detailUpdate);
+            const details = {
+                idChiTiet: $(this).find("td:eq(5) input[type='hidden']").val(),
+                receivedQuantity: $(this).find("td:eq(4) input[type='number']").val()
+            };
+            detailsList.push(details);
         });
 
 
-        var data = { idOrder : $("#orderID").val(),
-            deliverNote: $("#deliverNote").val(),
-            updateOrderDetailsList: listDetailUpdate } ;
+        var data = { idDonHang : $("#donHangId").val(),
+            ghiChuShipper: $("#ghiChuShipper").val(),
+            danhSachCapNhatChiTietDon: detailsList } ;
 //    	 console.log(data);
         $.ajax({
             async:false,
@@ -275,8 +274,8 @@ $(document).ready(function() {
             data : JSON.stringify(data),
             // dataType : 'json',
             success : function(response) {
-                $("#updateStatusModal").modal('hide');
-                alert("Update order delivery successful");
+                $("#capNhatTrangThaiModal").modal('hide');
+                alert("Cập nhật giao đơn hàng thành công");
             },
             error : function(e) {
                 alert("Error!")
@@ -288,8 +287,8 @@ $(document).ready(function() {
     // reset table after post, put, filter
     function resetData(){
         var page = $('li.active').children().text();
-        $('.orderTable tbody tr').remove();
+        $('.donHangTable tbody tr').remove();
         $('.pagination li').remove();
         ajaxGet(page);
-    }
+    };
 });

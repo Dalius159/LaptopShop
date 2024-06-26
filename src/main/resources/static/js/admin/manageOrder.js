@@ -50,21 +50,8 @@ $(document).ready(function () {
                         }
                     });
                 });
+                renderPagination(page, result.totalPages);
 
-                if (result.totalPages > 1) {
-                    for (let numberPage = 1; numberPage <= result.totalPages; numberPage++) {
-                        const li = '<li class="page-item "><a class="pageNumber">' + numberPage + '</a></li>';
-                        $('.pagination').append(li);
-                    }
-
-
-                    // active page pagination
-                    $(".pageNumber").each(function (index) {
-                        if ($(this).text() === page) {
-                            $(this).parent().removeClass().addClass("page-item active");
-                        }
-                    });
-                }
             },
             error: function (e) {
                 alert("Error fetching orders from db! ");

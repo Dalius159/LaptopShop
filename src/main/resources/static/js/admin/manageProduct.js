@@ -27,23 +27,8 @@ $(document).ready(function () {
                     productRow += '  <button class="btn btn-danger btnDeleteProduct">Delete</button></td>' + '</tr>';
                     $('.productTable tbody').append(productRow);
                 });
-
-                if (result.totalPages > 1) {
-                    for (let numberPage = 1; numberPage <= result.totalPages; numberPage++) {
-                        const li = '<li class="page-item "><a class="pageNumber">' + numberPage + '</a></li>';
-                        $('.pagination').append(li);
-                    }
-                    ;
-
-
-                    // active page pagination
-                    $(".pageNumber").each(function (index) {
-                        if ($(this).text() === page) {
-                            $(this).parent().removeClass().addClass("page-item active");
-                        }
-                    });
-                }
-                ;
+                // Pagination
+                renderPagination(page, result.totalPages);
             },
             error: function (e) {
                 alert("Error: ", e);
