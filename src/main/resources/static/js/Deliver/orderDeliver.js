@@ -1,12 +1,12 @@
 $(document).ready(function() {
-    ajaxGet(1);
+    getAllOrders(1);
 
-    function ajaxGet(page){
+    function getAllOrders(page){
         const data = {
-            trangThai: $('#trangThai').val(),
-            tuNgay: $('#fromDate').val(),
-            denNgay: $('#toDate').val(),
-            idShipper: $('#idShipper').val()
+            status: $('#trangThai').val(),
+            fromDate: $('#fromDate').val(),
+            toDate: $('#toDate').val(),
+            deliverID: $('#idShipper').val()
         };
         $.ajax({
             type: "GET",
@@ -82,7 +82,7 @@ $(document).ready(function() {
         const page = $(this).text();
         $('.donHangTable tbody tr').remove();
         $('.pagination li').remove();
-        ajaxGet(page);
+        getAllOrders(page);
     });
 
     // clicking on search for order by id
@@ -253,16 +253,18 @@ $(document).ready(function() {
         const table = $(".chiTietCapNhatTable tbody");
         table.find('tr').each(function (i) {
             const details = {
-                idChiTiet: $(this).find("td:eq(5) input[type='hidden']").val(),
+                detailsID: $(this).find("td:eq(5) input[type='hidden']").val(),
                 receivedQuantity: $(this).find("td:eq(4) input[type='number']").val()
             };
             detailsList.push(details);
         });
 
 
-        var data = { idDonHang : $("#donHangId").val(),
-            ghiChuShipper: $("#ghiChuShipper").val(),
-            danhSachCapNhatChiTietDon: detailsList } ;
+        const data = {
+            orderID: $("#donHangId").val(),
+            deliverNote: $("#ghiChuShipper").val(),
+            updateOrderDetailsList: detailsList
+        };
 //    	 console.log(data);
         $.ajax({
             async:false,
@@ -275,7 +277,7 @@ $(document).ready(function() {
             // dataType : 'json',
             success : function(response) {
                 $("#capNhatTrangThaiModal").modal('hide');
-                alert("Cập nhật giao đơn hàng thành công");
+                alert("Order status updattd");
             },
             error : function(e) {
                 alert("Error!")
@@ -286,9 +288,9 @@ $(document).ready(function() {
 
     // reset table after post, put, filter
     function resetData(){
-        var page = $('li.active').children().text();
+        const page = $('li.active').children().text();
         $('.donHangTable tbody tr').remove();
         $('.pagination li').remove();
-        ajaxGet(page);
+        getAllOrders(page);
     };
 });

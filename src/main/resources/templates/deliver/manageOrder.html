@@ -17,12 +17,13 @@
 </head>
 <body>
 <div th:insert="~{/deliver/include/sidebar}"></div>
+<script th:src="@{/js/Deliver/orderDeliver.js}"></script>
 
-<div class="col-md-9 animated bounce">
-	<h3 class="page-header form-inline">Qu?n lý ??n hàng -Shipper</h3>
+<div class="col-md-11 animated bounce">
+	<h3 class="page-header form-inline" style="padding-left: 75px;">Shipper Order</h3>
 
 	<form class="form-inline" id="searchForm" name="searchObject">
-		<input id="idShipper" type="hidden" value="${loggedInUser.id }">
+		<input id="idShipper" type="hidden" th:value="${loggedInUser.id}">
 		<select class="form-control" id="trangThai">
 			<option value="Delivering">Assigned</option>
 			<option value="Waiting for approval">Waiting for approval</option>
@@ -271,6 +272,5 @@
         }
     });
 </script>
-<script th:src="@{/js/Deliver/orderDeliver.js}"></script>
 </body>
 </html>

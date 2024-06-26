@@ -25,8 +25,11 @@ public class OrderDeliverApi {
     private UserService userService;
 
     @GetMapping("/all")
-    public Page<Orders> getOrderByFilter(@RequestParam(defaultValue = "1") int page, @RequestParam String status,
-                                         @RequestParam String fromDate, @RequestParam String toDate, @RequestParam long deliverID)
+    public Page<Orders> getOrderByFilter(@RequestParam(defaultValue = "1") int page,
+                                         @RequestParam String status,
+                                         @RequestParam String fromDate,
+                                         @RequestParam String toDate,
+                                         @RequestParam long deliverID)
             throws ParseException {
 
         SearchOrderObject object = new SearchOrderObject();
