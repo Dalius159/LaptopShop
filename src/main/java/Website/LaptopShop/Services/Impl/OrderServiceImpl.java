@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
             builder.and(QOrders.orders.orderStatus.eq(orderStatus));
         }
 
-        if (!fromDate.equals("") && fromDate != null) {
+        if (!fromDate.equals("")) {
             if (orderStatus.equals("Delivering")) {
                 builder.and(QOrders.orders.deliveryDate.goe(formatDate.parse(fromDate)));
             } else { // completed
@@ -104,7 +104,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        if (!toDate.equals("") && toDate != null) {
+        if (!toDate.equals("")) {
             if (orderStatus.equals("Delivering")) {
                 builder.and(QOrders.orders.deliveryDate.loe(formatDate.parse(toDate)));
             } else { // completed
@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        return Rep.findAll(builder, PageRequest.of(page - 1, size));
+        return Rep.findAll(builder, PageRequest.of(page - 1, 9));
     }
 
     @Override

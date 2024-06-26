@@ -404,7 +404,7 @@ $(document).ready(function () {
         $('.productTable tbody tr').remove();
         $('.pagination li').remove();
         getAllProducts(page);
-    };
+    }
 
     // event - clicking on product pagination
     $(document).on('click', '.pageNumber', function (event) {

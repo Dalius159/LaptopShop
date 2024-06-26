@@ -17,16 +17,16 @@
 </head>
 <body>
 <div th:insert="~{/deliver/include/sidebar}"></div>
-<script th:src="@{/js/Deliver/orderDeliver.js}"></script>
+<script th:src="@{/js/Deliver/manageOrderDelivery.js}"></script>
 
-<div class="col-md-11 animated bounce">
-	<h3 class="page-header form-inline" style="padding-left: 75px;">Shipper Order</h3>
+<div class="col-md-11 animated bounce" style="padding-left: 75px;">
+	<h3 class="page-header form-inline"> Shipper Order</h3>
 
 	<form class="form-inline" id="searchForm" name="searchObject">
 		<input id="idShipper" type="hidden" th:value="${loggedInUser.id}">
 		<select class="form-control" id="trangThai">
-			<option value="Delivering">Assigned</option>
-			<option value="Waiting for approval">Waiting for approval</option>
+			<option value="Delivering">Delivering</option>
+			<option value="Waiting for Delivery">Waiting for Delivery</option>
 			<option value="Completed">Completed</option>
 		</select>
 
@@ -238,16 +238,16 @@
 </div>
 
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         const to = $("#toDate").datepicker({
-            dateFormat : "dd-mm-yy",
-            changeMonth : true
-        }).on("change", function() {
+            dateFormat: "dd-mm-yy",
+            changeMonth: true
+        }).on("change", function () {
             from.datepicker("option", "maxDate", getDate(this));
         });
 
         const trangThai = /*[[${#request.getParameter('trangThai')}]]*/ 'null';
-        if (trangThai !== null){
+        if (trangThai !== null) {
             $("#trangThai").val(trangThai);
             console.log(trangThai);
         }

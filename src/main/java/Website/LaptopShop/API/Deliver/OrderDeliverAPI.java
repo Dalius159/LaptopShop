@@ -17,7 +17,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/deliver/order")
-public class OrderDeliverApi {
+public class OrderDeliverAPI {
     @Autowired
     private OrderService orderService;
 
@@ -29,8 +29,7 @@ public class OrderDeliverApi {
                                          @RequestParam String status,
                                          @RequestParam String fromDate,
                                          @RequestParam String toDate,
-                                         @RequestParam long deliverID)
-            throws ParseException {
+                                         @RequestParam long deliverID) throws ParseException {
 
         SearchOrderObject object = new SearchOrderObject();
         object.setToDate(toDate);
@@ -38,8 +37,7 @@ public class OrderDeliverApi {
         object.setFromDate(fromDate);
 
         Users deliver = userService.findById(deliverID);
-        Page<Orders> orderList = orderService.findOrderByDeliver(object, page, 6, deliver);
-        return orderList;
+        return orderService.findOrderByDeliver(object, page, 6, deliver);
     }
 
     @GetMapping("/{id}")

@@ -84,7 +84,7 @@ $(document).ready(function () {
             async: false,
             type: "POST",
             contentType: "application/json",
-            url: "http://localhost:8080/api/order/assign?deliver=" + email + "&orderID=" + orderID,
+            url: "http://localhost:8080/api/order/assign?deliverEmail=" + email + "&orderID=" + orderID,
             enctype: 'multipart/form-data',
 
             success: function (response) {
@@ -132,10 +132,10 @@ $(document).ready(function () {
         const href = "http://localhost:8080/api/order/" + orderID;
         $.get(href, function (order) {
             $('#maDonHang').text("Order ID: " + order.id);
-            $('#hoTenNguoiNhan').text("Người nhận: " + order.receiver);
+            $('#hoTenNguoiNhan').text("Receiver:  " + order.receiver);
             $('#sdtNhanHang').text("Phone num.: " + order.receivedPhone);
             $('#diaChiNhan').text("Address: " + order.receiveAddress);
-            $('#trangThaiDonHang').text("Order status:" + order.orderStatus);
+            $('#trangThaiDonHang').text("Order status: " + order.orderStatus);
             $("#ngayDatHang").text("Order date: " + order.orderDate);
 
             if (order.deliveryDate != null) {

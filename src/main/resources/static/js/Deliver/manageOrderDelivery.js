@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     getAllOrders(1);
 
-    function getAllOrders(page){
+    function getAllOrders(page) {
         const data = {
             status: $('#trangThai').val(),
             fromDate: $('#fromDate').val(),
@@ -11,61 +11,62 @@ $(document).ready(function() {
         $.ajax({
             type: "GET",
             data: data,
-            contentType : "application/json",
+            contentType: "application/json",
             url: "http://localhost:8080/api/deliver/order/all" + '?page=' + page,
-            success: function(result){
-                $.each(result.content, function(i, order){
+            success: function (result) {
+                $.each(result.content, function (i, order) {
                     let orderGrossValue = 0;
-                    if(order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval" ){
-                        $.each(order.orderDetailsList, function(i, orderDetails){
+                    if (order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval") {
+                        $.each(order.orderDetailsList, function (i, orderDetails) {
                             orderGrossValue += orderDetails.cost * orderDetails.receivedQuantity;
                         });
                     } else {
-                        $.each(order.orderDetailsList, function(i, orderDetails){
+                        $.each(order.orderDetailsList, function (i, orderDetails) {
                             orderGrossValue += orderDetails.cost * orderDetails.orderQuantity;
                         });
                     }
-                    var orderRow = '<tr>' +
-                        '<td>' + order.id+ '</td>' +
+                    let orderRow = '<tr>' +
+                        '<td>' + order.id + '</td>' +
                         '<td>' + order.receiver + '</td>' +
                         '<td>' + order.orderStatus + '</td>' +
                         '<td>' + orderGrossValue + '</td>' +
                         '<td>' + order.orderDate + '</td>' +
                         '<td>' + order.deliveryDate + '</td>' +
                         '<td>' + order.receivedDate + '</td>' +
-                        '<td>'+'<input type="hidden" class="donHangId" value=' + order.id + '>'+ '</td>'+
+                        '<td>' + '<input type="hidden" class="donHangId" value=' + order.id + '>' + '</td>' +
                         '<td><button class="btn btn-primary btnChiTiet" >Detail</button>';
-                    if(order.orderStatus == "Delivering"){
+                    if (order.orderStatus == "Delivering") {
                         orderRow += ' &nbsp;<button class="btn btn-warning btnCapNhat" >Update</button> </td>';
                     }
 
 
                     $('.donHangTable tbody').append(orderRow);
 
-                    $('td').each( function(i){
-                        if ($(this).html() === 'null'){
+                    $('td').each(function (i) {
+                        if ($(this).html() === 'null') {
                             $(this).html('');
                         }
                     });
                 });
 
-                if(result.totalPages > 1 ){
-                    for(let numberPage = 1; numberPage <= result.totalPages; numberPage++) {
+                if (result.totalPages > 1) {
+                    for (let numberPage = 1; numberPage <= result.totalPages; numberPage++) {
                         const li = '<li class="page-item "><a class="pageNumber">' + numberPage + '</a></li>';
                         $('.pagination').append(li);
-                    };
+                    }
 
                     // active page pagination
-                    $(".pageNumber").each(function(index){
-                        if($(this).text() === page){
+                    $(".pageNumber").each(function (index) {
+                        if ($(this).text() === page) {
                             $(this).parent().removeClass().addClass("page-item active");
                         }
                     });
-                };
+                }
+                ;
             },
-            error : function(e){
-                alert("Error: ",e);
-                console.log("Error" , e );
+            error: function (e) {
+                alert("Error: get request for /all orders");
+                console.log("Error", e);
             }
         });
     };
@@ -77,7 +78,7 @@ $(document).ready(function() {
 
 
     // clicking on pagination
-    $(document).on('click', '.pageNumber', function (event){
+    $(document).on('click', '.pageNumber', function (event) {
 //		event.preventDefault();
         const page = $(this).text();
         $('.donHangTable tbody tr').remove();
@@ -86,17 +87,17 @@ $(document).ready(function() {
     });
 
     // clicking on search for order by id
-    $(document).on('keyup', '#searchById', function (event){
+    $(document).on('keyup', '#searchById', function (event) {
         event.preventDefault();
         const orderID = $('#searchById').val();
         console.log(orderID);
-        if(orderID !== ''){
+        if (orderID !== '') {
             $('.donHangTable tbody tr').remove();
             $('.pagination li').remove();
             const href = "http://localhost:8080/api/deliver/order/" + orderID;
-            $.get(href, function(order) {
+            $.get(href, function (order) {
                 let orderGrossValue = 0;
-                $.each(order.orderDetailsList, function(i, orderDetail){
+                $.each(order.orderDetailsList, function (i, orderDetail) {
                     orderGrossValue += orderDetail.cost * orderDetail.orderQuantity;
                 });
 
@@ -111,13 +112,13 @@ $(document).ready(function() {
                     '<td>' + '<input type="hidden" id="donHangId" value=' + order.id + '>' + '</td>' +
                     '<td><button class="btn btn-primary btnChiTiet" >Detail</button>';
 
-                if(order.orderStatus === "Delivering"){
+                if (order.orderStatus === "Delivering") {
                     orderRow += ' &nbsp;<button class="btn btn-warning btnCapNhat" >Update</button> </td>';
                 }
 
                 $('.donHangTable tbody').append(orderRow);
-                $('td').each( function(i){
-                    if ($(this).html() === 'null'){
+                $('td').each(function (i) {
+                    if ($(this).html() === 'null') {
                         $(this).html('');
                     }
                 });
@@ -128,45 +129,45 @@ $(document).ready(function() {
     });
 
     // clicking on order detail
-    $(document).on('click', '.btnChiTiet', function (event){
+    $(document).on('click', '.btnChiTiet', function (event) {
         event.preventDefault();
         const orderID = $(this).parent().prev().children().val();
         const href = "http://localhost:8080/api/deliver/order/" + orderID;
-        $.get(href, function(order) {
-            $('#maDonHang').text("Order ID: "+ order.id);
-            $('#hoTenNguoiNhan').text("Receiver: "+ order.receiver);
-            $('#sdtNhanHang').text("Phone number: "+ order.receivedPhone);
-            $('#diaChiNhan').text("Address: "+ order.receiveAddress);
-            $('#trangThaiDonHang').text("Order status: "+ order.orderStatus);
-            $("#ngayDatHang").text("Order date: "+ order.orderDate);
+        $.get(href, function (order) {
+            $('#maDonHang').text("Order ID: " + order.id);
+            $('#hoTenNguoiNhan').text("Receiver: " + order.receiver);
+            $('#sdtNhanHang').text("Phone number: " + order.receivedPhone);
+            $('#diaChiNhan').text("Address: " + order.receiveAddress);
+            $('#trangThaiDonHang').text("Order status: " + order.orderStatus);
+            $("#ngayDatHang").text("Order date: " + order.orderDate);
 
-            if(order.deliveryDate != null){
-                $("#ngayShipHang").text("Delivery date: "+ order.deliveryDate);
+            if (order.deliveryDate != null) {
+                $("#ngayShipHang").text("Delivery date: " + order.deliveryDate);
             }
 
-            if(order.receivedDate != null){
-                $("#ngayNhanHang").text("Retrieval date: "+ order.receivedDate);
+            if (order.receivedDate != null) {
+                $("#ngayNhanHang").text("Retrieval date: " + order.receivedDate);
             }
 
-            if(order.note != null){
-                $("#ghiChu").text("Ghi chú: "+ order.note);
+            if (order.note != null) {
+                $("#ghiChu").text("Ghi chú: " + order.note);
             }
 
-            if(order.orderer != null){
-                $("#nguoiDat").text("Người đặt: "+ order.orderer.hoTen);
+            if (order.orderer != null) {
+                $("#nguoiDat").text("Người đặt: " + order.orderer.hoTen);
             }
 
-            if(order.shipper != null){
-                $("#shipper").text("Shipper: "+ order.shipper.fullName);
+            if (order.shipper != null) {
+                $("#shipper").text("Shipper: " + order.shipper.fullName);
             }
 
             const check = order.orderStatus === "Completed" || order.orderStatus === "Waiting for approval";
-            if(check){
+            if (check) {
                 $('.chiTietTable').find('thead tr').append('<th id="soLuongNhanTag" class="border-0 text-uppercase small font-weight-bold"> SỐ LƯỢNG NHẬN </th>');
             }
             let sum = 0;
             let no = 1;
-            $.each(order.orderDetailsList, function(i, oderDetails){
+            $.each(order.orderDetailsList, function (i, oderDetails) {
                 console.log(oderDetails.orderQuantity);
                 let detailRow = '<tr>' +
                     '<td>' + no + '</td>' +
@@ -174,7 +175,7 @@ $(document).ready(function() {
                     '<td>' + oderDetails.cost + '</td>' +
                     '<td>' + oderDetails.orderQuantity + '</td>';
 
-                if(check){
+                if (check) {
                     detailRow += '<td>' + oderDetails.receivedQuantity + '</td>';
                     sum += oderDetails.cost * oderDetails.receivedQuantity;
                 } else {
@@ -184,13 +185,13 @@ $(document).ready(function() {
                 $('.chiTietTable tbody').append(detailRow);
                 no++;
             });
-            $("#tongTienCapNhat").text("Total : "+ sum);
+            $("#tongTienCapNhat").text("Total : " + sum);
         });
         $("#chiTietModal").modal();
     });
 
     // event khi ẩn modal chi tiết
-    $('#chiTietModal, #capNhatTrangThaiModal').on('hidden.bs.modal', function(e) {
+    $('#chiTietModal, #capNhatTrangThaiModal').on('hidden.bs.modal', function (e) {
         e.preventDefault();
         $("#chiTietForm p").text(""); // reset text thẻ p
         $("#capNhatTrangThaiForm h4").text(""); // reset text thẻ p
@@ -200,14 +201,14 @@ $(document).ready(function() {
     });
 
     // clicking on update order
-    $(document).on('click', '.btnCapNhat', function (event){
+    $(document).on('click', '.btnCapNhat', function (event) {
         event.preventDefault();
         const orderID = $(this).parent().prev().children().val();
         $("#donHangId").val(orderID);
         const href = "http://localhost:8080/api/deliver/order/" + orderID;
-        $.get(href, function(order) {
+        $.get(href, function (order) {
             let no = 1;
-            $.each(order.orderDetailsList, function(i, orderDetails){
+            $.each(order.orderDetailsList, function (i, orderDetails) {
                 const detailRow = '<tr>' +
                     '<td>' + no + '</td>' +
                     '<td>' + orderDetails.sanPham.tenSanPham + '</td>' +
@@ -219,10 +220,10 @@ $(document).ready(function() {
                 no++;
             });
             var sum = 0;
-            $.each(order.orderDetailsList, function(i, orderDetails){
+            $.each(order.orderDetailsList, function (i, orderDetails) {
                 sum += orderDetails.cost * orderDetails.orderQuantity;
             });
-            $("#tongTienCapNhat").text("Total : "+ sum);
+            $("#tongTienCapNhat").text("Total : " + sum);
         });
         $("#capNhatTrangThaiModal").modal();
     });
@@ -230,13 +231,13 @@ $(document).ready(function() {
     //
     $(document).on('change', '.soLuongNhan', function (event) {
         var table = $(".chiTietCapNhatTable tbody");
-        sum  = 0;
+        sum = 0;
         table.find('tr').each(function (i) {
             donGia = $(this).find("td:eq(2)").text();
             soLuongCapNhat = $(this).find("td:eq(4) input[type='number']").val();
             sum += donGia * soLuongCapNhat;
         });
-        $("#tongTienCapNhat").text("Total : "+ sum);
+        $("#tongTienCapNhat").text("Total : " + sum);
 
     });
 
@@ -267,19 +268,19 @@ $(document).ready(function() {
         };
 //    	 console.log(data);
         $.ajax({
-            async:false,
-            type : "POST",
-            contentType : "application/json",
-            url : "http://localhost:8080/api/deliver/order/update",
+            async: false,
+            type: "POST",
+            contentType: "application/json",
+            url: "http://localhost:8080/api/deliver/order/update",
             enctype: 'multipart/form-data',
 
-            data : JSON.stringify(data),
+            data: JSON.stringify(data),
             // dataType : 'json',
-            success : function(response) {
+            success: function (response) {
                 $("#capNhatTrangThaiModal").modal('hide');
                 alert("Order status updattd");
             },
-            error : function(e) {
+            error: function (e) {
                 alert("Error!")
                 console.log("ERROR: ", e);
             }
@@ -287,10 +288,11 @@ $(document).ready(function() {
     }
 
     // reset table after post, put, filter
-    function resetData(){
+    function resetData() {
         const page = $('li.active').children().text();
+        console.log(page);
         $('.donHangTable tbody tr').remove();
         $('.pagination li').remove();
-        getAllOrders(page);
-    };
+        getAllOrders(1);
+    }
 });
