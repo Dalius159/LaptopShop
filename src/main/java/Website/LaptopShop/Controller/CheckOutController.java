@@ -52,7 +52,6 @@ public class CheckOutController {
 			quantity.put(c.getProduct().getId(), (long) c.getQuantity());
 		}
 
-//      TODO: fix typo
 		model.addAttribute("cart", productList);
 		model.addAttribute("quantity", quantity);
 		model.addAttribute("user", currentUser);
@@ -61,14 +60,20 @@ public class CheckOutController {
 		return "client/checkout";
 	}
 
-	@PostMapping("/complete-order")
+	@PostMapping("/process_order")
 	public String completeOrder(@ModelAttribute("order") Orders order, HttpServletRequest req, HttpServletResponse response, Model model) {
-		SaveOrder(order, req, response, model, (byte) 0);
-
-		return "redirect:/thankyou";
+//		SaveOrder(order, req, response, model, (byte) 0);
+		return "redirect:/process_payment";
 	}
 
-	@GetMapping(value = "/thankyou")
+	@PostMapping("/save_order")
+	@ResponseBody
+	public String saveOrderAjax(@ModelAttribute("order") Orders order, HttpServletRequest req, HttpServletResponse response, Model model) {
+		SaveOrder(order, req, response, model, (byte) 0);
+		return "Order saved successfully";
+	}
+
+	@GetMapping(value = "/process_payment")
 	public String thankYouPage(HttpServletRequest req, Model model) {
 		Users currentUser = getSessionUser(req);
 		Orders order = orderService.findLatestOrderByOrdererID(currentUser.getId());
@@ -85,11 +90,15 @@ public class CheckOutController {
 		model.addAttribute("cart", productList);
 		model.addAttribute("quantity", quantity);
 
-		return "client/thankYou";
+		return "client/processPayment";
 	}
 
 	public void SaveOrder(Orders order, HttpServletRequest req, HttpServletResponse response, Model model, byte status) {
-		if (status == 1) {order.setNote("Paid");} else {order.setNote("Cash-on-delivery payment");}
+		if (status == 1) {
+			order.setNote("Paid");
+		} else {
+			order.setNote("Cash-on-delivery payment");
+		}
 		order.setOrderDate(new Date());
 		order.setOrderStatus("Waiting for Delivery");
 
